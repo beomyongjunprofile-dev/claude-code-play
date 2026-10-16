@@ -1,4 +1,4 @@
-# Claude Code Play
+# Claude Architecture Play
 
 A browser game for studying Claude Code and Claude API concepts from the certification track (CCA and CCDV-F).
 
