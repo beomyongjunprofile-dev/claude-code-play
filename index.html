@@ -1338,7 +1338,7 @@ const CH=[
  {t:'Context & long sessions',d:'What a long session carries, and when to start fresh',lv:['Session Resume','Context Diet']},
  {t:'Final',d:'Everything at once',lv:['Legacy Overhaul']}];
 {const by={};EPS.forEach(e=>by[e.en]=e);const out=[];CH.forEach((c,ci)=>c.lv.forEach((en,li)=>{const e=by[en];if(!e)throw new Error('no level '+en);e.ch=ci;e.lv=li+1;out.push(e)}));if(out.length!==EPS.length)throw new Error('levels not in a chapter');EPS.length=0;EPS.push(...out)}
-const TBUD={"Basics":12.5,"PreToolUse vs Stop vs max_turns":18.5,"Model Selection":8,"Batch vs Caching":6,"Caching Details":10.5,"Structured Output":9,"Few-shot":8,"Built-in Tools":13,"Tool Descriptions":11.5,"Tool Use Loop":8,"Orchestration":13,"Human Escalation":25,"Config Scope":8,"Skills & Slash Commands":12,"Session Resume":9.5}; // guided levels: budget = cost of the guided solution + ~10%
+const TBUD={"Basics":12.5,"PreToolUse vs Stop vs max_turns":18.5,"Model Selection":9.5,"Batch vs Caching":6,"Caching Details":10.5,"Structured Output":9,"Few-shot":8,"Built-in Tools":13,"Tool Descriptions":11.5,"Tool Use Loop":8,"Orchestration":13,"Human Escalation":25,"Config Scope":8,"Skills & Slash Commands":12,"Session Resume":9.5}; // guided levels: budget = cost of the guided solution + ~10%
 EPS.forEach(e=>{const b=TBUD[e.en];if(e.tut&&b){e.budget=b;if(e.par>b)e.par=b}});
 EPS.forEach(e=>{if(e.tut)e.fade=true}); // every guided level: the placement guide is behind "Show me where" // after chapter 1 the board stops pointing at the answer
 ['PreToolUse vs Stop vs max_turns','Human Escalation','Batch vs Caching','Session Resume','Structured Output','Few-shot','Built-in Tools','Tool Descriptions','Tool Use Loop','Skills & Slash Commands'].forEach(en=>{const e=EPS.find(x=>x.en===en);e.gap=Math.min(e.gap||1.6,1)});
@@ -1526,9 +1526,12 @@ function pickHandler(t){
   const det=idle.find(h=>h.type==='tool'||h.type==='batch');if(det)return det;
   if(G.net.usable.some(h=>h.type==='batch'&&capable(h,t)))return null; // work meant for the batch waits for it instead of going real-time
   const ag=idle.filter(h=>PT[h.type].cat==='agent');if(!ag.length)return null;
-  if(routerOn()){const need=Math.min(4,t.diff+t.esc);const ok=ag.filter(h=>M[PT[h.type].model].skill>=need);
-    const price=h=>M[PT[h.type].model].pin*h.w*h.h;return (ok.length?ok:ag).sort((a,b)=>ok.length?price(a)-price(b):M[PT[b.type].model].skill-M[PT[a.type].model].skill)[0]}
-  return ag.sort((a,b)=>a.net.A.length-b.net.A.length)[0];
+  /*P130*/if(routerOn()){const need=Math.min(4,t.diff+(t.esc||0)),sk=h=>M[PT[h.type].model].skill,ok=ag.filter(h=>sk(h)>=need);
+    const price=h=>M[PT[h.type].model].pin*h.w*h.h;
+    if(ok.length){const h=ok.sort((a,b)=>price(a)-price(b))[0];t.why='fit';return h}
+    if(G.net.usable.some(h=>PT[h.type].cat==='agent'&&sk(h)>=need))return null; // a capable agent is on the board but busy: wait for it
+    const h=ag.sort((a,b)=>sk(b)-sk(a))[0];t.why='fallback';return h}
+  const h=ag.sort((a,b)=>a.net.A.length-b.net.A.length)[0];t.why='near';return h;
 }
 function dispatch(t,h){
   const o=G.orch,cached=G.net.reach.has('cache');
@@ -1538,7 +1541,7 @@ function dispatch(t,h){
   const pk={task:t,h,phase:'A',pts:routePts(h.net.A),i:0,d:0,th:t.inj?['inject']:[],cost:0,r:3+1.2*(t.diff||2)+Math.min(9,inherit/9000),inherit,x:0,y:0};
   pk.x=pk.pts[0].x;pk.y=pk.pts[0].y;G.pkts.push(pk);
   if(inherit>20000&&G.rnd()<.6){const c=center(o);floatT(c[0],c[1]-CS,`Dragging all ${fmtK(inherit)} of context along`,'#C2413F')}
-  if(routerOn()&&!isDet(h))fxAdd('route',h,{text:`Difficulty ${Math.min(4,t.diff+t.esc)} → ${M[PT[h.type].model].name}`});
+  if(!isDet(h)&&(routeOk()||routerOn())){const nm=M[PT[h.type].model].name,d=Math.min(4,t.diff+(t.esc||0));fxAdd('route',h,{text:t.why==='near'?Lk(`Nearest free → ${nm}`,`가장 가까운 빈 에이전트 → ${nm}`,`いちばん近い空きエージェント → ${nm}`):t.why==='fallback'?Lk(`Difficulty ${d} → ${nm} · no capable agent`,`난이도 ${d} → ${nm} · 감당할 에이전트 없음`,`難易度 ${d} → ${nm} · こなせるエージェントなし`):Lk(`Difficulty ${d} → ${nm} · cheapest that can`,`난이도 ${d} → ${nm} · 감당 가능한 가장 싼 모델`,`難易度 ${d} → ${nm} · こなせる中で最安`)})}
 }
 const isDet=h=>h.type==='tool'||h.type==='batch';
 function baseCtx(h){let b=12000;const e=h.net.eff;if(e.has('resume'))b+=6000;if(e.has('delta')||e.has('dlost'))b+=300;if(e.has('fresh'))b+=800; // resume carries yesterday's conversation
@@ -2218,7 +2221,7 @@ function render(dt){
     if(e.type==='grab'){const gx=e.x+(e.pk.x-e.x)*k,gy=e.y+(e.pk.y-e.y)*k-Math.sin(k*Math.PI)*CS*.5;cx.fillStyle='#fff';cx.strokeStyle=e.col;cx.lineWidth=2.5;cx.beginPath();cx.arc(gx,gy,6*(1-k*.4),0,7);cx.fill();cx.stroke();cx.strokeStyle=e.col;cx.globalAlpha=.4*(1-k);cx.lineWidth=2;cx.beginPath();cx.moveTo(e.x,e.y);cx.lineTo(gx,gy);cx.stroke();cx.globalAlpha=1}
     if(e.type==='ring'){cx.strokeStyle=e.col;cx.globalAlpha=1-k;cx.lineWidth=3*(1-k)+1;cx.beginPath();cx.arc(e.x,e.y,(e.r||CS)*(.3+k),0,7);cx.stroke();cx.globalAlpha=1}
     if(e.type==='banner'){const a=k<.15?k/.15:k>.7?(1-k)/.3:1,sc=k<.15?.8+k/.15*.2:1;cx.save();cx.globalAlpha=a;cx.translate(W/2,BY+ROWS*CS*.42);cx.scale(sc,sc);cx.font='400 46px Manrope,"Pretendard Variable","Noto Sans KR","Noto Sans JP",system-ui,sans-serif';cx.textAlign='center';cx.lineJoin='round';cx.lineWidth=10;cx.strokeStyle='rgba(255,255,255,.95)';cx.strokeText(e.text,0,0);cx.fillStyle=e.col;cx.fillText(e.text,0,0);cx.restore()}
-    if(e.type==='route'){const a=center(G.orch),b=center(e.p);cx.globalAlpha=1-k;label('Router · '+e.text,(a[0]+b[0])/2,(a[1]+b[1])/2-8,11,'#33558F');cx.globalAlpha=1}});
+    if(e.type==='route'){const a=center(G.orch),b=center(e.p);cx.globalAlpha=1-k;label((routerOn()?'Router · ':'COORD · ')+e.text,(a[0]+b[0])/2,(a[1]+b[1])/2-8,11,'#33558F');cx.globalAlpha=1}});
   G.fxs=G.fxs.filter(e=>e.t<e.d);
   G.parts.forEach(p=>{p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;if(p.coin||p.dot)p.vy+=160*dt;cx.globalAlpha=clamp(p.life/p.max,0,1);
     if(p.badge==='I'){devil(p.x,p.y,9);p.vy+=260*dt}
