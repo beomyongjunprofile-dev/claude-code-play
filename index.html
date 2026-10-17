@@ -15,6 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#D5DAE0; --board:#EEF1F4; --paper:#FFFFFF; --paper2:#E9EDF1;
@@ -512,6 +513,51 @@ body{background-color:var(--bg);background-image:linear-gradient(rgba(34,39,43,.
 .ttl .heroart{width:min(600px,90%,max(300px,(100vh - 430px)*3.1));margin:18px 0 14px}
 .lvl .heroart{width:min(340px,90%);margin:6px 0 6px}
 @media (prefers-reduced-motion:reduce){.tb,.tsh,.teo,.teh,.tbl{animation:none!important}.teh{opacity:0}}
+
+/* ---------- v87 title screen ---------- */
+.scrw.tmode{--tbg:#FBFAF7;--tmint:#65D6C1;--tmint-d:#2FAF98;--tmint-l:#E8F8F3;--ttext:#252932;--tsub:#777E88;background:
+  radial-gradient(760px 420px at 50% 58%,rgba(101,214,193,.08),transparent 70%),
+  linear-gradient(rgba(37,41,50,.028) 1px,transparent 1px) 0 0/32px 32px,
+  linear-gradient(90deg,rgba(37,41,50,.028) 1px,transparent 1px) 0 0/32px 32px,var(--tbg)}
+#ov:has(.scrw.tmode){background:#FBFAF7}
+.tmode .ttl{padding:44px 20px 52px}
+.tmode .ttlin{gap:0}
+.tmode .brandmk{font:800 12px 'Nunito',var(--body);letter-spacing:.06em;text-transform:none;color:#2C8F7E;background:var(--tmint-l);border-radius:999px;padding:5px 12px 5px 10px}
+.tmode .brandmk i{width:8px;height:8px;border-radius:50%;background:var(--tmint);box-shadow:none}
+.tmode h1.ttlh{font:600 clamp(32px,min(4.7vw,6.8vh),60px)/1.05 'Fredoka','Nunito',var(--display);letter-spacing:-.005em;color:var(--ttext);margin:14px 0 8px}
+.tmode .ttlh em{color:var(--tmint-d)}
+.tmode .ttlsub{font:600 clamp(14px,min(1.25vw,2vh),17px)/1.5 'Nunito',var(--body);color:var(--tsub);margin:0}
+:lang(ko) .tmode .ttlsub,:lang(ja) .tmode .ttlsub{font-family:var(--body);font-weight:500}
+.crew{display:flex;align-items:flex-end;justify-content:center;gap:clamp(16px,min(3vw,4vh),40px);margin:clamp(18px,4.2vh,40px) 0 clamp(16px,3.4vh,30px);padding-top:14px}
+.rb{--u:min(1px,.118vh,.2vw);width:calc(var(--s)*var(--u));display:flex;flex-direction:column;align-items:center;transform:translateY(var(--dy));cursor:default;-webkit-tap-highlight-color:transparent}
+.rbh{transition:transform .65s cubic-bezier(.2,.8,.2,1);will-change:transform}.rb.hov .rbh{transform:translateY(-5px);transition-duration:.3s}
+.rbf{will-change:transform}.rb-opus .rbf{animation:opusBob 5.6s ease-in-out infinite}
+@keyframes opusBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.rba{transform-origin:50% 100%;will-change:transform}
+.rb svg{display:block;width:100%;height:auto;overflow:visible}
+.rb .look{transition:transform .38s cubic-bezier(.3,.7,.3,1)}
+.rb .eo{transform-box:fill-box;transform-origin:center;transition:opacity .12s}.rb .eh{opacity:0;transition:opacity .12s}
+.rb.happy .eo{opacity:0}.rb.happy .eh{opacity:1}
+.rbsh{width:72%;height:12px;margin-top:4px;border-radius:50%;background:radial-gradient(closest-side,rgba(35,45,55,.14),rgba(35,45,55,0));will-change:transform,opacity}
+.rb-opus .rbsh{animation:opusShadow 5.6s ease-in-out infinite}@keyframes opusShadow{0%,100%{transform:scaleX(1);opacity:1}50%{transform:scaleX(.9);opacity:.75}}
+.rbn{margin-top:4px;font:800 12px 'Nunito',var(--body);letter-spacing:.05em;color:var(--tsub)}
+.tmode .ttlbtns{gap:12px;margin:0}
+.tmode .bigbtn{font:800 16px 'Nunito',var(--body);border-radius:16px;padding:0 26px;height:52px;transition:transform .14s ease,box-shadow .14s ease,background .14s ease,border-color .14s ease}
+:lang(ko) .tmode .bigbtn,:lang(ja) .tmode .bigbtn{font-family:var(--body);font-weight:700}
+.tmode .bigbtn.go{background:var(--tmint);border:0;color:#123A33;box-shadow:0 4px 0 #3FB8A2,0 12px 22px rgba(101,214,193,.28)}
+.tmode .bigbtn.go:hover{transform:translateY(-2px);box-shadow:0 6px 0 #3FB8A2,0 16px 26px rgba(101,214,193,.32)}
+.tmode .bigbtn.go:active{transform:translateY(3px);box-shadow:0 1px 0 #3FB8A2,0 6px 12px rgba(101,214,193,.22)}
+.tmode .bigbtn.go .k{font:800 13px 'Nunito',var(--mono);opacity:.7}
+.tmode .bigbtn.ghost{background:#FFFDF8;border:1.5px solid #E7E2D8;color:var(--ttext);box-shadow:0 4px 0 #EDE8DF}
+.tmode .bigbtn.ghost:hover{background:#F6FBF9;border-color:#BFE9DF;transform:translateY(-2px);box-shadow:0 6px 0 #E3EEE9}
+.tmode .bigbtn.ghost:active{transform:translateY(3px);box-shadow:0 1px 0 #EDE8DF}
+.tmode .ttlprog{margin-top:18px;gap:12px;font:700 13px 'Nunito',var(--body);color:var(--tsub);font-variant-numeric:tabular-nums}
+.tmode .ttlprog .pgb{width:150px;height:8px;border-radius:999px;background:#ECE8E0}.tmode .ttlprog .pgb i{background:var(--tmint);border-radius:999px}
+.tmode .ttlprog .st{color:#F2B53A}
+.tmode .ttlfoot{color:#A3A9B1;bottom:14px;font-size:11.5px}.tmode .ttlfoot kbd{background:#fff;border-color:#E7E2D8;color:var(--tsub)}
+.tmode .setbtn{background:#FFFDF8;border-color:#E7E2D8;border-radius:12px}
+@media (max-width:640px){.crew{gap:10px}.rb{--u:min(1px,.118vh,.21vw)}}
+@media (prefers-reduced-motion:reduce){.rb-opus .rbf,.rb-opus .rbsh{animation:none}.rbh,.rb .look{transition:none}.rb.hov .rbh{transform:none}}
 </style>
 
 <div id="app">
@@ -2527,7 +2573,53 @@ $('#bFiles').addEventListener('click',()=>showFiles());$('#bConc').addEventListe
 const ov=$('#ov');
 const starsHtml=n=>`<span class="stars">${'★'.repeat(n)}<span class="off">${'★'.repeat(3-n)}</span></span>`;
 /*P119*/
-/*P124*/function heroSVG(){ // the four model robots, drawn like the in-game agents: white body, dark visor, LED eyes, colour stripe
+/*P124*//*P125*//*P125*/const CREW=[['haiku','Haiku','#17AE9B',104,'-7px'],['sonnet','Sonnet','#1C9ED8',134,'0px'],['opus','Opus','#8D6BE8',164,'-11px'],['fable','Fable','#F08A24',194,'-3px']];
+function robotSVG(k,c){ // the in-game agent, softened: white body, dark visor, glowing LED eyes, colour stripe
+  const eye=sd=>`<g transform="translate(${50+sd*14.4} 31) rotate(${sd*11.5})"><ellipse rx="6" ry="10" fill="${c}" filter="url(#rg${k})"/>${[-6,-2,2,6].map(y=>`<rect x="-7.8" y="${y-.45}" width="15.6" height=".9" fill="rgba(14,18,22,.38)"/>`).join('')}</g>`;
+  const smile=sd=>`<path transform="translate(${50+sd*14.4} 31)" d="M-7.5 3.5 Q0 -10.5 7.5 3.5" stroke="${c}" stroke-width="4.2" fill="none" stroke-linecap="round" filter="url(#rg${k})"/>`;
+  return `<svg viewBox="-2 -2 104 94" aria-hidden="true"><defs><filter id="rg${k}" x="-150%" y="-150%" width="400%" height="400%"><feGaussianBlur stdDeviation="1.9" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><clipPath id="rv${k}"><ellipse cx="50" cy="31" rx="37" ry="24"/></clipPath></defs>
+   <rect x="0" y="0" width="100" height="90" rx="24" fill="#FCFDFD" stroke="rgba(43,51,59,.5)" stroke-width="1.8"/>
+   <rect x="31" y="2.2" width="10" height="2.6" rx="1.3" fill="rgba(31,37,43,.12)"/><rect x="59" y="2.2" width="10" height="2.6" rx="1.3" fill="rgba(31,37,43,.12)"/>
+   <ellipse cx="50" cy="31" rx="37" ry="24" fill="#10151A"/>
+   <g clip-path="url(#rv${k})"><ellipse cx="42" cy="14" rx="29" ry="9" fill="rgba(255,255,255,.10)"/>
+    <g class="look"><g class="eo">${eye(-1)}${eye(1)}</g><g class="eh">${smile(-1)}${smile(1)}</g></g></g>
+   <rect x="13" y="74" width="74" height="4.6" rx="2.3" fill="${c}"/></svg>`}
+function crewHTML(){return `<div class="crew" data-noi18n>${CREW.map(([k,nm,c,sz,dy])=>`<div class="rb rb-${k}" data-k="${k}" style="--s:${sz};--dy:${dy}"><div class="rbh"><div class="rbf"><div class="rba">${robotSVG(k,c)}</div></div></div><div class="rbsh"></div><span class="rbn">${nm}</span></div>`).join('')}</div>`}
+function crewLife(root){ // idle behaviour for the title robots; returns a stop function. One central clock keeps actions from piling up.
+  const R={};root.querySelectorAll('.rb').forEach(el=>R[el.dataset.k]=el);const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let alive=true;const T=new Set(),busy={},nBusy=()=>Object.keys(busy).filter(k=>busy[k]).length,rnd=(a,b)=>a+Math.random()*(b-a),pick=a=>a[Math.floor(Math.random()*a.length)];
+  const stop=()=>{if(!alive)return;alive=false;T.forEach(clearTimeout);T.clear();root.getAnimations({subtree:true}).forEach(a=>{if(!/opus/.test(a.animationName||''))a.cancel()})};
+  const later=(ms,fn)=>{const id=setTimeout(()=>{T.delete(id);if(!alive)return;if(!root.isConnected||ov.hidden){stop();return}if(document.hidden){later(1000,fn);return}fn()},ms);T.add(id)};
+  const q=(k,sel)=>R[k].querySelector(sel);
+  const look=(k,dx,dy)=>{q(k,'.look').style.transform=`translate(${dx||0}px,${dy||0}px)`};
+  const blink=k=>{if(R[k].classList.contains('happy'))return;q(k,'.eo').animate([{transform:'scaleY(1)'},{transform:'scaleY(.08)',offset:.45},{transform:'scaleY(1)'}],{duration:k==='opus'?300:170,easing:'ease-in-out'})};
+  const smile=(k,ms)=>{R[k].classList.add('happy');later(ms,()=>{if(!R[k].classList.contains('hov'))R[k].classList.remove('happy')})};
+  const act=(k,frames,dur,ease)=>q(k,'.rba').animate(frames,{duration:dur,easing:ease||'ease-in-out'});
+  const hold=(k,ms)=>{busy[k]=1;later(ms,()=>{busy[k]=0})};
+  const hop=(k,h)=>{hold(k,640);act(k,[{transform:'translateY(0)'},{transform:`translateY(-${h}px)`,offset:.42},{transform:'translateY(0)'}],580,'cubic-bezier(.3,.7,.4,1)');q(k,'.rbsh').animate([{transform:'scaleX(1)',opacity:1},{transform:'scaleX(.8)',opacity:.5,offset:.42},{transform:'scaleX(1)',opacity:1}],{duration:580})};
+  const tilt=(k,deg,ms)=>{hold(k,ms+60);act(k,[{transform:'rotate(0deg)'},{transform:`rotate(${deg}deg)`,offset:.22},{transform:`rotate(${deg}deg)`,offset:.78},{transform:'rotate(0deg)'}],ms)};
+  const sway=k=>{hold(k,1560);act(k,[0,-3,3,-2,0].map(d=>({transform:`rotate(${d}deg)`})),1500)};
+  const free=k=>!busy[k]&&!R[k].classList.contains('hov');
+  // hover: the robot looks at you, rises 5 px and smiles; it settles back slowly
+  Object.keys(R).forEach(k=>{R[k].addEventListener('pointerenter',()=>{R[k].classList.add('hov');look(k,0,2.5);later(110,()=>{if(R[k].classList.contains('hov'))R[k].classList.add('happy')})});
+    R[k].addEventListener('pointerleave',()=>{R[k].classList.remove('hov');R[k].classList.remove('happy');look(k,0,0)})});
+  if(still)return stop;
+  const blinkLoop=(k,a,b)=>later(rnd(a,b),()=>{if(!R[k].classList.contains('hov'))blink(k);blinkLoop(k,a,b)});
+  blinkLoop('haiku',3000,5000);blinkLoop('sonnet',4000,6000);blinkLoop('opus',5200,8200);blinkLoop('fable',3600,6200);
+  const loop=(k,a,b,fn)=>later(rnd(a,b),()=>{if(free(k)&&nBusy()<1)fn();loop(k,a,b,fn)});
+  loop('haiku',5000,8000,()=>{Math.random()<.3?hop('haiku',5):tilt('haiku',(Math.random()<.5?-1:1)*3.5,1500)});
+  loop('sonnet',6000,10000,()=>{if(Math.random()<.65){const d=Math.random()<.5?-4:4;hold('sonnet',1500);look('sonnet',d,0);later(1250,()=>look('sonnet',0,0))}else tilt('sonnet',(Math.random()<.5?-1:1)*2.5,1800)});
+  loop('opus',16000,26000,()=>tilt('opus',(Math.random()<.5?-1:1)*2,2200));
+  loop('fable',5000,8000,()=>{const r=Math.random();if(r<.55){hop('fable',6);smile('fable',1000)}else if(r<.8)sway('fable');else{hold('fable',1300);look('fable',-4,0);later(1100,()=>look('fable',0,0))}});
+  // interactions, roughly every 8–15 s, only when nobody else is moving
+  const inter=()=>later(rnd(8000,15000),()=>{if(nBusy()===0&&['haiku','sonnet','opus','fable'].every(free)){const w=pick(['eye','react','blink']);
+      if(w==='eye'){hold('haiku',1700);hold('sonnet',1700);look('haiku',4,0);later(380,()=>look('sonnet',-4,0));later(1400,()=>{look('haiku',0,0);look('sonnet',0,0)})}
+      else if(w==='react'){hop('fable',6);smile('fable',900);hold('opus',1400);later(120,()=>look('opus',4,0));later(1250,()=>look('opus',0,0))}
+      else{const ks=['haiku','sonnet','opus','fable'].sort(()=>Math.random()-.5).slice(0,2);blink(ks[0]);later(70,()=>blink(ks[1]))}}
+    inter()});
+  later(1800,()=>{if(free('fable')){hop('fable',5);smile('fable',900)}});inter();
+  return stop}
+function heroSVG(){ // the four model robots, drawn like the in-game agents: white body, dark visor, LED eyes, colour stripe
   const B=[['Haiku','#17AE9B',62,0,11,5.5],['Sonnet','#1C9ED8',80,1,11,0],['Opus','#8D6BE8',98,2,11,8.2],['Fable','#F08A24',116,3,11,2.7]],gapX=34,floor=176;
   let x=0;const tot=B.reduce((a,b)=>a+b[2],0)+gapX*(B.length-1),x0=(640-tot)/2;x=x0;
   const bots=B.map(([nm,c,w,k,per,dl])=>{const h=w*.9,cx0=x+w/2,top=floor-h,r=w*.2,W=r*3.7/2,H=r*2.4/2,vy=top+h*.3,gap=r*.72,ew=r*.3,eh=r*.5;x+=w+gapX;
@@ -2551,22 +2643,22 @@ function refreshLang(){if(!ov.hidden&&ov.querySelector('.scrw'))showTitle(scrMod
 function showTitle(mode){mode=mode==='title'?'title':'levels';
   const prog=store.get('ccp4-stars',{}),best=store.get('ccp4-best',{});ov.hidden=false;delete ov.dataset.dlg;
   const done=EPS.filter(e=>prog[e.en]).length,nx=Math.max(0,EPS.findIndex(e=>!prog[e.en])),starN=EPS.reduce((a,e)=>a+(prog[e.en]||0),0),missN=rvMissed().length;
-  const prevArt=ov.querySelector('.heroart'),r0=prevArt?prevArt.getBoundingClientRect():null,prevH=ov.querySelector('h1.ttlh'),h0=prevH?prevH.getBoundingClientRect():null;scrMode=mode;
+  if(window.__crewStop){window.__crewStop();window.__crewStop=null}const prevArt=ov.querySelector('.heroart'),r0=prevArt?prevArt.getBoundingClientRect():null,prevH=ov.querySelector('h1.ttlh'),h0=prevH?prevH.getBoundingClientRect():null;scrMode=mode;
   const T=`Claude <em>Architecture</em> Play`,setb=`<div class="scrtop"><button type="button" class="setbtn" data-set>${SLID}<span>Settings</span></button></div>`;
-  const progLine=`<span data-noi18n>${done} / ${EPS.length} ${Lk('levels','레벨','レベル')}</span><span class="pgb"><i style="width:${done/EPS.length*100}%"></i></span><span data-noi18n>★ ${starN} / ${EPS.length*3}</span>`;
+  const progLine=`<span data-noi18n>${done} / ${EPS.length} ${Lk('levels','레벨','レベル')}</span><span class="pgb"><i style="width:${done/EPS.length*100}%"></i></span><span data-noi18n><span class="st">★</span> ${starN} / ${EPS.length*3}</span>`;
   if(mode==='title'){
-    ov.innerHTML=`<div class="scrw">${setb}<div class="ttl"><div class="ttlin">
+    ov.innerHTML=`<div class="scrw tmode">${setb}<div class="ttl"><div class="ttlin">
      <span class="brandmk" data-noi18n><i></i>${Lk('A circuit game for Claude architects','Claude 설계를 위한 회로 게임','Claude 設計のための回路ゲーム')}</span>
      <h1 class="ttlh" data-noi18n>${T}</h1>
      <p class="ttlsub" data-noi18n>${Lk('Wire agents, hooks and schemas. Catch every failure at the lowest cost.','에이전트와 hook, 스키마를 연결해 모든 실패를 가장 싸게 막아 보세요.','エージェント、hook、スキーマをつなぎ、すべての失敗をいちばん安く止めましょう。')}</p>
-     <div class="heroart">${heroSVG()}</div>
+     ${crewHTML()}
      <div class="ttlbtns" data-noi18n><button class="bigbtn go" id="tGo" type="button">${done?Lk('Continue','이어 하기','つづける'):Lk('Start','시작하기','はじめる')} <span class="k">▸ ${lvCode(EPS[nx])}</span></button><button class="bigbtn ghost" id="tLv" type="button">${Lk('Choose a level','레벨 선택','レベルを選ぶ')}</button></div>
      <div class="ttlprog">${progLine}</div>
      <p class="mnote">This game is built for a desktop screen. On a phone the board is too small to play comfortably: rotate to landscape, or open it on a computer.</p>
     </div></div><div class="ttlfoot"><span data-noi18n><kbd>Enter</kbd> ${Lk('start','시작','開始')} · <kbd>L</kbd> ${Lk('levels','레벨','レベル')} · </span><span>Unofficial study game. Not affiliated with or endorsed by Anthropic. Prices and behaviour are simplified for play.</span></div></div>`;
     $('#tGo').addEventListener('click',()=>showBrief(nx));$('#tLv').addEventListener('click',()=>showTitle('levels'));
-    const art=ov.querySelector('.heroart');
-    flipFrom(r0,art);flipFrom(h0,ov.querySelector('h1.ttlh'));$('#tGo').focus();return}
+    window.__crewStop=crewLife(ov.querySelector('.crew'));
+    flipFrom(h0,ov.querySelector('h1.ttlh'));$('#tGo').focus();return}
   const L3=i=>{const e=EPS[i];return e},partsOf=e=>(e.unlock||[]).filter(id=>PT[id]&&id!=='wire'&&id!=='effort').map(id=>PT[id].name),
     tags=e=>`${e.kind==='fix'?'<i class="hardtag" data-noi18n>HARD</i>':''}${EXAM.A.has(e.en)?'<span class="exm" data-noi18n>CCA</span>':''}${EXAM.D.has(e.en)?'<span class="exm" data-noi18n>CCDV-F</span>':''}`;
   const pvHtml=i=>{const e=EPS[i],st=prog[e.en]?['done',Lk('Cleared','클리어','クリア')]:i===nx?['',Lk('Next up','다음 차례','次はこれ')]:e.kind==='fix'?['hard',Lk('Challenge','도전','チャレンジ')]:['',Lk('New','새 레벨','新しい')];
