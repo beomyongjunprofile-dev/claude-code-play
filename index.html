@@ -916,6 +916,20 @@ body{background-color:#F1F1EB!important;background-image:linear-gradient(rgba(39
 #tlog .ap.auto{background:#E2F3EA;color:#1F6B4A}#tlog .ap.pre{background:#E2F1F6;color:#1C5E7E}#tlog .ap.ask{background:#FFF3DF;color:#8A5410}
 #tlog .ap.gone,#tlog .ap.hook,#tlog .ap.stop{background:#E9EDF5;color:#3B4A6B}#tlog .ap.ran{background:#FBE5E3;color:#A1302B}
 #tlog .tle{padding:7px 10px;font:400 9.9px/1.5 var(--body);color:var(--ink2)}
+
+/* ---------- v106 stage window + playground ---------- */
+.lmode .lvl .pv{display:none}
+.lmode .lv3d{flex:1 1 auto!important;height:auto!important;min-height:260px;margin:0!important}
+.lmode .lvl{gap:8px!important}
+.sdlg{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:rgba(39,49,46,.32);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);animation:sdIn .16s ease-out}
+.sdlg[hidden]{display:none}
+@keyframes sdIn{from{opacity:0}to{opacity:1}}
+.sdlg .sdbox{position:relative;width:min(520px,calc(100vw - 32px));max-height:calc(100vh - 48px);overflow:auto;border-radius:18px;box-shadow:var(--sh3);animation:sdUp .2s cubic-bezier(.2,.8,.2,1)}
+@keyframes sdUp{from{transform:translateY(10px);opacity:.6}to{transform:none;opacity:1}}
+.sdlg .sdbox .pv{display:grid!important;margin:0;border-radius:18px!important;box-shadow:none!important}
+.sdlg .sdx{position:absolute;top:12px;right:12px;z-index:2;width:30px;height:30px;border-radius:9px;border:1px solid rgba(39,49,46,.14);background:#F8F8F4;font:700 16px/1 var(--body);color:#4E5B54;cursor:pointer}
+.sdlg .pvtop{padding-right:40px}
+@media (prefers-reduced-motion:reduce){.sdlg,.sdlg .sdbox{animation:none}}
 </style>
 
 <div id="app">
@@ -1947,9 +1961,12 @@ function leak(t,k,c){G.orch.xx=1.4;G.orch.smile=0;if(k==='premature'){G.fxs.push
 function pieceKeys(pc,phase){return pc.type==='hook'?(phase==='A'?['pretool:in']:['posttool']):[effKey(pc)]}
 const POSTTEST=.6; // $ per skipped-test catch by a POST hook: it runs the suite after every edit
 function passPiece(pk,pc,via){ // when passing a part on (or next to) the route
-  if(pc.fixed||!pk.th.length||pc.late||FRONT.has(pc.type))return false;const keys=pieceKeys(pc,pk.phase); // prompt-side parts act when the agent reads them, never on a result passing by
+  const ex0=()=>{if(!G.ep.tut||pc.fixed||!G.net.active.has(pc)||(pc.type!=='hook'&&pc.type!=='stophook')||(pc.type==='stophook'&&pk.phase==='A'))return;if(pc.ex0r!==G.runs){pc.ex0r=G.runs;pc.ex0n=0}if(++pc.ex0n>2)return;
+    const c=center(pc),m=pc.type==='stophook'?Lk('Stop · exit 0 — done, it may stop','Stop · exit 0 — 끝내도 돼요','Stop · exit 0 — 終わってよい'):pk.phase==='A'?Lk('PreToolUse · exit 0 — clean, passes','PreToolUse · exit 0 — 이상 없음, 통과','PreToolUse · exit 0 — 問題なし、通過'):Lk('PostToolUse · exit 0 — output is fine','PostToolUse · exit 0 — 결과 정상','PostToolUse · exit 0 — 出力は正常');
+    floatT(c[0],c[1]-CS*1.1,m,'#2E8B62');pc.flash=.5};
+  if(pc.fixed||pc.late||FRONT.has(pc.type))return false;if(!pk.th.length){ex0();return false}const keys=pieceKeys(pc,pk.phase); // prompt-side parts act when the agent reads them, never on a result passing by
   if(pc.type==='stophook'&&pk.phase==='A')return false; // nothing to do in front of the agent
-  const hit=pk.th.filter(k=>TH[k].by.some(b=>keys.includes(b))&&!(k==='halluc'&&pk.subtle&&(pk.subSaid=1))&&!(k==='premature'&&pc.type==='hook'&&pk.h.net.eff.has('stophook')));if(!hit.length)return false; // with a Stop hook in place the completion check lives there; the POST hook is not also running the suite
+  const hit=pk.th.filter(k=>TH[k].by.some(b=>keys.includes(b))&&!(k==='halluc'&&pk.subtle&&(pk.subSaid=1))&&!(k==='premature'&&pc.type==='hook'&&pk.h.net.eff.has('stophook')));if(!hit.length){ex0();return false} // with a Stop hook in place the completion check lives there; the POST hook is not also running the suite
   const c=center(pc),t=PT[pc.type];pc.flash=1;pc.count=(pc.count||0)+hit.length;sfx('catch');pk.hold=.5;scanFx(pc,pk);hit.forEach(k=>{G.caught[k]=(G.caught[k]||0)+1});
   const names=hit.map(k=>TH[k].ko).join(' · ');
   if(hit.includes('danger'))try{toolLog(pk.h,pk,'danger',pc.type==='stophook'?'stop':'hook')}catch(_){}
@@ -2175,8 +2192,9 @@ function hookArt(p,x,y,w,h,act){
   else{ // stop sign
     const k=1+Math.sin(T*3)*.04;octPath(ix,iy,r*1.05*k);cx.fill();cx.fillStyle='#fff';cx.fillRect(ix-r*.55,iy-r*.14,r*1.1,r*.28)}
 }
+/*P148*/const tHit=(t,mod,rem)=>t.id>=2&&(t.id-2)%mod===rem; // guided: the first two tasks of a run are always clean
 function taskTraits(t){const out=[];
-  if(G.ep.tut){G.ep.tut.parts.slice(0,G.part+1).forEach((p,i,ps)=>{if(qzOld(ps,i))return;if(p.on&&TH[p.k]&&t.id%p.on[0]===p.on[1]&&!out.includes(p.k))out.push(p.k);(p.more||[]).forEach(m=>{if(t.id%m[1]===m[2]&&!out.includes(m[0]))out.push(m[0])})});if(actK('stuck')&&t.amt>500)out.push('stuck')}
+  if(G.ep.tut){G.ep.tut.parts.slice(0,G.part+1).forEach((p,i,ps)=>{if(qzOld(ps,i))return;if(p.on&&TH[p.k]&&tHit(t,p.on[0],p.on[1])&&!out.includes(p.k))out.push(p.k);(p.more||[]).forEach(m=>{if(tHit(t,m[1],m[2])&&!out.includes(m[0]))out.push(m[0])})});if(actK('stuck')&&t.amt>500)out.push('stuck')}
   else{if(t.inj)out.push('inject');if(t.danger&&G.ep.haz.includes('danger'))out.push('danger');if(t.amt>500&&G.ep.haz.includes('stuck'))out.push('stuck')}
   return out}
 function traitIcons(x,y,r,t,tr){ // show the same marks in transit as in the queue
@@ -2716,10 +2734,10 @@ function tsee(k,a){const p=partOf(k);if(p&&p.see)tcard(p.see,a)}
 function tgood(k,a){if(k==='nopref'&&tagEff('peer','usermd'))return;const p=partOf(k);if(!p||!p.good)return;if(typeof p.good==='function'){const key=a&&a.type==='stophook'?'_g1':'_g0';p[key]=p[key]||p.good(a);tlater(p[key],a)}else tlater(p.good,a)}
 function tbad(k){const p=partOf(k);{const has_=t=>G.pieces.some(q=>q.type===t||(q.type==='session'&&q.cond===t)),t=p&&p.alt&&!TH[k].by.some(b=>G.pieces.some(q=>q.type===b))&&Object.keys(p.alt).find(has_);if(t)return p.alt[t]} // a plausible wrong part explains itself
   let c=p&&p.bad;if(typeof c==='function')c=c();if(c&&!c.title)c=c[k];return c||K(TH[k].ko+' — leaked','<p>'+(TH[k].ex||'')+'</p>'+REW,BAD)}
-function tutOn(k,t,h){const ps=G.ep.tut.parts;for(let i=0;i<=G.part;i++){const p=ps[i];if(p.k===k&&p.on&&t.id%p.on[0]===p.on[1]&&(!p.who||h.tag===p.who))return true}return false}
+function tutOn(k,t,h){const ps=G.ep.tut.parts;for(let i=0;i<=G.part;i++){const p=ps[i];if(p.k===k&&p.on&&tHit(t,p.on[0],p.on[1])&&(!p.who||h.tag===p.who))return true}return false}
 function forcedKinds(t,h){t.fz=t.fz||{};const out=[];
   if(G.ep.tut){const ps=G.ep.tut.parts;for(let i=0;i<=G.part;i++){const p=ps[i];if(qzOld(ps,i)||(p.scene&&i<G.part))continue; // a later scene replaces the earlier one
-      if(p.on&&p.k!=='inject'&&!t.fz[p.k]&&t.id%p.on[0]===p.on[1]&&(!p.who||h.tag===p.who))out.push(p.k);(p.more||[]).forEach(m=>{if(!t.fz[m[0]]&&t.id%m[1]===m[2])out.push(m[0])})}
+      if(p.on&&p.k!=='inject'&&!t.fz[p.k]&&tHit(t,p.on[0],p.on[1])&&(!p.who||h.tag===p.who))out.push(p.k);(p.more||[]).forEach(m=>{if(!t.fz[m[0]]&&tHit(t,m[1],m[2]))out.push(m[0])})}
     if(G.ep.scope&&h.tag==='peer'&&h.net.eff.has('usermd')&&!t.fz.wrongscope)out.push('wrongscope')}
   else if(G.ep.rate){t.rz=t.rz||{};for(const k in G.ep.rate){if(k==='stuck')continue;if(!(k in t.rz))t.rz[k]=(!JSONLY.has(k)||t.type==='json')&&(k!=='stuck'||t.type==='refund'||t.type==='edit')&&G.rnd()<G.ep.rate[k];if(t.rz[k]&&!t.fz[k])out.push(k)}}
   if(!t.fz.stuck&&actK('stuck')&&(t.amt>500||(h.net.eff.has('escalate')&&(t.amt||0)>escThr(h))))out.push('stuck');
@@ -3064,7 +3082,7 @@ function ensureThree(ok,fail){if(window.THREE){ok();return}
   let done=false;const t=setTimeout(()=>{if(!done){done=true;fail()}},6000);
   el.addEventListener('load',()=>{if(!done){done=true;clearTimeout(t);window.THREE?ok():fail()}});el.addEventListener('error',()=>{if(!done){done=true;clearTimeout(t);fail()}})}
 function scene3d(box,opt){ // returns a stop function
-  /*P132*/const CMP=!!(opt&&opt.compact); // compact: the four robots in a row, no platform, no hover (level select)
+  /*P132*/const CMP=!!(opt&&opt.compact);const RB={x:2.6,z:1.5}; // roaming bounds, sized in fit() // compact: the four robots in a row, no platform, no hover (level select)
   const T3=window.THREE;let canvasOK=false;try{const c=document.createElement('canvas');canvasOK=!!(c.getContext('webgl')||c.getContext('experimental-webgl'))}catch(_){}
   if(!T3||!canvasOK)return null;
   const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -3072,7 +3090,7 @@ function scene3d(box,opt){ // returns a stop function
   box.appendChild(renderer.domElement);
   const scene=new T3.Scene();
   // camera: stylized 3/4 top-down, about 38° elevation and 35° azimuth, orthographic
-  const EL=(CMP?17:38)*Math.PI/180,AZ=35*Math.PI/180,D=20,cam=new T3.OrthographicCamera(-1,1,1,-1,.1,100);
+  const EL=(CMP?24:38)*Math.PI/180,AZ=35*Math.PI/180,D=20,cam=new T3.OrthographicCamera(-1,1,1,-1,.1,100);
   cam.position.set(D*Math.cos(EL)*Math.sin(AZ),D*Math.sin(EL),D*Math.cos(EL)*Math.cos(AZ));cam.lookAt(0,CMP?.62:.35,0);
   /*P142*/scene.add(new T3.HemisphereLight(0xfffdf8,0xcfd5ce,.48));scene.add(new T3.AmbientLight(0xffffff,CMP?.22:.15));
   const key=new T3.DirectionalLight(0xfffaf2,.44);key.position.set(-6,10,3);key.castShadow=true;key.shadow.mapSize.set(1024,1024);
@@ -3095,7 +3113,7 @@ function scene3d(box,opt){ // returns a stop function
   // robots: the in-game agent in 3D. A thick rounded body, a glossy visor, glowing eyes that can blink or smile, a colour stripe
   const BOTS=[['haiku','#17AE9B',.8,-2.15,1.0],['sonnet','#1C9ED8',1.04,-1.75,-1.2],['opus','#8D6BE8',1.27,.35,-1.35],['fable','#F08A24',1.5,2.05,.7]];
   if(CMP){plat.visible=top.visible=false;nodes.forEach(n=>n.g.visible=false);cubes.forEach(c=>c.visible=false);scene.children.forEach(o=>{if(o.userData.link)o.visible=false});
-    const sh=new T3.Mesh(new T3.PlaneGeometry(16,9),new T3.ShadowMaterial({opacity:.04}));sh.rotation.x=-Math.PI/2;sh.receiveShadow=true;scene.add(sh);
+    const sh=new T3.Mesh(new T3.PlaneGeometry(40,40),new T3.ShadowMaterial({opacity:.04}));sh.rotation.x=-Math.PI/2;sh.receiveShadow=true;scene.add(sh);
     [-2.5,-1.18,.37,2.16].forEach((x,i)=>{BOTS[i][3]=x*Math.cos(AZ);BOTS[i][4]=-x*Math.sin(AZ)})} // a row along the screen's horizontal
   const bodyM=mat(0xffffff,{roughness:.8,vertexColors:true}),visorM=new T3.MeshStandardMaterial({color:0x1B2528,roughness:.3,metalness:.2});
   const bots=BOTS.map(([k,hex,w,x,z],i)=>{const c=new T3.Color(hex),h=w*.9,d=w*.72,root=new T3.Group(),body=new T3.Group();root.position.set(x,0,z);root.add(body);
@@ -3125,7 +3143,7 @@ function scene3d(box,opt){ // returns a stop function
   // names under the robots, as HTML labels so they stay crisp and translatable
   const nm=document.createElement('div');nm.className='s3names';nm.setAttribute('data-noi18n','');nm.innerHTML=bots.map(b=>`<span data-k="${b.k}">${b.k[0].toUpperCase()+b.k.slice(1)}</span>`).join('');box.appendChild(nm);
   // size
-  let W=1,H=1;const fit=()=>{const r=box.getBoundingClientRect();W=Math.max(1,r.width);H=Math.max(1,r.height);renderer.setSize(W,H,false);const view=5.6,asp=W/H,hh=CMP?/*P132b*/Math.max(1.3,(6.9/asp)/2):Math.max(view/2,(9.2/asp)/2);cam.left=-hh*asp;cam.right=hh*asp;cam.top=hh;cam.bottom=-hh;cam.updateProjectionMatrix();placeNames();draw()};
+  let W=1,H=1;const fit=()=>{const r=box.getBoundingClientRect();W=Math.max(1,r.width);H=Math.max(1,r.height);renderer.setSize(W,H,false);const view=5.6,asp=W/H,hh=CMP?Math.max(1.6,(6.2/asp)/2):Math.max(view/2,(9.2/asp)/2);cam.left=-hh*asp;cam.right=hh*asp;cam.top=hh;cam.bottom=-hh;cam.updateProjectionMatrix();if(CMP){RB.x=Math.max(1.4,hh*asp-1);RB.z=Math.min(10,Math.max(1,(hh-1.4)/Math.sin(EL)))}placeNames();draw()};
   const v=new T3.Vector3();const placeNames=()=>{nm.querySelectorAll('span').forEach(sp=>{const b=B[sp.dataset.k];v.set(b.root.position.x,-.02,b.root.position.z+b.w*.36+.05).project(cam);sp.style.left=((v.x+1)/2*W)+'px';sp.style.top=((1-v.y)/2*H+4)+'px'})};
   // hover: the robot under the pointer turns to you and smiles
   const ray=new T3.Raycaster(),mp=new T3.Vector2();let hov=null;
@@ -3133,6 +3151,13 @@ function scene3d(box,opt){ // returns a stop function
   /*P128*/const onLeave=()=>{hov=null;if(still){bots.forEach(b=>{const sm=b.k==='sonnet';b.happy.visible=sm;b.eyes.visible=!sm});draw()}};
   if(!CMP){renderer.domElement.addEventListener('pointermove',onMove);renderer.domElement.addEventListener('pointerleave',onLeave)}
   
+  // compact scene: the robots wander the ground and hop as they go (level-select playground)
+  let roamT=0;
+  const toWorld=(u,v)=>[u*Math.cos(AZ)+v*Math.sin(AZ),-u*Math.sin(AZ)+v*Math.cos(AZ)]; // screen-horizontal u, depth v
+  const pickGo=b=>{for(let k=0;k<12;k++){const u=(Math.random()*2-1)*RB.x,v=(Math.random()*2-1)*RB.z,[x,z]=toWorld(u,v);if(bots.every(o=>o===b||Math.hypot((o.go?o.go[0]:o.root.position.x)-x,(o.go?o.go[1]:o.root.position.z)-z)>(o.w+b.w)*.75)){b.go=[x,z];return}}b.go=null};
+  function roam(dt){roamT+=dt;bots.forEach((b,i)=>{if(b.idleTo==null)b.idleTo=1+i*.8;if(!b.go){if(roamT>b.idleTo){pickGo(b);b.spd=.55+Math.random()*.35}return}
+      const p=b.root.position,dx=b.go[0]-p.x,dz=b.go[1]-p.z,d=Math.hypot(dx,dz),blocked=bots.some(o=>o!==b&&Math.hypot(o.root.position.x-(p.x+dx/d*.12),o.root.position.z-(p.z+dz/d*.12))<(o.w+b.w)*.52);
+      if(d<.04||blocked){b.go=null;b.idleTo=roamT+1.2+Math.random()*2.6;return}const st=Math.min(d,b.spd*dt);p.x+=dx/d*st;p.z+=dz/d*st;if(b.hop<0)b.hop=0})}
   // the scene clock
   let t=0,last=performance.now(),raf=0,alive=true,pulseState=null,nextPulse=CMP?Infinity:1.2;
   const glance=(b,x,z,dur)=>{b.look=[x,z];b.lookTo=t+dur};
@@ -3141,8 +3166,9 @@ function scene3d(box,opt){ // returns a stop function
       const tn=nodes[pulseState.to];let best=null,bd=9;bots.forEach(b=>{const dd=Math.hypot(b.root.position.x-tn.x,b.root.position.z-tn.z);if(dd<bd&&b!==hov){bd=dd;best=b}});if(best)glance(best,tn.x,tn.z,2.4)}
     if(pulseState){const p=(t-pulseState.t0)/pulseState.dur,A=nodes[pulseState.from],Z=nodes[pulseState.to];if(p>=1){Z.flash=1;pulse.visible=false;pulseState=null;nextPulse=t+2+Math.random()*2.2}else{const e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;pulse.position.set(A.x+(Z.x-A.x)*e,.1+Math.sin(p*Math.PI)*.12,A.z+(Z.z-A.z)*e)}}
     nodes.forEach((n,i)=>{n.flash=Math.max(0,n.flash-dt*1.4);n.m.emissiveIntensity=.22+.08*Math.sin(t*1.6+i)+n.flash*.9;const sc=1+n.flash*.28;n.gem.scale.setScalar(sc);n.gem.rotation.y+=dt*(.35+n.flash*2);n.gem.position.y=.36+Math.sin(t*1.3+i*1.1)*.025});
+    if(CMP)roam(dt);
     bots.forEach(b=>{ // per-robot activity
-      let aim=AIM[b.k]();
+      let aim=CMP&&b.go?b.go:AIM[b.k]();
       
       if(b.k==='opus'&&!CMP){const who=['haiku','fable','sonnet'][((Math.floor(t/4.6)%3)+3)%3];aim=[B[who].root.position.x,B[who].root.position.z]}
       if(b.look&&t<b.lookTo)aim=b.look;else b.look=null;
@@ -3160,7 +3186,7 @@ function scene3d(box,opt){ // returns a stop function
       let sy=1;if(b.blinkP>=0){const cl=b.k==='opus'?.15:.12,op=b.k==='opus'?.2:.17;b.blinkP+=dt;const p=b.blinkP;sy=p<cl?1-.92*(p/cl):p<cl+op?.08+.92*((p-cl)/op):1;if(p>=cl+op){b.blinkP=-1;if(!b.blink2&&Math.random()<.2){b.blink2=true;b.blinkAt=t+.12}else{b.blink2=false;b.blinkAt=t+3+Math.random()*4}}}
       b.eyes.scale.y=sy;b.happy.scale.y=sy});
   };
-  const draw=()=>{renderer.render(scene,cam)};
+  const draw=()=>{if(CMP)placeNames();renderer.render(scene,cam)};
   const loop=now=>{if(!alive)return;if(!box.isConnected||ov.hidden){stop();return}const dt=Math.max(0,Math.min(.05,(now-last)/1000));last=Math.max(last,now);if(!document.hidden){try{step(dt);draw()}catch(e){console.warn('title scene frame',e)}}raf=requestAnimationFrame(loop)};
   const ro=new ResizeObserver(fit);ro.observe(box);fit();
   const stop=()=>{if(!alive)return;alive=false;cancelAnimationFrame(raf);ro.disconnect();renderer.domElement.removeEventListener('pointermove',onMove);renderer.domElement.removeEventListener('pointerleave',onLeave);
@@ -3363,15 +3389,22 @@ function showTitle(mode){mode=mode==='title'?'title':'levels';
     </div></div></div>`;
   {const box=$('#lv3d');let st=null,dead=false;window.__crewStop=()=>{dead=true;if(st)st()};const no=()=>{if(!dead)box.classList.add('no3d')};
    ensureThree(()=>{if(dead||!box.isConnected)return;try{st=scene3d(box,{compact:true})}catch(e){st=null}if(!st)no()},no)}
+  /*P149*/{const dlg=document.createElement('div');dlg.className='sdlg';dlg.id='sdlg';dlg.hidden=true;dlg.setAttribute('role','dialog');dlg.setAttribute('aria-modal','true');dlg.setAttribute('data-noi18n','');
+   dlg.innerHTML=`<div class="sdbox"><button type="button" class="sdx" aria-label="Close">×</button></div>`;dlg.querySelector('.sdbox').appendChild($('#pv'));ov.querySelector('.scrw').appendChild(dlg);
+   dlg.addEventListener('click',e=>{if(e.target===dlg||e.target.closest('.sdx'))closeDlg()})}
+  const closeDlg=()=>{const d=$('#sdlg');if(!d||d.hidden)return;d.hidden=true;const t=ov.querySelector(`.tile[data-i="${lvSel}"]`);if(t)t.focus({preventScroll:true})};
+  const openDlg=i=>{sel(i);const d=$('#sdlg');d.hidden=false;const b=$('#pvGo');if(b)b.focus()};
+  ov.__closeDlg=closeDlg;
   const pv=$('#pv'),tiles=[...ov.querySelectorAll('.tile')];
   const sel=(i,scroll)=>{if(i===lvSel&&pv.innerHTML)return;lvSel=i;pv.innerHTML=pvHtml(i);pv.classList.remove('flash');void pv.offsetWidth;pv.classList.add('flash');tiles.forEach(t=>t.classList.toggle('sel',+t.dataset.i===i));$('#pvGo').addEventListener('click',()=>showBrief(i));
     if(scroll){const t=tiles.find(t=>+t.dataset.i===i);if(t)t.scrollIntoView({block:'nearest'})}};
   lvSel=-1;sel(lvSel>=0?lvSel:nx,true);
-  tiles.forEach((t,k)=>{t.style.animation=`rise .32s cubic-bezier(.2,.8,.2,1) ${Math.min(k,14)*.02}s both`;let fresh=false;t.addEventListener('focus',()=>{if(+t.dataset.i!==lvSel){sel(+t.dataset.i);fresh=true;setTimeout(()=>{fresh=false},250)}});t.addEventListener('click',()=>{const i=+t.dataset.i;if(i!==lvSel){sel(i);return}if(fresh)return;showBrief(i)});t.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();showBrief(+t.dataset.i)}})});
+  tiles.forEach((t,k)=>{t.style.animation=`rise .32s cubic-bezier(.2,.8,.2,1) ${Math.min(k,14)*.02}s both`;t.addEventListener('focus',()=>{tiles.forEach(x=>x.classList.toggle('sel',x===t))});const go=()=>{const i=+t.dataset.i,d=$('#sdlg');if(d&&!d.hidden&&i===lvSel){showBrief(i);return}openDlg(i)};t.addEventListener('click',go);t.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();go()}})});
   $('#lvBack').addEventListener('click',()=>showTitle('title'));$('#lvJump').addEventListener('click',()=>{sel(nx,false);const t=tiles.find(t=>+t.dataset.i===nx);if(t){t.scrollIntoView({block:'center',behavior:'smooth'});t.focus({preventScroll:true})}});{const rm=$('#rvmiss');if(rm)rm.addEventListener('click',()=>showReview(()=>showTitle('levels'),rvMissed().slice(0,RVN)))}
   flipFrom(r0,ov.querySelector('.lvl .heroart'));flipFrom(h0,ov.querySelector('.lvl h1.ttlh'));
   (tiles.find(t=>+t.dataset.i===nx)||tiles[0]).focus({preventScroll:true});
 }
+addEventListener('keydown',e=>{if(e.key==='Escape'){const d=document.getElementById('sdlg');if(d&&!d.hidden&&ov.__closeDlg){e.preventDefault();e.stopImmediatePropagation();ov.__closeDlg()}}},true);
 addEventListener('keydown',e=>{if(ov.hidden||!ov.querySelector('.scrw')||!setdlg.hidden||e.metaKey||e.ctrlKey||e.altKey)return;
   if(scrMode==='title'){if(e.key==='l'||e.key==='L'||e.key==='Enter'){e.preventDefault();showTitle('levels')}return}
   if(e.key==='Escape'){e.preventDefault();showTitle('title');return}
