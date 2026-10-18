@@ -791,6 +791,41 @@ body{background-color:var(--bg);background-image:linear-gradient(rgba(34,39,43,.
 @media (max-width:900px){#app{grid-template-columns:minmax(0,1fr)!important}#app>#fpanel{grid-column:1;grid-row:5;max-height:220px}}
 /*P137 text x0.9*//*P138*/.exm,.hardtag{font-size:9px!important}
 #hud .m .ml{font-size:9px!important}#obj .goal span{font-size:clamp(9.5px,0.63vw,9.9px)!important}
+/*P140*/
+#obj #coach,#obj.tut #coach{height:auto!important;max-height:9.5em;overflow:auto}
+@media (max-height:760px){#obj #coach,#obj.tut #coach{height:auto!important;max-height:7em}}
+#coach .hintb#tHint{position:sticky;bottom:0;display:inline-flex;align-items:center;gap:6px;margin-top:6px;padding:4px 11px;border-radius:8px;border:1px solid #E9A33B;background:#FFF6E6;color:#8A5410;font-weight:700;cursor:pointer;box-shadow:0 1px 0 rgba(233,163,59,.25)}
+#coach .hintb#tHint::before{content:'?';display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;background:#E9A33B;color:#fff;font-size:10px;font-weight:800}
+#coach .hintb#tHint:hover{background:#FFEFD2}
+
+/* ---------- v99 soft shadow scale ---------- */
+:root{--sh1:0 1px 3px rgba(28,38,48,.05);--sh2:0 3px 12px rgba(28,38,48,.055);--sh3:0 6px 20px rgba(28,38,48,.09)}
+#hud{box-shadow:var(--sh2)!important}
+#fpanel{box-shadow:var(--sh1)!important}
+#xcard{box-shadow:var(--sh3)!important}
+.setbox,.panel{box-shadow:var(--sh3)!important}
+#stageWrap #insp{box-shadow:var(--sh3)!important}
+#tip{box-shadow:var(--sh2)!important}
+/* mission board: lighter slate, softer cards */
+.lmode .lvr{background:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px) 0 0/28px 28px,linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/28px 28px,#65717D!important;border-color:rgba(255,255,255,.12)!important;box-shadow:var(--sh2)!important}
+.lmode .lvrh b,.lmode .chh .cht{color:#F9FAFB!important}.lmode .lvrh span,.lmode .chh .chp,.lmode .chh .chs2{color:#D1D8DF!important}
+.lmode .chh{border-bottom-color:rgba(255,255,255,.16)!important}
+.lmode .tile.stg{background:#F6F7F8!important;border:1px solid #E4E8EC!important;box-shadow:0 3px 10px rgba(25,35,45,.06)!important}
+.lmode .tile.stg:hover{background:#FAFBFC!important;box-shadow:0 5px 14px rgba(25,35,45,.10)!important}
+.lmode .tile.stg.next{background:#F6F7F8!important;border:2px solid #43C7B4!important;box-shadow:0 0 0 3px rgba(67,199,180,.12),0 3px 10px rgba(25,35,45,.06)!important}
+.lmode .tile.stg.sel:not(.next){border-color:#43C7B4!important;box-shadow:0 0 0 2px rgba(67,199,180,.18),0 3px 10px rgba(25,35,45,.06)!important}
+.lmode .lvjump{background:rgba(255,255,255,.1)!important;border-color:rgba(255,255,255,.22)!important}
+.lmode .pv{background:#fff!important;border:1px solid #E7EAED!important;box-shadow:0 4px 16px rgba(25,35,45,.045)!important}
+/* CLAUDE.md panel header and softer selected options */
+#insp h3.mdh{display:flex;align-items:center;gap:9px;justify-content:flex-start}
+#insp h3.mdh .mdi{width:30px;height:30px;flex:none;border-radius:9px;background:#EEF1F4 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='4' y='3' width='11' height='15' rx='2' fill='%23fff' stroke='%237E8A96' stroke-width='1.4'/%3E%3Cpath d='M7 7.5h5M7 10.5h5M7 13.5h3' stroke='%239AA6B2' stroke-width='1.4' stroke-linecap='round'/%3E%3Cpath d='M15 8h3M15 13h3' stroke='%2343A99A' stroke-width='1.4'/%3E%3Ccircle cx='19.5' cy='8' r='1.7' fill='%2343C7B4'/%3E%3Ccircle cx='19.5' cy='13' r='1.7' fill='%2343C7B4'/%3E%3C/svg%3E") center/22px no-repeat;border:1px solid #D3DAE1}
+#insp h3.mdh .mdt{display:flex;flex-direction:column;gap:1px;min-width:0;margin-right:auto}
+#insp h3.mdh .mdt b{font:700 13.5px "JetBrains Mono",var(--mono);color:#23303C}
+#insp h3.mdh .mdt small{font:500 10.4px var(--body);color:#6B7581}
+#insp .opb[aria-pressed="true"]{background:#EAF7F4!important;border-color:#43C7B4!important;color:#1E2B33!important;box-shadow:inset 0 0 0 1px #43C7B4!important}
+#insp .opb[aria-pressed="true"] .ok{background:#43C7B4!important;border-color:#43C7B4!important;color:#fff!important}
+#insp .opb[aria-pressed="true"]::after{content:'✓';margin-left:auto;padding-left:6px;color:#1F8F7E;font-weight:800;flex:none}
+#insp .opb{min-height:34px}
 </style>
 
 <div id="app">
@@ -1282,12 +1317,12 @@ architecture  → Opus</pre><p>A model router is a few lines of code in the coor
   story:`In the same project, <b>you</b> and a <b>teammate</b> each use Claude. Where you put a setting decides who it applies to. Watch the Project files tab below as well.`,
   lesson:`<b>CLAUDE.md at the project root</b> — committed to git, so it applies to <b>the whole team</b>. Team rules go here.<br><b>~/.claude/CLAUDE.md</b> — lives only on your machine and applies <b>only to you</b>, but across all your projects. Personal preferences and local environment go here.<br>On the board: click the CLAUDE.md block and choose where each line is written.`,
   tut:{parts:[
-   {k:'norule',on:[1,0],box:()=>({x:1,y:3,w:2,h:2}),label:'Click CLAUDE.md',noHand:true,test:(put,C)=>{C.G.set.cm_rules='project';C.changed()},fixed:()=>G.set.cm_rules==='project'&&effAll('claudemd'),
+   {k:'norule',on:[1,0],box:()=>({x:1,y:3,w:3,h:2}),label:'Click CLAUDE.md',noHand:true,test:(put,C)=>{C.G.set.cm_rules='project';C.changed()},fixed:()=>G.set.cm_rules==='project'&&effAll('claudemd'),
     intro:K(`Nobody knows the team rule`,`<p>This team has a rule: <b>"side effects only in the services/ folder"</b>.</p><p>The upper Sonnet is <b>your</b> session, the lower one is your <b>teammate's</b>. Neither has ever been told this rule.</p><p class="why">Press Run ▶ and see the result.</p>`,INTRO),
     ask:`<b>Write the team rule into CLAUDE.md</b><br><b>Both</b> sessions need it. Click the <b>CLAUDE.md</b> block above COORD and choose where the team rule is written.`,
     bad:()=>G.set.cm_rules==='user'?K(`Only your session followed it`,`<pre>you:      services/track.ts       ✓\nteammate: components/Button.tsx  ✕</pre><p>You wrote the rule in <code>~/.claude/CLAUDE.md</code>. That file lives only on your machine, so your teammate's session never read it.</p>`+REW,BAD):K(`Code that breaks the team rule went out`,`<pre>// components/Button.tsx\nawait fetch("/api/track")   ← side effect inside a component</pre><p>Every session that never read the rule broke it the same way.</p>`+REW,BAD),
     good:K(`It applied to the whole team`,`<pre>my-project/\n└─ CLAUDE.md      ← committed to git</pre><p>The CLAUDE.md at the project root travels with the repository. <b>Everyone's session</b> that uses this repo reads it automatically at startup.</p><p class="why">Because it is in the project CLAUDE.md, it reached <b>both</b> you and your teammate.</p>`,GOOD)},
-   {k:'nopref',also:['wrongscope'],on:[1,0],who:'me',box:()=>({x:1,y:3,w:2,h:2}),label:'Click CLAUDE.md',noHand:true,test:(put,C)=>{C.G.set.cm_pers='user';C.changed()},fixed:()=>G.set.cm_pers==='user'&&tagEff('me','usermd')&&!tagEff('peer','usermd'),
+   {k:'nopref',also:['wrongscope'],on:[1,0],who:'me',box:()=>({x:1,y:3,w:3,h:2}),label:'Click CLAUDE.md',noHand:true,test:(put,C)=>{C.G.set.cm_pers='user';C.changed()},fixed:()=>G.set.cm_pers==='user'&&tagEff('me','usermd')&&!tagEff('peer','usermd'),
     intro:K(`This setting is just for you`,`<p>You run your local DB on <b>port 5433</b> and want answers in <b>a concise style</b>. Your teammate uses the default port (5432) and prefers detailed answers.</p><p>Where should this setting go?</p><p class="why">First press Run ▶ and see what happens to your session without the setting.</p>`,INTRO),
     ask:`<b>Write your personal settings</b><br>They should change <b>only your</b> session. Click <b>CLAUDE.md</b> again and choose where your DB port and answer style go.`,
     bad:{nopref:K(`It doesn't know your local environment`,`<pre>Error: connect ECONNREFUSED 127.0.0.1:5432</pre><p>Your session tried the default port and failed. Your DB is on 5433.</p>`+REW,BAD),
@@ -1534,7 +1569,7 @@ const zoneOf=x=>x<=0?'queue':x>=COLS-1?'deploy':'board';
 const ALLOW={agent:['board'],wire:['board'],link:['board'],backend:['board']};
 let G=null,epIdx=-1,uid=0;
 const cv=$('#cv'),cx=cv.getContext('2d');
-{const ft=cx.fillText.bind(cx),mt=cx.measureText.bind(cx);cx.fillText=(t,x,y,m)=>m===undefined?ft(tr(t,'c'),x,y):ft(tr(t,'c'),x,y,m);cx.measureText=t=>mt(tr(t,'c'));/*P137b*/const fd=Object.getOwnPropertyDescriptor(CanvasRenderingContext2D.prototype,'font');Object.defineProperty(cx,'font',{configurable:true,get(){return fd.get.call(cx)},set(v){fd.set.call(cx,String(v).replace(/(\d*\.?\d+)px/,(m,n)=>(+n*0.9).toFixed(2)+'px'))}})}
+{const ft=cx.fillText.bind(cx),mt=cx.measureText.bind(cx);cx.fillText=(t,x,y,m)=>m===undefined?ft(tr(t,'c'),x,y):ft(tr(t,'c'),x,y,m);cx.measureText=t=>mt(tr(t,'c'));{const sd=Object.getOwnPropertyDescriptor(CanvasRenderingContext2D.prototype,'shadowColor');Object.defineProperty(cx,'shadowColor',{configurable:true,get(){return sd.get.call(cx)},set(v){sd.set.call(cx,String(v).replace(/rgba\(([^)]*),\s*([\d.]+)\)/,(m,a,b)=>`rgba(${a},${(+b*.6).toFixed(3)})`))}})}/*P137b*/const fd=Object.getOwnPropertyDescriptor(CanvasRenderingContext2D.prototype,'font');Object.defineProperty(cx,'font',{configurable:true,get(){return fd.get.call(cx)},set(v){fd.set.call(cx,String(v).replace(/(\d*\.?\d+)px/,(m,n)=>(+n*0.9).toFixed(2)+'px'))}})}
 let W=0,H=0,DPR=1,CS=30,BX=0,BY=0,T=0;
 /*P131*/{const app=document.getElementById('app'),obj=document.getElementById('obj'),sw=document.getElementById('stageWrap');app.insertBefore(obj,sw);
   document.getElementById('dpParts').appendChild(document.getElementById('tray'));document.getElementById('dpFiles').appendChild(document.getElementById('tree'));sw.appendChild(document.getElementById('insp'));
@@ -1556,7 +1591,7 @@ function newGame(ep){
   G={ep,pieces:[],running:false,done:false,t:0,speed:SPEED,queue:[],pkts:[],parts:[],fxs:[],wave:[],wi:0,tok:0,pen:0,shipped:0,leaks:{},leakN:0,dead:0,caught:{},resolved:0,
      tutPhase:1,p2runs:0,part:0,rew:{},set:{},miss:0,pmiss:0,hintU:false,hintOn:null,acted:null,pred:null,predN:0,predOK:0,freeH:0,slow:false,slowSeen:{},introT:0,runAfter:false,cardQ:[],tsteps:[],seen:new Set(),card:null,orch:null,sel:null,drag:null,armed:null,hover:null,rot:false,net:null,rnd:Math.random,pool:{},dispT:0,runs:0,last:null,tutStep:0,nudge:{},logT:0};
   const fx=(type,x,y,w,h,name)=>{const p={id:++uid,type,x,y,w,h,fixed:true,name};G.pieces.push(p);return p};
-  G.qp=fx('queue',0,0,1,ROWS,'QUEUE');G.orch=fx('orch',1,4+GY,2,4,'COORDINATOR');G.dp=fx('deploy',COLS-1,4+GY,1,4,'DEPLOY');G.memo=fx('memo',1,GY,2,2,'CLAUDE.md');
+  G.qp=fx('queue',0,0,1,ROWS,'QUEUE');G.orch=fx('orch',1,4+GY,2,4,'COORDINATOR');G.dp=fx('deploy',COLS-1,4+GY,1,4,'DEPLOY');G.memo=fx('memo',1,GY,3,2,'CLAUDE.md');
   G.set.cm_rules=(ep.cmd&&ep.cmd.rules)||'none';if(ep.cmd&&ep.cmd.pers)G.set.cm_pers=ep.cmd.pers;
   G.orch.ctx=22000;RTC={};
   (ep.preset||[]).forEach(a=>{if(!ep.native&&!(a[3]&&a[3].nat))a=a[0]==='W'?['W',gx(a[1]),gy(a[2]),gx(a[3]),gy(a[4])]:[a[0],gx(a[1]),gy(a[2]),a[3]];if(a[0]==='W'){for(let x=Math.min(a[1],a[3]);x<=Math.max(a[1],a[3]);x++)for(let y=Math.min(a[2],a[4]);y<=Math.max(a[2],a[4]);y++)if(!G.pieces.some(q=>q.type==='wire'&&q.x===x&&q.y===y))G.pieces.push({id:++uid,type:'wire',x,y,w:1,h:1,rot:false,state:'idle'})}
@@ -1679,7 +1714,7 @@ function billAt(p,ctx,out,pr,cached,mul){
   let cost;if(cached){const read=Math.min(p.cached||0,ctx),write=ctx-read;cost=(write*pr.pin*CACHE_WRITE+read*pr.cr+out*pr.pout)/1e6;p.cached=ctx+out}else{cost=(ctx*pr.pin+out*pr.pout)/1e6;p.cached=0}
   cost*=(mul||1)*(G.ep.tokMul||1);G.tok+=cost;p.spent=(p.spent||0)+cost;const c=center(p);coins(c[0],c[1],cost);return cost;
 }
-function startRun(){G.acc=0;if(buildCost()>G.ep.budget){log(`Build cost alone ($${buildCost().toFixed(1)}) exceeds the budget of $${G.ep.budget} — drag unneeded parts off the board for a refund`,'bad');sfx('bad');if(!G.ep.tut&&!(hintN[epIdx]>0))nextHint();return}if(!G.net.usable.length){log('The circuit is still broken — connect QUEUE through an agent to DEPLOY','bad');return}
+function startRun(){/*P139*/if(G.card&&!G.running){const ok=$('#xok'),rw=!!G.rewind;if(!ok){G.runAfter=true;return}ok.click();if(G.card||rw)return}G.acc=0;if(buildCost()>G.ep.budget){log(`Build cost alone ($${buildCost().toFixed(1)}) exceeds the budget of $${G.ep.budget} — drag unneeded parts off the board for a refund`,'bad');sfx('bad');if(!G.ep.tut&&!(hintN[epIdx]>0))nextHint();return}if(!G.net.usable.length){log('The circuit is still broken — connect QUEUE through an agent to DEPLOY','bad');return}
   if(G.ep.tut&&!G.running){const pp=G.ep.tut.parts[G.part];if(G.introT){clearTimeout(G.introT);G.introT=0;if(pp.intro&&!G.card){showCard(pp.intro,G.dp);return}}
     if(false&&pp.intro0){G.seen.add(pp.intro0);G.runAfter=true;showCard(pp.intro0,G.dp);return}} // the first prediction is asked the moment Run is pressed
   closeFdiff();resetWave();G.running=true;G.ff=false;G.manual=false;G.slowT=0;G.runs++;G.slow=!!G.ep.tut&&!G.slowSeen[G.part];if(G.slow)G.slowSeen[G.part]=1; // each part's first run plays at 1x until its first card
@@ -2284,12 +2319,24 @@ function simRate(dt){if(G.manual)return SPEED*.8; // the player picked a speed d
   return (G.slow&&G.caseOn?1:SPEED)*.8*(G.ff?4:quietRun()?2.5:1)}
 const CMW={none:'not written',user:'only in my ~/.claude',project:'project · whole team'};
 function drawMemo(p){const x=BX+p.x*CS+3,y=BY+p.y*CS+3,w=p.w*CS-6,h=p.h*CS-6,hov=G.hover===p||G.sel===p,Rr=G.set.cm_rules,Pp=G.set.cm_pers;if(p.pulse>0)p.pulse=Math.max(0,p.pulse-.03);
-  cx.save();(G.net.usable||[]).forEach(a=>{if(!isAgent(a)||!(a.net.eff.has('claudemd')||a.net.eff.has('usermd')))return;const c=center(a);cx.strokeStyle='rgba(183,130,42,.35)';cx.lineWidth=1.5;cx.setLineDash([3,4]);cx.beginPath();cx.moveTo(x+w/2,y+h);cx.lineTo(c[0],c[1]-a.h*CS/2);cx.stroke()});cx.setLineDash([]);
-  cx.shadowColor='rgba(47,42,61,.28)';cx.shadowBlur=hov?14:7;cx.shadowOffsetY=2;cx.fillStyle='#FFFCF2';rr(x,y,w,h,6);cx.fill();cx.shadowColor='transparent';
-  cx.strokeStyle=p.pulse>0?'#2E8B62':hov?'#B7822A':'#D8C597';cx.lineWidth=hov||p.pulse>0?2.2:1.3;rr(x,y,w,h,6);cx.stroke();cx.fillStyle='#EFE1BC';cx.beginPath();cx.moveTo(x+w-11,y);cx.lineTo(x+w,y+11);cx.lineTo(x+w-11,y+11);cx.closePath();cx.fill();
-  const fs=Math.max(8,CS*.24);cx.textAlign='left';cx.fillStyle='#2F2A3D';cx.font=`700 ${fs*1.15}px "JetBrains Mono",monospace`;cx.fillText('CLAUDE.md',x+6,y+fs*1.5);
-  cx.font=`600 ${fs*.85}px Manrope,"Pretendard Variable","Noto Sans KR","Noto Sans JP",system-ui,sans-serif`;const row=(lab,v,yy)=>{cx.fillStyle='#6B6478';cx.fillText(lab,x+6,yy);cx.fillStyle=v==='project'?'#1F6B4A':v==='user'?'#8C6218':'#9A93AA';cx.fillText(CMW[v],x+6,yy+fs*1.05)};
-  row(Lk("Team rules","팀 규칙","チームのルール"),Rr,y+fs*3.1);if(Pp)row(Lk("My settings","내 설정","自分の設定"),Pp,y+fs*5.4);cx.restore()}
+  cx.save();(G.net.usable||[]).forEach(a=>{if(!isAgent(a)||!(a.net.eff.has('claudemd')||a.net.eff.has('usermd')))return;const c=center(a);cx.strokeStyle='rgba(67,150,140,.4)';cx.lineWidth=1.5;cx.setLineDash([3,4]);cx.beginPath();cx.moveTo(x+w/2,y+h);cx.lineTo(c[0],c[1]-a.h*CS/2);cx.stroke()});cx.setLineDash([]);
+  // the module body: soft off-white slate with a thin metal rim, a header band and a status LED
+  cx.shadowColor='rgba(28,38,48,.16)';cx.shadowBlur=hov?12:7;cx.shadowOffsetY=2;const g=cx.createLinearGradient(0,y,0,y+h);g.addColorStop(0,'#FBFCFD');g.addColorStop(1,'#EEF1F4');cx.fillStyle=g;rr(x,y,w,h,9);cx.fill();cx.shadowColor='transparent';
+  cx.strokeStyle=p.pulse>0?'#2E8B62':hov?'#43C7B4':'#C3CCD5';cx.lineWidth=hov||p.pulse>0?2:1.2;rr(x+.5,y+.5,w-1,h-1,8.5);cx.stroke();
+  const hb=Math.max(12,h*.24);cx.fillStyle='#E3E8ED';cx.save();rr(x+1,y+1,w-2,h-2,8);cx.clip();cx.fillRect(x,y,w,hb);cx.restore();cx.strokeStyle='#D3DAE1';cx.lineWidth=1;cx.beginPath();cx.moveTo(x+1,y+hb+.5);cx.lineTo(x+w-1,y+hb+.5);cx.stroke();
+  // icon: a document with rule lines and two config nodes
+  const u=hb/12,ix=x+5,iy=y+(hb-9*u)/2;cx.fillStyle='#fff';cx.strokeStyle='#7E8A96';cx.lineWidth=1;rr(ix,iy,7*u,9*u,1.5);cx.fill();cx.stroke();cx.fillStyle='#9AA6B2';for(let k=0;k<3;k++)cx.fillRect(ix+1.6*u,iy+(2.2+k*1.9)*u,3.8*u,.8*u);
+  cx.strokeStyle='#43A99A';cx.lineWidth=1.1;cx.beginPath();cx.moveTo(ix+7*u,iy+3*u);cx.lineTo(ix+9.6*u,iy+3*u);cx.moveTo(ix+7*u,iy+6.4*u);cx.lineTo(ix+9.6*u,iy+6.4*u);cx.stroke();cx.fillStyle='#43C7B4';[3,6.4].forEach(yy=>{cx.beginPath();cx.arc(ix+10.4*u,iy+yy*u,1.1*u,0,7);cx.fill()});
+  // gear: this module has settings
+  {const gx=x+w-hb/2-2,gy=y+hb/2,r=hb*.28;cx.fillStyle=hov?'#2C8C7F':'#7E8A96';for(let k=0;k<8;k++){const a=k*Math.PI/4;cx.save();cx.translate(gx,gy);cx.rotate(a);cx.fillRect(-r*.22,-r*1.32,r*.44,r*.5);cx.restore()}cx.beginPath();cx.arc(gx,gy,r,0,7);cx.fill();cx.fillStyle='#E3E8ED';cx.beginPath();cx.arc(gx,gy,r*.42,0,7);cx.fill()}
+  // name and role
+  const fs=Math.max(8,CS*.25),cxm=x+w/2;cx.textAlign='center';cx.fillStyle='#23303C';cx.font=`700 ${Math.min(fs*1.12,w/7.2)}px "JetBrains Mono",monospace`;cx.fillText('CLAUDE.md',cxm,y+hb+fs*1.45);
+  cx.font=`700 ${fs*.66}px Manrope,"Pretendard Variable","Noto Sans KR","Noto Sans JP",system-ui,sans-serif`;cx.fillStyle='#7E8A96';cx.fillText(Lk('PROJECT RULES','프로젝트 지침','プロジェクト指針'),cxm,y+hb+fs*2.45);
+  // status LED: what the team-rules setting really is
+  const st=Rr==='project'?['#2FB57C',Lk('Team · loaded','팀 전체 적용','チーム全体に適用')]:Rr==='user'?['#E39A2B',Lk('My machine only','내 PC만','自分の PC だけ')]:['#A9B2BB',Lk('Not written','안 적음','未記入')];
+  const ly=y+h-fs*.95;cx.font=`600 ${fs*.66}px Manrope,"Pretendard Variable","Noto Sans KR","Noto Sans JP",system-ui,sans-serif`;const tw=cx.measureText(st[1]).width,lx=cxm-(tw+fs*.9)/2;
+  cx.fillStyle=st[0];cx.shadowColor=Rr==='none'||!Rr?'transparent':st[0];cx.shadowBlur=5;cx.beginPath();cx.arc(lx+fs*.28,ly-fs*.22,fs*.24,0,7);cx.fill();cx.shadowColor='transparent';cx.textAlign='left';cx.fillStyle='#4E5A66';cx.fillText(st[1],lx+fs*.75,ly);
+  cx.restore()}
 function drawLoose(){if(G.running||G.drag||!G.net)return; // a gray wire with a free end: show where the route stops
   G.pieces.forEach(q=>{if(q.type!=='wire'||G.net.active.has(q))return;const nb=G.net.adj.get(q)||[];if(nb.length>1)return;
     const [x,y]=center(q),r=4+Math.sin(T*6+q.id)*1.5;cx.save();cx.fillStyle='rgba(194,65,63,.85)';cx.beginPath();cx.arc(x,y,r,0,7);cx.fill();cx.strokeStyle='rgba(194,65,63,.35)';cx.lineWidth=2;cx.beginPath();cx.arc(x,y,r+5,0,7);cx.stroke();cx.restore()})}
@@ -2697,7 +2744,7 @@ function renderInsp(){
   if(el._for!==p){el._for=p;el.style.animation='none';void el.offsetWidth;el.style.animation=''}
   el.hidden=false;const t=p.fixed?null:PT[p.type];let h;
   if(p.type==='memo'){const showP=G.set.cm_pers!=null&&(!G.ep.tut||G.ep.tut.parts.slice(0,G.part+1).some(q=>q.k==='nopref'));
-    h=`<h3>CLAUDE.md<button class="x" data-a="close">×</button></h3><div class="olab cur">Team rules <span>(e.g. "side effects only in services/")</span></div>${optPick([["none", "Not written anywhere \u2014 people just know it"], ["user", "In my ~/.claude/CLAUDE.md \u2014 only on my machine"], ["project", "In the project CLAUDE.md \u2014 committed, read by everyone's session"]],G.set.cm_rules,'cm_rules')}${showP?`<div class="olab cur">My settings <span>(DB port 5433, short answers)</span></div>${optPick([["none", "Not written anywhere"], ["project", "In the project CLAUDE.md \u2014 committed, read by everyone's session"], ["user", "In my ~/.claude/CLAUDE.md \u2014 only on my machine"]],G.set.cm_pers,'cm_pers')}`:''}<div class="dom" style="margin-top:9px;padding-top:7px;border-top:1px dashed var(--line)">${PT.memo.desc}</div>`}
+    h=`<h3 class="mdh"><span class="mdi" aria-hidden="true"></span><span class="mdt"><b data-noi18n>CLAUDE.md</b><small data-noi18n>${Lk('Project instructions · read by every session','프로젝트 지침 · 모든 세션이 읽어요','プロジェクト指針 · すべてのセッションが読みます')}</small></span><button class="x" data-a="close">×</button></h3><div class="olab cur">Team rules <span>(e.g. "side effects only in services/")</span></div>${optPick([["none", "Not written anywhere \u2014 people just know it"], ["user", "In my ~/.claude/CLAUDE.md \u2014 only on my machine"], ["project", "In the project CLAUDE.md \u2014 committed, read by everyone's session"]],G.set.cm_rules,'cm_rules')}${showP?`<div class="olab cur">My settings <span>(DB port 5433, short answers)</span></div>${optPick([["none", "Not written anywhere"], ["project", "In the project CLAUDE.md \u2014 committed, read by everyone's session"], ["user", "In my ~/.claude/CLAUDE.md \u2014 only on my machine"]],G.set.cm_pers,'cm_pers')}`:''}<div class="dom" style="margin-top:9px;padding-top:7px;border-top:1px dashed var(--line)">${PT.memo.desc}</div>`}
   else if(p.fixed){h=`<h3>${p.type==='orch'?'Coordinator':p.name}<button class="x" data-a="close">×</button></h3><div class="dom">${p.type==='orch'?'The main session (assumed Sonnet 5.5). It delegates tasks to agents and resends its entire context every time it delegates. The team keeps it under a 200k context budget, well below the 1M window: a long context costs more on every call and gets less precise.':p.type==='queue'?'Tasks stack from the top and leave through the exit (▶) in the middle; the bottom one is next. A devil marks a task with hidden injection, a bomb one that will issue a dangerous command, and a red badge any other task that will cause trouble.':'The backend shipping dock. Any threat that gets this far becomes an incident.'}</div>${p.type==='orch'?`${routeOk()?`<div class="olab cur">How COORD assigns tasks</div>${optPick([["free", "Whichever agent is free"], ["diff", "By difficulty: the cheapest model that can handle it"]],G.set.route||'free','route')}`:''}<dl><dt>Context budget</dt><dd>${fmtK(p.ctx)} / 200k</dd><dt>Cost so far</dt><dd>${usd(p.spent||0)}</dd></dl>`:''}`}
   else if(t.cat==='agent'){const m=M[t.model],eff=p.net?[...p.net.eff]:[];
     h=`<h3>${m.full}<button class="x" data-a="close">×</button></h3><div class="dom">${t.desc}</div>
@@ -2853,22 +2900,22 @@ function scene3d(box,opt){ // returns a stop function
   const T3=window.THREE;let canvasOK=false;try{const c=document.createElement('canvas');canvasOK=!!(c.getContext('webgl')||c.getContext('experimental-webgl'))}catch(_){}
   if(!T3||!canvasOK)return null;
   const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const renderer=new T3.WebGLRenderer({antialias:true,alpha:true});renderer.setPixelRatio(Math.min(2,window.devicePixelRatio||1));renderer.shadowMap.enabled=true;renderer.shadowMap.type=T3.PCFSoftShadowMap;renderer.setClearColor(0x000000,0);
+  const renderer=new T3.WebGLRenderer({antialias:true,alpha:true});renderer.setPixelRatio(Math.min(2,window.devicePixelRatio||1));renderer.shadowMap.enabled=true;renderer.shadowMap.type=T3.PCFShadowMap;/*P141*/renderer.setClearColor(0x000000,0);
   box.appendChild(renderer.domElement);
   const scene=new T3.Scene();
   // camera: stylized 3/4 top-down, about 38° elevation and 35° azimuth, orthographic
   const EL=(CMP?17:38)*Math.PI/180,AZ=35*Math.PI/180,D=20,cam=new T3.OrthographicCamera(-1,1,1,-1,.1,100);
   cam.position.set(D*Math.cos(EL)*Math.sin(AZ),D*Math.sin(EL),D*Math.cos(EL)*Math.cos(AZ));cam.lookAt(0,CMP?.62:.35,0);
-  scene.add(new T3.HemisphereLight(0xffffff,0xc4bdb0,.58));
-  const key=new T3.DirectionalLight(0xffffff,.95);key.position.set(-6,10,3);key.castShadow=true;key.shadow.mapSize.set(1024,1024);
-  Object.assign(key.shadow.camera,{left:-5,right:5,top:5,bottom:-5,near:1,far:30});key.shadow.radius=4;key.shadow.bias=-.0008;scene.add(key);
-  const fill=new T3.DirectionalLight(0xe8f8f3,.22);fill.position.set(6,4,-3);scene.add(fill);
+  scene.add(new T3.HemisphereLight(0xffffff,0xd8d2c6,.68));scene.add(new T3.AmbientLight(0xffffff,.08));
+  const key=new T3.DirectionalLight(0xfffaf2,.72);key.position.set(-6,10,3);key.castShadow=true;key.shadow.mapSize.set(1024,1024);
+  Object.assign(key.shadow.camera,{left:-5,right:5,top:5,bottom:-5,near:1,far:30});key.shadow.radius=9;key.shadow.bias=-.0008;scene.add(key);
+  const fill=new T3.DirectionalLight(0xe8f8f3,.2);fill.position.set(6,4,-3);scene.add(fill);
   const mat=(c,o)=>new T3.MeshStandardMaterial(Object.assign({color:c,roughness:.85,metalness:0},o||{}));
   const rshape=(w,h,r)=>{const sh=new T3.Shape(),x=-w/2,y=-h/2;sh.moveTo(x+r,y);sh.lineTo(x+w-r,y);sh.quadraticCurveTo(x+w,y,x+w,y+r);sh.lineTo(x+w,y+h-r);sh.quadraticCurveTo(x+w,y+h,x+w-r,y+h);sh.lineTo(x+r,y+h);sh.quadraticCurveTo(x,y+h,x,y+h-r);sh.lineTo(x,y+r);sh.quadraticCurveTo(x,y,x+r,y);return sh};
   const rbox=(w,h,d,r,b)=>{const g=new T3.ExtrudeGeometry(rshape(w-2*b,h-2*b,Math.max(.001,r-b)),{depth:Math.max(.001,d-2*b),bevelEnabled:true,bevelThickness:b,bevelSize:b,bevelSegments:3,curveSegments:8});g.center();return g};
   // platform: a rounded cream slab with a lighter inset top
-  const plat=new T3.Mesh(rbox(6.8,4.6,.36,.55,.08),mat(0xEFEAE0,{roughness:.95}));plat.rotation.x=-Math.PI/2;plat.position.y=-.18;plat.receiveShadow=true;scene.add(plat);
-  const top=new T3.Mesh(new T3.ShapeGeometry(rshape(6.3,4.1,.42),10),mat(0xFAF8F3,{roughness:1}));top.rotation.x=-Math.PI/2;top.position.y=.005;top.receiveShadow=true;scene.add(top);
+  const plat=new T3.Mesh(rbox(6.8,4.6,.36,.55,.08),mat(0xEAE7E0,{roughness:.95}));plat.rotation.x=-Math.PI/2;plat.position.y=-.18;plat.receiveShadow=true;scene.add(plat);
+  const top=new T3.Mesh(new T3.ShapeGeometry(rshape(6.3,4.1,.42),10),mat(0xF4F3EF,{roughness:1}));top.rotation.x=-Math.PI/2;top.position.y=.005;top.receiveShadow=true;scene.add(top);
   // data nodes, links and the light pulses that travel between them
   const NODES=[[-.25,.35],[1.2,-.45],[-.95,-.25],[.6,1.25]],nodes=NODES.map(([x,z])=>{const g=new T3.Group();g.position.set(x,0,z);
       const ped=new T3.Mesh(new T3.CylinderGeometry(.2,.24,.12,6),mat(0xE6E1D6,{flatShading:true}));ped.position.y=.06;ped.castShadow=true;ped.receiveShadow=true;g.add(ped);
@@ -2882,7 +2929,7 @@ function scene3d(box,opt){ // returns a stop function
   if(CMP){plat.visible=top.visible=false;nodes.forEach(n=>n.g.visible=false);cubes.forEach(c=>c.visible=false);scene.children.forEach(o=>{if(o.userData.link)o.visible=false});
     const sh=new T3.Mesh(new T3.PlaneGeometry(16,9),new T3.ShadowMaterial({opacity:.06}));sh.rotation.x=-Math.PI/2;sh.receiveShadow=true;scene.add(sh);
     [-2.5,-1.18,.37,2.16].forEach((x,i)=>{BOTS[i][3]=x*Math.cos(AZ);BOTS[i][4]=-x*Math.sin(AZ)})} // a row along the screen's horizontal
-  const bodyM=mat(0xF7F8FA,{roughness:.6}),visorM=new T3.MeshStandardMaterial({color:0x0E1216,roughness:.22,metalness:.35});
+  const bodyM=mat(0xF7F7F4,{roughness:.74}),visorM=new T3.MeshStandardMaterial({color:0x0E1216,roughness:.22,metalness:.35});
   const bots=BOTS.map(([k,hex,w,x,z],i)=>{const c=new T3.Color(hex),h=w*.9,d=w*.72,root=new T3.Group(),body=new T3.Group();root.position.set(x,0,z);root.add(body);
     const shell=new T3.Mesh(rbox(w,h,d,w*.2,w*.07),bodyM);shell.position.y=h/2+.02;shell.castShadow=true;shell.receiveShadow=true;body.add(shell);
     const fy=h/2+.02+h*.2,fz=d/2+.005;
@@ -3242,7 +3289,7 @@ function diagnose(why){ // plain-language reading of the failed run: what leaked
   return D}
 function hudFit(ep){const has=(...k)=>k.some(x=>(ep.unlock||[]).includes(x)||(ep.haz||[]).includes(x)),show=(id,on)=>{const m=$(id).closest('.m');if(m)m.hidden=!on};
   show('#mHum',has('escalate','stuck','handoff'));show('#mTime',!!(ep.tut&&ep.tut.parts.some(p=>p.k==='overesc'))||!!ep.parT||(ep.sla||90)<90||!!(ep.tut&&ep.tut.parts.some(p=>p.k==='dead')));show('#mCtx',has('summary','ctxedit','compact','cache','bloat','handoff','raw')||!!ep.tokMul)}
-function startEp(i){$('#xcard').hidden=true;epIdx=i;newGame(EPS[i]);fitView();G.hist=[];G.snapCur=snap();hudFit(EPS[i]);updateHUD();ov.hidden=true;ov.innerHTML='';const t=EPS[i].tut,e=EPS[i];if(t){tour();if(!t.pre&&t.parts[0].intro){const g0=G;G.introT=setTimeout(()=>{if(G!==g0)return;G.introT=0;if(!G.running&&!G.card)showCard(t.parts[0].intro,G.dp)},3000)}}
+function startEp(i){$('#xcard').hidden=true;epIdx=i;newGame(EPS[i]);fitView();G.hist=[];G.snapCur=snap();hudFit(EPS[i]);updateHUD();updateRunBtn();/*P139b*/ov.hidden=true;ov.innerHTML='';const t=EPS[i].tut,e=EPS[i];if(t){tour();if(!t.pre&&t.parts[0].intro){const g0=G;G.introT=setTimeout(()=>{if(G!==g0)return;G.introT=0;if(!G.running&&!G.card)showCard(t.parts[0].intro,G.dp)},3000)}}
   else if(e.kind==='fix'&&e.sit)showCard(K('The situation',`<p>${e.sit}</p><p><b>Your goal:</b> <span>${e.goal}</span></p><p class="why"><b>How to start:</b> press <b>Run ▶</b> once and watch what breaks. After a failed run you get a diagnosis and a hint. You can also press <b>Hint</b> above the board at any time.</p>`,INTRO),G.orch)}
 const RVN=4;
 const rvMissed=()=>store.get('ccp-rv-miss',[]).map(z=>{const q=(RVQ[z.en]||[]).find(x=>x.id===z.id);return q?{en:z.en,q}:null}).filter(Boolean); // questions answered wrong, not yet answered right // questions per review round
