@@ -930,6 +930,15 @@ body{background-color:#F1F1EB!important;background-image:linear-gradient(rgba(39
 .sdlg .sdx{position:absolute;top:12px;right:12px;z-index:2;width:30px;height:30px;border-radius:9px;border:1px solid rgba(39,49,46,.14);background:#F8F8F4;font:700 16px/1 var(--body);color:#4E5B54;cursor:pointer}
 .sdlg .pvtop{padding-right:40px}
 @media (prefers-reduced-motion:reduce){.sdlg,.sdlg .sdbox{animation:none}}
+
+/* ---------- v107 concept page navigation ---------- */
+.panel.cpt .act.cact{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.panel.cpt .cnav{display:flex;gap:8px}
+.panel.cpt .cnav .btn[disabled]{opacity:.38;cursor:default}
+.panel.cpt .cgo{display:flex;align-items:center;gap:10px;margin-left:auto}
+.panel.cpt .cgo .btn{min-width:150px}
+.panel.cpt .cgo .btn[disabled]{background:#C9D3CD;border-color:#C9D3CD;color:#6E7A73;box-shadow:none;cursor:not-allowed}
+.panel.cpt .cwait{font:500 10.8px var(--body);color:var(--ink2)}
 </style>
 
 <div id="app">
@@ -3425,12 +3434,12 @@ function animSVG(sp){const L3=a=>Array.isArray(a)?(LANG==='ko'?a[1]:LANG==='ja'?
   else if(sp.k==='sizes'){h=170;const rows=[['Haiku',4,40],['Sonnet',7,90],['Opus',10.5,140]];rows.forEach(([m,r,y],i)=>{ln+=`<path d="M70 ${y} L${Wd-110} ${y}" class="aline"/>`+chip(Wd-90,y,m,true)+mark(Wd-30,y+5,'✓')+dot(`M60 ${y} L${Wd-140} ${y}`,2.4,r,i*.4)});o+=`<text x="40" y="${h-6}" class="act" style="font-size:9.9px;opacity:.6">${escH(L3(['small task → small model','작은 작업 → 작은 모델','小さな仕事 → 小さなモデル']))}</text>`}
   return `<svg viewBox="0 0 ${Wd} ${h}" role="img" aria-hidden="true">${ln}${dt}${o}</svg>`}
 function showConcepts(i,done,inPlay){const pg=CONCEPTS[EPS[i].en]||[];if(!pg.length){done();return} // the level's new ideas, before its scenarios
-  const L3=a=>LANG==='ko'?a[1]:LANG==='ja'?a[2]:a[0];let n=0;
-  const draw=()=>{const p=pg[n],v=p.v,last=n===pg.length-1;ov.hidden=false;
+  const L3=a=>LANG==='ko'?a[1]:LANG==='ja'?a[2]:a[0];let n=0,seen=false;/*P150*/
+  const draw=()=>{const p=pg[n],v=p.v,last=n===pg.length-1;if(last)seen=true;const can=seen||inPlay;ov.hidden=false;
     ov.innerHTML=`<div class="panel cpt" data-noi18n><div class="eyebrow">${epLabel(i)} · ${Lk("Concepts","개념","概念")} ${n+1} / ${pg.length}</div><h2>${L3(p.t)}</h2><div class="cptb">${L3(p.b)}</div>`+
       (v?(v[0]==='anim'?`<div class="anim">${animSVG(v[1])}</div>`:v[0]==='code'?`<pre class="cptv">${escH(v[1])}</pre>`:`<div class="cflow">${v[1].map(x=>`<span>${escH(x)}</span>`).join('<i>→</i>')}</div>`):'')+
-      `<div class="cdots">${pg.map((_,k)=>`<i class="${k===n?'on':''}"></i>`).join('')}</div><div class="act">${n>0?`<button class="btn alt" id="cprev">${Lk("Back","이전","戻る")}</button>`:''}<button class="btn" id="cnext">${!last?Lk("Next","다음","次へ"):inPlay?Lk("Back to the board","보드로 돌아가기","ボードに戻る"):Lk("Start the level","레벨 시작","レベルを始める")}</button>${!last?`<button class="btn alt" id="cskip">${inPlay?Lk("Close","닫기","閉じる"):Lk("Skip to the level","레벨로 바로 가기","レベルへ進む")}</button>`:''}</div></div>`;
-    $('#cnext').addEventListener('click',()=>{if(last)done();else{n++;draw()}});{const b=$('#cprev');if(b)b.addEventListener('click',()=>{n--;draw()})}{const b=$('#cskip');if(b)b.addEventListener('click',done)}$('#cnext').focus();ov.scrollTop=0};
+      `<div class="cdots">${pg.map((_,k)=>`<i class="${k===n?'on':''}"></i>`).join('')}</div><div class="act cact"><div class="cnav"><button class="btn alt" id="cprev"${n>0?'':' disabled'}>‹ ${Lk("Back","이전","戻る")}</button><button class="btn alt" id="cnext"${last?' disabled':''}>${Lk("Next","다음","次へ")} ›</button></div><div class="cgo">${can?'':`<span class="cwait">${Lk("Read to the last page to start","끝까지 읽으면 시작할 수 있어요","最後まで読むと始められます")} · ${n+1}/${pg.length}</span>`}<button class="btn" id="cstart"${can?'':' disabled'}>${inPlay?Lk("Back to the board","보드로 돌아가기","ボードに戻る"):Lk("Start the level","레벨 시작","レベルを始める")} ▸</button></div></div></div>`;
+    $('#cnext').addEventListener('click',()=>{if(!last){n++;draw()}});$('#cprev').addEventListener('click',()=>{if(n>0){n--;draw()}});$('#cstart').addEventListener('click',()=>{if(seen||inPlay)done()});(last?$('#cstart'):$('#cnext')).focus();ov.scrollTop=0};
   draw()}
 function askLeave(){ov.hidden=false;setTimeout(()=>{ov.dataset.dlg='leave'},0);ov.innerHTML=`<div class="panel" style="max-width:440px" data-noi18n><h2>${Lk("Leave this level?","이 레벨을 나갈까요?","このレベルを出ますか？")}</h2><p class="lead" style="font-size:12.6px">${Lk("The design you built here is not saved.","여기서 만든 설계는 저장되지 않아요.","ここで作った設計は保存されません。")}</p><div class="act"><button class="btn" id="lvStay">${Lk("Keep playing","계속하기","続ける")}</button><button class="btn alt" id="lvGo">${Lk("Back to the level list","레벨 목록으로","レベル一覧へ")}</button></div></div>`;
   const close=()=>{ov.hidden=true;ov.innerHTML='';delete ov.dataset.dlg};$('#lvStay').addEventListener('click',close);$('#lvGo').addEventListener('click',()=>{delete ov.dataset.dlg;showTitle()});$('#lvStay').focus()}
