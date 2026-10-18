@@ -758,6 +758,37 @@ body{background-color:var(--bg);background-image:linear-gradient(rgba(34,39,43,.
 .lmode .tile.stg:hover{box-shadow:0 10px 20px rgba(20,26,34,.22)!important}
 .lmode .chh{border-bottom-color:rgba(255,255,255,.14)!important}
 .lmode .chh .chs2{color:#BAC4CF!important}.lmode .lvrh span,.lmode .chh .chp{color:#C3CCD6!important}
+
+/* ---------- v97 Finder-style project panel, parts-only dock ---------- */
+#app{grid-template-columns:minmax(0,1fr) clamp(200px,15vw,244px)!important}
+#app>#hud{grid-column:1/-1;grid-row:1}#app>#obj{grid-column:1/-1!important;grid-row:2}
+#app>#stageWrap{grid-column:1;grid-row:3}#app>#fpanel{grid-column:2;grid-row:3}#app>#dock{grid-column:1/-1!important;grid-row:4}
+#fpanel{min-height:0;display:flex;flex-direction:column;background:#F6F7F9;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 1px 0 rgba(255,255,255,.7) inset}
+#fpanel .fph{display:flex;align-items:center;gap:10px;height:30px;padding:0 10px;background:linear-gradient(#ECEEF1,#E4E7EB);border-bottom:1px solid #D6DAE0;flex:none}
+#fpanel .tl{display:flex;gap:6px}#fpanel .tl i{width:10px;height:10px;border-radius:50%;background:#FF5F57;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.18)}#fpanel .tl i:nth-child(2){background:#FEBC2E}#fpanel .tl i:nth-child(3){background:#28C840}
+#fpanel .fpt{font:600 12px var(--body);color:#5C6570;margin-right:auto}
+#fpanel #tree{flex:1;height:auto!important;min-height:0;overflow-y:auto;border:0;border-radius:0;background:transparent;padding:8px 8px 10px;box-shadow:none;margin:0}
+#fpanel #tree h3{font:700 10.5px var(--body)!important;letter-spacing:.06em;text-transform:uppercase;color:#8A939D;border:0!important;padding:2px 6px 6px!important;margin:0!important}
+#fpanel #tree h3 small{font:600 10px var(--body);text-transform:none;letter-spacing:0}
+#fpanel #tree .tw{max-height:none!important;overflow:visible;font:500 12.5px/1 var(--body)!important}
+#fpanel #tree .row{height:24px;gap:6px;border-radius:6px;padding-right:6px;color:#2B323A}
+#fpanel #tree .row.d{color:#2B323A;font-weight:600}
+#fpanel #tree .row.d::before{content:'';width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid #8A939D;margin-right:-1px;flex:none}
+#fpanel #tree .row.f{padding-left:calc(var(--pl,0px) + 9px)}
+#fpanel #tree .row.f:hover{background:rgba(0,0,0,.05)}
+#fpanel #tree .row.f:active{background:#0A64D8;color:#fff}
+#fpanel #tree .ic{width:16px!important;height:13px!important;border:0!important;border-radius:0!important;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 13'%3E%3Cpath d='M1 2.2C1 1.5 1.5 1 2.2 1h3.6l1.5 1.6h6.5c.7 0 1.2.5 1.2 1.2v7.1c0 .7-.5 1.1-1.2 1.1H2.2C1.5 12 1 11.6 1 10.9z' fill='%2363A9F2'/%3E%3Cpath d='M1 4.2h14v6.7c0 .7-.5 1.1-1.2 1.1H2.2C1.5 12 1 11.6 1 10.9z' fill='%2389C0F8'/%3E%3C/svg%3E") center/contain no-repeat!important}
+#fpanel #tree .row.f .ic{width:12px!important;height:15px!important;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 15'%3E%3Cpath d='M1.5 1h6l3.5 3.5V14h-9.5z' fill='%23fff' stroke='%23A9B2BC' stroke-width='1'/%3E%3Cpath d='M7.5 1v3.5H11' fill='%23E9EDF1' stroke='%23A9B2BC' stroke-width='1'/%3E%3C/svg%3E") center/contain no-repeat!important}
+#fpanel #tree .row span:last-child{overflow:hidden;text-overflow:ellipsis}
+#fpanel #tree .row .tg{flex:none}
+#fpanel #tree .emp{font:400 11.5px/1.5 var(--body);color:#8A939D;padding:6px 8px}
+#fpanel #fdiff{margin:0 0 8px}
+#dock{height:clamp(104px,13vh,132px)!important;grid-template-rows:minmax(0,1fr)!important}
+#dock .dpane{padding:12px 16px 6px!important;overflow:hidden}
+#dock #tray{gap:22px;padding-top:4px;padding-bottom:8px;scrollbar-width:thin;scrollbar-color:#C9CFD6 transparent}
+#dock #tray::-webkit-scrollbar{height:6px}#dock #tray::-webkit-scrollbar-thumb{background:#C9CFD6;border-radius:3px}
+#dock #tray .gl{font-size:10.5px;letter-spacing:.06em}
+@media (max-width:900px){#app{grid-template-columns:minmax(0,1fr)!important}#app>#fpanel{grid-column:1;grid-row:5;max-height:220px}}
 </style>
 
 <div id="app">
@@ -1507,10 +1538,13 @@ let W=0,H=0,DPR=1,CS=30,BX=0,BY=0,T=0;
   document.getElementById('dpParts').appendChild(document.getElementById('tray'));document.getElementById('dpFiles').appendChild(document.getElementById('tree'));sw.appendChild(document.getElementById('insp'));
   const vc=document.createElement('div');vc.className='vctl';vc.setAttribute('data-noi18n','');vc.innerHTML='<button type="button" data-v="out" aria-label="Zoom out">−</button><button type="button" data-v="fit"></button><button type="button" data-v="all"></button><button type="button" data-v="in" aria-label="Zoom in">+</button>';sw.appendChild(vc);
   const tabs=[['dtParts','dpParts'],['dtFiles','dpFiles']];tabs.forEach(([t,p])=>document.getElementById(t).addEventListener('click',()=>tabs.forEach(([t2,p2])=>{document.getElementById(t2).setAttribute('aria-selected',String(t2===t));document.getElementById(p2).hidden=t2!==t})))}
+/*P136*/{const sw=document.getElementById('stageWrap'),fp=document.createElement('aside');fp.id='fpanel';fp.setAttribute('aria-label','Project files');
+  fp.innerHTML='<div class="fph"><span class="tl" aria-hidden="true"><i></i><i></i><i></i></span><span class="fpt">Project files</span></div>';sw.after(fp);fp.appendChild(document.getElementById('tree'));
+  const tb=document.querySelector('#dock .dtabs');if(tb)tb.remove();const pf=document.getElementById('dpFiles');if(pf)pf.remove();const pp=document.getElementById('dpParts');if(pp)pp.hidden=false}
 const VIEW={r0:0,rows:18};cv.__view=VIEW; // rows of the board on screen: the full width is always shown, the rows fit the circuit
 let VTOP=34;
 function resize(){const r=$('#stageWrap').getBoundingClientRect();DPR=Math.min(2,window.devicePixelRatio||1);W=Math.max(1,r.width);H=Math.max(1,r.height);cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';
-  const top=34,Hh=Math.max(60,H-top-24);VIEW.rows=Math.max(6,Math.min(ROWS,VIEW.rows));VIEW.r0=Math.max(0,Math.min(ROWS-VIEW.rows,VIEW.r0));CS=Math.max(12,Math.floor(Math.min((W-16)/(COLS+3.2),Hh/VIEW.rows)));BX=Math.round((W-CS*COLS)/2);VTOP=top;BY=top+Math.max(0,Math.round((Hh-VIEW.rows*CS)/2))-VIEW.r0*CS;syncView()}
+  const top=34,Hh=Math.max(60,H-top-24);VIEW.rows=Math.max(6,Math.min(ROWS,VIEW.rows));VIEW.r0=Math.max(0,Math.min(ROWS-VIEW.rows,VIEW.r0));CS=Math.max(12,Math.floor(Math.min((W-16)/(COLS+3.2),Hh/VIEW.rows)));/*P136b*/{const fr=Math.min(ROWS,Math.floor(Hh/CS));if(fr>VIEW.rows){const add=fr-VIEW.rows;VIEW.r0=Math.max(0,Math.min(ROWS-fr,VIEW.r0-Math.floor(add/2)));VIEW.rows=fr}}BX=Math.round((W-CS*COLS)/2);VTOP=top;BY=top+Math.max(0,Math.round((Hh-VIEW.rows*CS)/2))-VIEW.r0*CS;syncView()}
 const unlocked=id=>G.ep.unlock.includes(id);
 function dims(p){if(PT[p.type].cat==='agent'){const s=M[PT[p.type].model].sizes[p.effort];return p.rot?[s[1],s[0]]:[s[0],s[1]]}const t=PT[p.type];return p.rot?[t.h,t.w]:[t.w,t.h]}
 function setDims(p){const d=dims(p);p.w=d[0];p.h=d[1]}
