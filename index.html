@@ -833,6 +833,35 @@ body{background-color:var(--bg);background-image:linear-gradient(rgba(34,39,43,.
 .lmode{--lb:#F2F1EC;background:#F2F1EC!important}
 #ov:has(.scrw.lmode){background:#F2F1EC!important}
 .scene3d .s3names span{background:rgba(242,241,236,.9)!important;color:#7C848C}
+
+/* ---------- v101 Warm Sage Tech tokens ---------- */
+:root{--bg:#F1F1EB;--paper:#F8F8F4;--paper2:#E9EEE7;--board:#EEF2EC;--ink:#27312E;--ink2:#636F68;--ink3:#97A39B;--line:rgba(39,49,46,.14);
+  --g9:#2C3833;--g8:#35433E;--g7:#44534C;--teal:#3EC2AE;--teal-d:#2FA392;--teal-l:#E2F5F0;
+  --sh1:0 1px 3px rgba(35,48,41,.05);--sh2:0 3px 12px rgba(35,48,41,.06);--sh3:0 6px 20px rgba(35,48,41,.09)}
+body{background-color:#F1F1EB!important;background-image:linear-gradient(rgba(39,49,46,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(39,49,46,.035) 1px,transparent 1px)!important}
+#hud{background:#35433E!important;color:#F6F8F4!important}
+#stageWrap{background:#EEF2EC!important;border-color:rgba(39,49,46,.12)!important}
+#app>#obj,#dock,.panel,.setbox,#xcard,#stageWrap #insp{background:#F8F8F4}
+#fpanel{background:#F3F5EF!important;border-color:rgba(39,49,46,.12)!important}
+#fpanel .fph{background:linear-gradient(#E9EEE7,#E1E7DF)!important;border-bottom-color:#D3DBD1!important}
+#dock{background:#F8F8F4!important;border-color:rgba(39,49,46,.12)!important}
+.vctl{background:rgba(248,248,244,.94)!important}
+/* stage select: sage-slate board, off-white cards */
+.lmode .lvr{background:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px) 0 0/28px 28px,linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px) 0 0/28px 28px,#5A6B62!important;border-color:rgba(255,255,255,.1)!important}
+.lmode .lvrh b,.lmode .chh .cht{color:#F6F8F4!important}.lmode .lvrh span,.lmode .chh .chp,.lmode .chh .chs2{color:#E6ECE7!important}
+.lmode .chh{border-bottom-color:rgba(246,248,244,.16)!important}
+.lmode .tile.stg{background:#F2F4EE!important;border:1px solid #DCE3DA!important;box-shadow:0 3px 10px rgba(35,48,41,.06)!important;color:#27312E}
+.lmode .tile.stg:hover{background:#F6F7F2!important;box-shadow:0 5px 14px rgba(35,48,41,.10)!important}
+.lmode .tile.stg.next{background:#F2F4EE!important;border:2px solid #3EC2AE!important;box-shadow:0 0 0 3px rgba(62,194,174,.12),0 3px 10px rgba(35,48,41,.06)!important}
+.lmode .tile.stg.sel:not(.next){border-color:#3EC2AE!important;box-shadow:0 0 0 2px rgba(62,194,174,.18),0 3px 10px rgba(35,48,41,.06)!important}
+.lmode .stg .tn{color:#27312E!important}.lmode .stg .ssub{color:#5F6C65}
+.lmode .pv{background:#F8F8F4!important;border-color:#E1E6DE!important}
+.lmode .lvjump{background:rgba(246,248,244,.1)!important;border-color:rgba(246,248,244,.24)!important}
+/* title: one Play button */
+.tmode .bigbtn.go.play{display:inline-flex;justify-content:center;align-items:center;min-width:220px;height:60px;border-radius:18px;background:#3EC2AE;color:#173F38;font:700 15.3px var(--body);gap:10px;box-shadow:0 4px 0 rgba(35,125,110,.22)!important;transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
+.tmode .bigbtn.go.play:hover{background:#35B5A2;transform:translateY(-2px)}
+.tmode .bigbtn.go.play:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(35,125,110,.22)!important}
+.tmode .bigbtn.go.play .pi{font-size:.8em}
 </style>
 
 <div id="app">
@@ -1994,13 +2023,13 @@ function rr(x,y,w,h,r){cx.beginPath();cx.moveTo(x+r,y);cx.arcTo(x+w,y,x+w,y+h,r)
 function txt(s,x,y,size,col,font,align){cx.font=`${font||'600'} ${size}px ${font&&font.includes('IBM')?'':'"JetBrains Mono",monospace'}`;cx.textAlign=align||'center';cx.fillStyle=col;cx.fillText(s,x,y)}
 function label(s,x,y,size,col,align,w){cx.__lastLabel=s;cx.font=`${w||600} ${size}px Manrope,"Pretendard Variable","Noto Sans KR","Noto Sans JP",system-ui,sans-serif`;cx.textAlign=align||'center';cx.fillStyle=col;cx.fillText(s,x,y)}
 function drawBoard(){
-  cx.fillStyle='#E4E8EC';cx.fillRect(BX,BY,COLS*CS,ROWS*CS);cx.fillStyle='rgba(255,255,255,.55)';cx.fillRect(BX+CS,BY,(COLS-2)*CS,ROWS*CS);
+  /*P143*/cx.fillStyle='#D5DED4';cx.fillRect(BX,BY,COLS*CS,ROWS*CS);cx.fillStyle='#E2E8E1';cx.fillRect(BX+CS,BY,(COLS-2)*CS,ROWS*CS);
   if(0){const y=BY-18,sq=(x,fill,st)=>{cx.fillStyle=fill;rr(x,y,13,13,3);cx.fill();cx.strokeStyle=st;cx.lineWidth=1.3;rr(x+.5,y+.5,12,12,3);cx.stroke()};let x=BX+CS+2; // legend: which parts are the model, which are code
     sq(x,'#FAFBFC','#2B333B');cx.fillStyle='#F08A24';cx.fillRect(x+3,y+9,7,2);label('AGENT SIDE · the model and what you attach to it (non-deterministic)',x+19,y+11,11,'#55606B','left');
     x+=Math.min(CS*9.6,430);sq(x,'#46525D','#1C9ED8');cx.fillStyle='#7FD6F5';cx.fillRect(x+3,y+3,7,2);label('BACKEND CODE · handlers, schemas, routing (deterministic)',x+19,y+11,Math.min(11.5,CS*.3),'#55606B','left')}
   // floor tiles: thin seams per cell, heavier panel seams every 4 cells
-  cx.lineWidth=1;for(let i=1;i<COLS;i++){cx.strokeStyle=i%4===0?'rgba(31,37,43,.20)':'rgba(31,37,43,.07)';cx.beginPath();cx.moveTo(BX+i*CS+.5,BY);cx.lineTo(BX+i*CS+.5,BY+ROWS*CS);cx.stroke()}
-  for(let j=0;j<=ROWS;j++){cx.strokeStyle=j%4===0?'rgba(31,37,43,.20)':'rgba(31,37,43,.07)';cx.beginPath();cx.moveTo(BX+CS,BY+j*CS+.5);cx.lineTo(BX+(COLS-1)*CS,BY+j*CS+.5);cx.stroke()}
+  cx.lineWidth=1;for(let i=1;i<COLS;i++){cx.strokeStyle=i%4===0?'#B4C2B5':'#CCD6CC';cx.beginPath();cx.moveTo(BX+i*CS+.5,BY);cx.lineTo(BX+i*CS+.5,BY+ROWS*CS);cx.stroke()}
+  for(let j=0;j<=ROWS;j++){cx.strokeStyle=j%4===0?'#B4C2B5':'#CCD6CC';cx.beginPath();cx.moveTo(BX+CS,BY+j*CS+.5);cx.lineTo(BX+(COLS-1)*CS,BY+j*CS+.5);cx.stroke()}
   if(G.drag){const x=BX+CS,w=(COLS-2)*CS;cx.fillStyle=`rgba(46,139,98,${.05+.04*Math.sin(T*5)})`;cx.fillRect(x,BY,w,ROWS*CS);cx.strokeStyle=`rgba(46,139,98,${.5+.3*Math.sin(T*5)})`;cx.lineWidth=2;cx.setLineDash([8,6]);cx.lineDashOffset=-T*30;cx.strokeRect(x+2,BY+2,w-4,ROWS*CS-4);cx.setLineDash([])}
   if(G.running){const sx=BX+((T*.35)%1)*COLS*CS,g=cx.createLinearGradient(sx-CS*2,0,sx+CS*2,0);g.addColorStop(0,'rgba(255,255,255,0)');g.addColorStop(.5,'rgba(255,255,255,.35)');g.addColorStop(1,'rgba(255,255,255,0)');cx.fillStyle=g;cx.fillRect(Math.max(BX,sx-CS*2),BY,CS*4,ROWS*CS)}
   if(G.hoverCell&&!G.drag){const [hx,hy]=G.hoverCell;if(hx>=1&&hx<COLS-1&&hy>=0&&hy<ROWS&&!occAt(hx,hy)){cx.fillStyle='rgba(47,42,61,.05)';rr(BX+hx*CS+2,BY+hy*CS+2,CS-4,CS-4,4);cx.fill()}}
@@ -2913,7 +2942,7 @@ function scene3d(box,opt){ // returns a stop function
   // camera: stylized 3/4 top-down, about 38° elevation and 35° azimuth, orthographic
   const EL=(CMP?17:38)*Math.PI/180,AZ=35*Math.PI/180,D=20,cam=new T3.OrthographicCamera(-1,1,1,-1,.1,100);
   cam.position.set(D*Math.cos(EL)*Math.sin(AZ),D*Math.sin(EL),D*Math.cos(EL)*Math.cos(AZ));cam.lookAt(0,CMP?.62:.35,0);
-  /*P142*/scene.add(new T3.HemisphereLight(0xfffdf8,0xcfd5ce,.48));scene.add(new T3.AmbientLight(0xffffff,.15));
+  /*P142*/scene.add(new T3.HemisphereLight(0xfffdf8,0xcfd5ce,.48));scene.add(new T3.AmbientLight(0xffffff,CMP?.22:.15));
   const key=new T3.DirectionalLight(0xfffaf2,.44);key.position.set(-6,10,3);key.castShadow=true;key.shadow.mapSize.set(1024,1024);
   Object.assign(key.shadow.camera,{left:-5,right:5,top:5,bottom:-5,near:1,far:30});key.shadow.radius=9;key.shadow.bias=-.0008;scene.add(key);
   const fill=new T3.DirectionalLight(0xe8f8f3,.16);fill.position.set(6,4,-3);scene.add(fill);
@@ -2934,9 +2963,9 @@ function scene3d(box,opt){ // returns a stop function
   // robots: the in-game agent in 3D. A thick rounded body, a glossy visor, glowing eyes that can blink or smile, a colour stripe
   const BOTS=[['haiku','#17AE9B',.8,-2.15,1.0],['sonnet','#1C9ED8',1.04,-1.75,-1.2],['opus','#8D6BE8',1.27,.35,-1.35],['fable','#F08A24',1.5,2.05,.7]];
   if(CMP){plat.visible=top.visible=false;nodes.forEach(n=>n.g.visible=false);cubes.forEach(c=>c.visible=false);scene.children.forEach(o=>{if(o.userData.link)o.visible=false});
-    const sh=new T3.Mesh(new T3.PlaneGeometry(16,9),new T3.ShadowMaterial({opacity:.06}));sh.rotation.x=-Math.PI/2;sh.receiveShadow=true;scene.add(sh);
+    const sh=new T3.Mesh(new T3.PlaneGeometry(16,9),new T3.ShadowMaterial({opacity:.04}));sh.rotation.x=-Math.PI/2;sh.receiveShadow=true;scene.add(sh);
     [-2.5,-1.18,.37,2.16].forEach((x,i)=>{BOTS[i][3]=x*Math.cos(AZ);BOTS[i][4]=-x*Math.sin(AZ)})} // a row along the screen's horizontal
-  const bodyM=mat(0xffffff,{roughness:.8,vertexColors:true}),visorM=new T3.MeshStandardMaterial({color:0x182127,roughness:.3,metalness:.2});
+  const bodyM=mat(0xffffff,{roughness:.8,vertexColors:true}),visorM=new T3.MeshStandardMaterial({color:0x1B2528,roughness:.3,metalness:.2});
   const bots=BOTS.map(([k,hex,w,x,z],i)=>{const c=new T3.Color(hex),h=w*.9,d=w*.72,root=new T3.Group(),body=new T3.Group();root.position.set(x,0,z);root.add(body);
     const sg=rbox(w,h,d,w*.2,w*.07);{const n=sg.attributes.normal,cols=new Float32Array(n.count*3),TOP=new T3.Color(0xF8F8F5),FR=new T3.Color(0xEFF1ED),SD=new T3.Color(0xD7DDD7);
       for(let q=0;q<n.count;q++){const ny=n.getY(q),nz=n.getZ(q),wt=Math.max(0,ny)**2,wf=Math.max(0,nz)**2,ws=Math.max(0,1-wt-wf);const r=TOP.r*wt+FR.r*wf+SD.r*ws,g=TOP.g*wt+FR.g*wf+SD.g*ws,b=TOP.b*wt+FR.b*wf+SD.b*ws;cols[q*3]=r;cols[q*3+1]=g;cols[q*3+2]=b}
@@ -2952,7 +2981,7 @@ function scene3d(box,opt){ // returns a stop function
     const stripe=new T3.Mesh(rbox(w*.74,w*.05,.03,.012,.006),new T3.MeshStandardMaterial({color:c,roughness:.5}));stripe.position.set(0,.02+h*.13,d/2+.005);body.add(stripe);
     root.traverse(o=>{if(o.isMesh)o.castShadow=true});
     {if(!window.__ctTex){const c=document.createElement('canvas');c.width=c.height=128;const x=c.getContext('2d'),gr=x.createRadialGradient(64,64,4,64,64,64);gr.addColorStop(0,'rgba(40,52,58,.55)');gr.addColorStop(.55,'rgba(40,52,58,.22)');gr.addColorStop(1,'rgba(40,52,58,0)');x.fillStyle=gr;x.fillRect(0,0,128,128);window.__ctTex=c}
-     const ct=new T3.Mesh(new T3.PlaneGeometry(w*1.35,d*1.45),new T3.MeshBasicMaterial({map:new T3.CanvasTexture(window.__ctTex),transparent:true,depthWrite:false,opacity:.75}));ct.rotation.x=-Math.PI/2;ct.position.y=.012;ct.renderOrder=1;root.add(ct)}
+     const ct=new T3.Mesh(new T3.PlaneGeometry(w*1.35,d*1.45),new T3.MeshBasicMaterial({map:new T3.CanvasTexture(window.__ctTex),transparent:true,depthWrite:false,opacity:CMP?.5:.75}));ct.rotation.x=-Math.PI/2;ct.position.y=.012;ct.renderOrder=1;root.add(ct)}
     scene.add(root);
     return {k,root,body,eyes,happy,eyeM,w,h,yaw:0,tYaw:0,blinkAt:.8+i*1.3+Math.random()*1.5,blinkP:-1,blink2:false,smileTo:0,hop:-1,hopAt:3+Math.random()*3,tilt:0,tTilt:0,tiltAt:2+Math.random()*2,tiltTo:0,lift:0,look:null,lookTo:0,seed:i*1.7}});
   const B=Object.fromEntries(bots.map(b=>[b.k,b]));
@@ -3164,15 +3193,15 @@ function showTitle(mode){mode=mode==='title'?'title':'levels';
      <h1 class="ttlh" data-noi18n>${T}</h1>
      <p class="ttlsub" data-noi18n>${Lk('Wire agents, hooks and schemas. Catch every failure at the lowest cost.','에이전트와 hook, 스키마를 연결해 모든 실패를 가장 싸게 막아 보세요.','エージェント、hook、スキーマをつなぎ、すべての失敗をいちばん安く止めましょう。')}</p>
      <div class="scene3d" id="scene3d">${crewHTML()}</div>
-     <div class="ttlbtns" data-noi18n><button class="bigbtn go" id="tGo" type="button">${done?Lk('Continue','이어 하기','つづける'):Lk('Start','시작하기','はじめる')} <span class="k">▸ ${lvCode(EPS[nx])}</span></button><button class="bigbtn ghost" id="tLv" type="button">${Lk('Choose a level','레벨 선택','レベルを選ぶ')}</button></div>
+     <div class="ttlbtns" data-noi18n><button class="bigbtn go play" id="tLv" type="button"><span class="pi" aria-hidden="true">▶</span>${Lk('Play','플레이하기','プレイする')}</button></div>
      <div class="ttlprog">${progLine}</div>
      <p class="mnote">This game is built for a desktop screen. On a phone the board is too small to play comfortably: rotate to landscape, or open it on a computer.</p>
-    </div></div><div class="ttlfoot"><span data-noi18n><kbd>Enter</kbd> ${Lk('start','시작','開始')} · <kbd>L</kbd> ${Lk('levels','레벨','レベル')} · </span><span>Unofficial study game. Not affiliated with or endorsed by Anthropic. Prices and behaviour are simplified for play.</span></div></div>`;
-    $('#tGo').addEventListener('click',()=>showBrief(nx));$('#tLv').addEventListener('click',()=>showTitle('levels'));
+    </div></div><div class="ttlfoot"><span data-noi18n><kbd>Enter</kbd> ${Lk('play','플레이','プレイ')} · </span><span>Unofficial study game. Not affiliated with or endorsed by Anthropic. Prices and behaviour are simplified for play.</span></div></div>`;
+    $('#tLv').addEventListener('click',()=>showTitle('levels'));
     {const box=$('#scene3d');let stop2d=null,stop3d=null,dead=false;window.__crewStop=()=>{dead=true;if(stop2d)stop2d();if(stop3d)stop3d()};
      const fall=()=>{if(!dead&&box.isConnected&&!stop2d){box.classList.add('fallback');stop2d=crewLife(box.querySelector('.crew'))}};
      ensureThree(()=>{if(dead||!box.isConnected)return;try{stop3d=scene3d(box)}catch(e){stop3d=null}if(!stop3d)fall()},fall)}
-    flipFrom(h0,ov.querySelector('h1.ttlh'));$('#tGo').focus();return}
+    flipFrom(h0,ov.querySelector('h1.ttlh'));$('#tLv').focus();return}
   const L3=i=>{const e=EPS[i];return e},partsOf=e=>(e.unlock||[]).filter(id=>PT[id]&&id!=='wire'&&id!=='effort').map(id=>PT[id].name),
     tags=e=>`${e.kind==='fix'?'<i class="hardtag" data-noi18n>HARD</i>':''}${EXAM.A.has(e.en)?'<span class="exm" data-noi18n>CCA</span>':''}${EXAM.D.has(e.en)?'<span class="exm" data-noi18n>CCDV-F</span>':''}`;
   const pvHtml=i=>{const e=EPS[i],st=prog[e.en]?['done','✓ '+Lk('Cleared','클리어','クリア')]:i===nx?['next',Lk('Next up','다음 스테이지','次のステージ')]:e.kind==='fix'?['hard',Lk('Challenge','도전','チャレンジ')]:['',Lk('Not played yet','아직 안 함','未プレイ')];
@@ -3212,7 +3241,7 @@ function showTitle(mode){mode=mode==='title'?'title':'levels';
   (tiles.find(t=>+t.dataset.i===nx)||tiles[0]).focus({preventScroll:true});
 }
 addEventListener('keydown',e=>{if(ov.hidden||!ov.querySelector('.scrw')||!setdlg.hidden||e.metaKey||e.ctrlKey||e.altKey)return;
-  if(scrMode==='title'){if(e.key==='l'||e.key==='L'){e.preventDefault();showTitle('levels')}return}
+  if(scrMode==='title'){if(e.key==='l'||e.key==='L'||e.key==='Enter'){e.preventDefault();showTitle('levels')}return}
   if(e.key==='Escape'){e.preventDefault();showTitle('title');return}
   const tl=[...ov.querySelectorAll('.tile')],k=tl.indexOf(document.activeElement);if(k<0)return;const cols=getComputedStyle(tl[0].parentElement).gridTemplateColumns.split(' ').length;
   const mv={ArrowRight:1,ArrowLeft:-1,ArrowDown:cols,ArrowUp:-cols}[e.key];if(mv){e.preventDefault();const n=tl[Math.max(0,Math.min(tl.length-1,k+mv))];n.focus()}});
