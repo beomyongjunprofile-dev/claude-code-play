@@ -890,6 +890,18 @@ body{background-color:#F1F1EB!important;background-image:linear-gradient(rgba(39
 #ptabs button[aria-selected="true"] i{background:rgba(255,255,255,.18)}
 #dpParts.hastabs .trayarr{top:calc(50% + 16px)}
 #tray .cards[hidden],#tray .gl[hidden],#tray .card[hidden]{display:none!important}
+
+/* ---------- v104 Tool Bay ---------- */
+#insp .tbay{margin-top:9px;padding:9px;border-radius:10px;background:#EEF4F7;border:1px solid #D6E4EC;display:grid;gap:7px}
+#insp .tbay .tbh{display:flex;align-items:baseline;gap:8px}#insp .tbay .tbh small{font:500 9.5px var(--body);color:var(--ink2)}
+#insp .tbsc{display:flex;gap:4px}#insp .tbsc button{flex:1;height:24px;border-radius:7px;border:1px solid #C9D9E3;background:#fff;font:600 9.9px var(--body);color:#35505F;cursor:pointer}
+#insp .tbsc button[aria-pressed="true"]{background:#1C6FA0;border-color:#1C6FA0;color:#fff}
+#insp .tbg{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+#insp .tbg button{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;align-items:center;text-align:left;gap:0 6px;padding:5px 8px;border-radius:8px;border:1px solid #C9D9E3;background:#fff;cursor:pointer;min-height:38px}
+#insp .tbg button b{font:700 10.8px var(--body);color:#1E2B33}#insp .tbg button span{grid-column:1;font:500 9.5px var(--body);color:var(--ink2)}
+#insp .tbg button i{grid-row:1/3;grid-column:2;font:700 9.9px var(--body);font-style:normal;color:#1C6FA0}
+#insp .tbg button[aria-pressed="true"]{background:#E3F1F9;border-color:#1C6FA0;box-shadow:inset 0 0 0 1px #1C6FA0}
+#insp .tbg button[aria-pressed="true"] i{color:#fff;background:#1C6FA0;border-radius:999px;width:18px;height:18px;display:grid;place-items:center}
 </style>
 
 <div id="app">
@@ -2556,12 +2568,15 @@ function toolsOf(a){const n=a&&a.net||{};return [...new Set([...(n.A||[]),...(n.
 function agentsOfTool(p){return (G.net&&G.net.usable||[]).filter(a=>PT[a.type]&&PT[a.type].cat==='agent'&&toolsOf(a).includes(p))}
 function toolInspect(p){const t=PT[p.type];if(!t)return '';const ap=Lk('<b>Approval in Claude Code</b> (default mode): Read, Grep and Glob run without a prompt inside the working directory. Edit and Write ask first unless a <code>permissions.allow</code> rule pre-approves them. That approval is separate from which tools the agent has.','<b>Claude Code 승인</b> (기본 모드): Read, Grep, Glob은 작업 디렉터리 안에서 묻지 않고 실행돼요. Edit, Write는 <code>permissions.allow</code> 규칙으로 미리 허용하지 않으면 먼저 물어봐요. 승인은 에이전트가 어떤 도구를 가졌는지와 별개예요.','<b>Claude Code の承認</b> (既定モード): Read・Grep・Glob は作業ディレクトリ内なら確認なしで動きます。Edit・Write は <code>permissions.allow</code> で事前に許可していなければ確認します。承認は、エージェントがどのツールを持つかとは別の話です。');
   if(t.cat==='agent'){const tl=toolsOf(p),al=(p.net&&p.net.near&&p.net.near.has('allowed'));
-    return `<div class="tbox" data-noi18n><div class="tbh">${Lk('Available tools','사용할 수 있는 도구','使えるツール')}${al?` <span class="tbt">tools:</span>`:''}</div>${tl.length?`<div class="tchips">${tl.map(n=>`<span><b>${PT[n.type].name}</b> ${L3t(TOOLFN[n.type])}</span>`).join('')}</div>`:`<div class="tnote">${Lk('No built-in tool is attached on this agent’s wire.','이 에이전트의 전선에 붙인 내장 도구가 없어요.','このエージェントの配線に付けた組み込みツールはありません。')}</div>`}
+    return toolBay(p)+`<div class="tbox" data-noi18n><div class="tbh">${Lk('Available tools','사용할 수 있는 도구','使えるツール')}${al?` <span class="tbt">tools:</span>`:''}</div>${tl.length?`<div class="tchips">${tl.map(n=>`<span><b>${PT[n.type].name}</b> ${L3t(TOOLFN[n.type])}</span>`).join('')}</div>`:`<div class="tnote">${Lk('No built-in tool is attached on this agent’s wire.','이 에이전트의 전선에 붙인 내장 도구가 없어요.','このエージェントの配線に付けた組み込みツールはありません。')}</div>`}
       <div class="tnote">${al?Lk('allowed-tools is on this wire: the agent file gets a <code>tools:</code> allowlist, so only the listed tools exist for it.','이 전선에 allowed-tools가 있어요: 에이전트 파일에 <code>tools:</code> 허용 목록이 생겨서, 적힌 도구만 존재해요.','この配線に allowed-tools があります: エージェントファイルに <code>tools:</code> の許可リストが入り、書かれたツールだけが存在します。'):Lk('No allowlist: without a <code>tools:</code> field a subagent inherits every tool, Bash included. Claude picks among them for each task.','허용 목록이 없어요: <code>tools:</code> 필드가 없으면 subagent는 Bash를 포함한 모든 도구를 물려받아요. 작업마다 Claude가 그중에서 골라요.','許可リストがありません: <code>tools:</code> がないと subagent は Bash も含めすべてのツールを引き継ぎます。タスクごとに Claude がその中から選びます。')}</div><div class="tnote">${ap}</div></div>`}
   if(!TOOLK.includes(p.type))return '';const ag=agentsOfTool(p);
   return `<div class="tbox" data-noi18n><div class="tbh">${L3t(TOOLFN[p.type])}</div><div class="tnote">${ag.length?Lk('Applies to','적용 대상','適用先')+': <b>'+Object.entries(ag.reduce((o,a)=>{const k=M[PT[a.type].model].name;o[k]=(o[k]||0)+1;return o},{})).map(([k,n])=>n>1?k+' ×'+n:k).join(', ')+'</b>':Lk('Not on any agent’s wire yet, so no agent can use it.','아직 어느 에이전트의 전선에도 없어서, 쓸 수 있는 에이전트가 없어요.','まだどのエージェントの配線にもないので、使えるエージェントはいません。')}</div>
     <div class="tnote">${ap}</div>${p.type==='t_glob'||p.type==='t_grep'?`<div class="tnote">${Lk('Claude chooses tools per task; Glob → Grep → Read is a common path, not a fixed order. On macOS and Linux, Claude Code leaves Glob and Grep out by default and searches with find and grep through Bash; naming them in <code>--tools</code> or <code>--allowedTools</code> brings them back.','Claude는 작업마다 도구를 골라요. Glob → Grep → Read는 흔한 흐름일 뿐 정해진 순서가 아니에요. macOS와 Linux의 Claude Code는 기본적으로 Glob과 Grep을 빼고 Bash의 find, grep으로 검색해요. <code>--tools</code>나 <code>--allowedTools</code>에 적으면 다시 생겨요.','Claude はタスクごとにツールを選びます。Glob → Grep → Read はよくある流れで、決まった順番ではありません。macOS と Linux の Claude Code は既定で Glob と Grep を外し、Bash の find と grep で検索します。<code>--tools</code> か <code>--allowedTools</code> に書くと戻ります。')}</div>`:''}</div>`}
 function drawToolLinks(){if(!G.net||!G.net.usable)return;cx.save();const hv=G.hover||G.sel;
+  if(G.drag&&!G.drag.moving&&TOOLK.includes(G.drag.type)){G.net.usable.filter(isAgent).forEach(a=>{const x=BX+a.x*CS,y=BY+a.y*CS,w=a.w*CS,h=a.h*CS,on=G.drag.gx>=a.x&&G.drag.gx<a.x+a.w&&G.drag.gy>=a.y&&G.drag.gy<a.y+a.h;
+      cx.strokeStyle=on?'#1C6FA0':'rgba(28,111,160,.55)';cx.lineWidth=on?3:2;cx.setLineDash([6,5]);cx.lineDashOffset=-T*24;rr(x-4,y-4,w+8,h+8,10);cx.stroke();cx.setLineDash([]);
+      if(on){const tx=Lk('Drop to equip','놓으면 장착','離すと装備');cx.font=`700 ${Math.max(10,CS*.3)}px Manrope,"Pretendard Variable","Noto Sans KR","Noto Sans JP",system-ui,sans-serif`;const tw=cx.measureText(tx).width+14;cx.fillStyle='#1C6FA0';rr(x+w/2-tw/2,y+h+8,tw,20,10);cx.fill();cx.fillStyle='#fff';cx.textAlign='center';cx.fillText(tx,x+w/2,y+h+22)}})}
   G.net.usable.forEach(a=>{if(!PT[a.type]||PT[a.type].cat!=='agent')return;const tl=toolsOf(a);if(!tl.length)return;const ac=center(a),ax=BX+a.x*CS,ay=BY+a.y*CS,aw=a.w*CS,ah=a.h*CS;
     tl.forEach(n=>{const c=center(n),hot=hv===a||hv===n;const tx=Math.max(ax,Math.min(ax+aw,c[0])),ty=Math.max(ay,Math.min(ay+ah,c[1]));cx.strokeStyle=hot?'rgba(28,111,160,.85)':'rgba(28,111,160,.32)';cx.lineWidth=hot?2:1.3;cx.setLineDash([3,4]);cx.beginPath();cx.moveTo(c[0],c[1]);cx.lineTo(tx,ty);cx.stroke();cx.setLineDash([])});
     const txt=Lk('Tools','도구','ツール')+' '+tl.length;cx.font=`700 ${Math.max(9,CS*.26)}px Manrope,"Pretendard Variable","Noto Sans KR","Noto Sans JP",system-ui,sans-serif`;const tw=cx.measureText(txt).width+10,bh=Math.max(13,CS*.38),bx=ax+aw-tw-3,by=ay-bh*.55;
@@ -2582,6 +2597,25 @@ function ptabBuild(){const dp=$('#dpParts');if(!dp)return;let bar=$('#ptabs');if
   bar.innerHTML=tabs.map(([k,l])=>`<button type="button" role="tab" data-t="${k}" aria-selected="${k===ptabCur}">${L3t(l)}<i>${k==='all'?ids.length:cnt[k]}</i></button>`).join('');
   bar.hidden=tabs.length<=2;dp.classList.toggle('hastabs',!bar.hidden);ptabApply()}
 let ptabLang=null;setInterval(()=>{if(ptabLang!==LANG&&$('#ptabs')){ptabLang=LANG;const cur=ptabCur;ptabBuild();if([...document.querySelectorAll('#ptabs button')].some(b=>b.dataset.t===cur)){ptabCur=cur;ptabApply()}}const g=document.querySelector('#tray .card.guide');if(g&&g.hidden&&PTAB[g.dataset.id]){ptabCur=PTAB[g.dataset.id];ptabApply()}},300); // follow the guide
+/*P146*/let tbScope='this';
+function tbCell(a,type,shared){const ags=(G.net&&G.net.usable||[]).filter(isAgent),route=x=>(x.net&&x.net.A)||[];
+  let cand=route(a).slice().reverse();if(shared){const others=ags.filter(x=>x!==a);cand=cand.filter(p=>others.every(o=>route(o).includes(p)))}
+  const ok=w=>w&&w.type==='wire'&&(G.net.adj.get(w)||[]).length<=2&&canPlace(type,w.x,w.y,1,1);
+  if(!shared){const own=cand.find(w=>ok(w)&&!ags.some(o=>o!==a&&route(o).includes(w)));if(own)return own} // prefer a cell only this agent passes
+  return cand.find(ok)||null}
+function equipTool(a,type,shared){if(!a||!isAgent(a)||!TOOLK.includes(type))return false;if(toolsOf(a).some(n=>n.type===type)){log(Lk(`${PT[type].name} is already on this agent`,`${PT[type].name} 도구는 이미 이 에이전트에 있어요`,`${PT[type].name} はもうこのエージェントにあります`));return false}
+  if(total()+PT[type].cost>G.ep.budget){log('Not enough budget','bad');sfx('bad');return false}
+  const w=tbCell(a,type,shared);if(!w){log(Lk(shared?'No free wire cell is shared by every agent’s route':'No free wire cell on this agent’s route. Draw a wire into it first',shared?'모든 에이전트가 함께 지나는 빈 전선 칸이 없어요':'이 에이전트로 가는 전선에 빈 칸이 없어요. 먼저 전선을 이어 주세요',shared?'すべてのエージェントが共通で通る空きセルがありません':'このエージェントへの配線に空きセルがありません。先に配線してください'),'bad');sfx('bad');return false}
+  const p={id:++uid,type,x:w.x,y:w.y,rot:false,state:'idle',mine:G.ep.tut?G.part:null};setDims(p);p.pop=1;G.pieces.push(p);bridge(p);G.lastPart=type;G.nudge[type]=0;sfx('place');changed();
+  const c=center(p);floatT(c[0],c[1]-CS*.9,Lk('Equipped','장착됨','装備しました'),'#1C6FA0');{const n=agentsOfTool(p).length;if(!shared&&n>1)log(Lk(`No wire cell reaches only this agent, so ${PT[type].name} went on the shared stretch: ${n} agents can use it`,`이 에이전트만 지나는 전선 칸이 없어서 ${PT[type].name} 도구를 공통 구간에 붙였어요. 에이전트 ${n}개가 쓸 수 있어요`,`このエージェントだけが通るセルがないため、${PT[type].name} を共通区間に付けました。${n} つのエージェントが使えます`))}return true}
+function unequipTool(a,type){const p=toolsOf(a).find(n=>n.type===type);if(!p)return;const heal=healWire(p);G.pieces=G.pieces.filter(x=>x!==p);if(G.sel===p)G.sel=a;if(heal)heal();sfx('rot');changed();log(`${PT[type].name} removed — refunded`)}
+function toolBay(a){const ids=TOOLK.filter(id=>unlocked(id));if(!ids.length)return '';const have=new Set(toolsOf(a).map(n=>n.type)),multi=(G.net.usable||[]).filter(isAgent).length>1;
+  return `<div class="tbay" data-noi18n><div class="tbh">${Lk('Tool Bay','도구 장착','ツールベイ')}<small>${Lk('click to equip or remove','눌러서 장착 · 해제','押して装備・解除')}</small></div>
+    ${multi?`<div class="tbsc"><button type="button" data-tbs="this" aria-pressed="${tbScope==='this'}">${Lk('This agent','이 에이전트만','このエージェントだけ')}</button><button type="button" data-tbs="shared" aria-pressed="${tbScope==='shared'}">${Lk('Shared route (all agents)','공통 경로 (모든 에이전트)','共通の経路 (全エージェント)')}</button></div>`:''}
+    <div class="tbg">${ids.map(id=>`<button type="button" data-tb="${id}" aria-pressed="${have.has(id)}"><b>${PT[id].name}</b><span>${L3t(TOOLFN[id])}</span><i>${have.has(id)?'✓':'+ $'+PT[id].cost}</i></button>`).join('')}</div>
+    ${multi?`<div class="tnote">${Lk('A tool on a shared stretch of wire reaches every agent on it; removing it removes it for all of them.','여러 에이전트가 함께 지나는 전선 위의 도구는 그 에이전트들 모두에게 적용돼요. 해제하면 모두에게서 빠져요.','複数のエージェントが通る配線上のツールは全員に効きます。外すと全員から外れます。')}</div>`:''}</div>`}
+$('#insp').addEventListener('click',e=>{const s_=e.target.closest('[data-tbs]');if(s_){tbScope=s_.dataset.tbs;renderInsp();return}const b=e.target.closest('[data-tb]');if(!b)return;const a=G.sel;if(!a||!isAgent(a))return;const id=b.dataset.tb;
+  if(toolsOf(a).some(n=>n.type===id))unequipTool(a,id);else equipTool(a,id,tbScope==='shared');G.sel=a;renderInsp()});
 function buildTray(){
   const root=$('#tray');root.innerHTML='';
   CATS.forEach(([cat,lab,cv_])=>{if(cat==='wire'){const d=document.createElement('div');d.className='wirehint';d.innerHTML='<b>Wiring</b> — <b>drag</b> across empty cells to draw wire ($0.1 per cell). Drag along a drawn wire to erase it.';root.appendChild(d);return}
@@ -2923,6 +2957,7 @@ function healWire(o){if(!o||o.type==='wire'||isAgent(o))return;const r={x:o.x,y:
     for(let x=r.x;x<r.x+r.w;x++)if(occAt(x,r.y-1,o)&&occAt(x,r.y+r.h,o))for(let y=r.y;y<r.y+r.h;y++)add(x,y)}}
 function dropDrag(){const d=G.drag;G.drag=null;if(!d||d.gx==null)return;
   if(d.moving){const p=d.moving,heal=healWire(p);if(d.valid){p.x=d.gx;p.y=d.gy;p.rot=d.rot;setDims(p);p.pop=1;sfx('place');bridge(p)}else if(!d.inside){G.pieces=G.pieces.filter(x=>x!==p);if(G.sel===p)G.sel=null;log(`${PT[p.type].name} removed — refunded`)}if(heal&&(d.valid||!d.inside))heal();changed();return}
+  if(!d.valid&&TOOLK.includes(d.type)){const o=occAt(d.gx,d.gy);if(o&&isAgent(o)){equipTool(o,d.type,false);return}}
   if(!d.valid){if(d.inside){log(zoneMsg(d.type),'bad');sfx('bad')}return}
   if(total()+PT[d.type].cost>G.ep.budget){log('Not enough budget','bad');return}
   const p={id:++uid,type:d.type,x:d.gx,y:d.gy,rot:d.rot,effort:d.effort,cond:d.type==='guard'?'inject':null,state:'idle',mine:G.ep.tut?G.part:null};setDims(p);p.pop=1;G.pieces.push(p);bridge(p);if(p.type==='session'&&G.pieces.filter(q=>q.type==='session').length>1)log(Lk("Only one session can start. With two Session starts neither applies, and you pay for both","세션은 하나만 시작할 수 있어요. 세션 시작이 둘이면 어느 것도 적용되지 않고 비용만 두 번 나가요","始まるセッションは一つだけです。セッション開始が二つあるとどちらも効かず、費用だけ二重にかかります"),'bad');G.lastPart=d.type;G.nudge[d.type]=0;sfx('place');changed();if(G.running&&PT[p.type].cat!=='agent'){const c=center(p);floatT(c[0],c[1]-CS*1.1,G.net.active.has(p)?'Active from now on':'Not touching the route yet','#1F6B4A');ringAt(p,'#2E8B62')}(G.net.adj.get(p)||[]).forEach(n=>{const k=contact(p,n);burst(k.x,k.y,'#E5B452',6)});
