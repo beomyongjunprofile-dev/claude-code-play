@@ -13,6 +13,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://beomyongjunprofile-dev.github.io/claude-code-play/social.png">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -939,6 +940,97 @@ body{background-color:#F1F1EB!important;background-image:linear-gradient(rgba(39
 .panel.cpt .cgo .btn{min-width:150px}
 .panel.cpt .cgo .btn[disabled]{background:#C9D3CD;border-color:#C9D3CD;color:#6E7A73;box-shadow:none;cursor:not-allowed}
 .panel.cpt .cwait{font:500 10.8px var(--body);color:var(--ink2)}
+#bSpeed,[data-sp]{display:none!important}
+
+/* ---------- v108 prologue ---------- */
+.panel.prolog .anim{background:#EEF2EC;border-radius:14px;padding:6px}
+#ov:has(.panel.prolog){background:radial-gradient(900px 520px at 50% 40%,rgba(62,194,174,.10),transparent 70%),#F1F1EB!important;-webkit-backdrop-filter:none;backdrop-filter:none}
+.panel.prolog{max-width:720px}
+.psvg{width:100%;height:auto;display:block}
+.psvg .pl{fill:none;stroke:#B9C6BB;stroke-width:3;stroke-linecap:round;stroke-dasharray:6 7}
+.psvg .plr{fill:none;stroke:rgba(194,65,63,.35);stroke-width:1.6;stroke-dasharray:3 4}
+.psvg .pb{fill:#fff;stroke:#9AA89D;stroke-width:1.4}.psvg .pb2{fill:#F6F8F4;stroke:#B4C2B5}.psvg .pb3{fill:#E9EEE7;stroke:#C6D1C7}
+.psvg .pdk{fill:#35433E}.psvg .pt{font:700 11.5px "JetBrains Mono",var(--mono);fill:#27312E}.psvg .ptw{font:800 10.8px var(--body);letter-spacing:.06em;fill:#F6F8F4}
+.psvg .pts{font:600 9.9px var(--body);fill:#636F68}.psvg .ptk{font:700 10.4px var(--body);fill:#35433E}
+.psvg .pd{fill:#3EC2AE}.psvg .pbad{fill:#E0442E}.psvg .pbadt{font:800 11.5px var(--body);fill:#C2413F}.psvg .pok{font:800 12px var(--body);fill:#2E8B62}
+.psvg .pbot{fill:#F8F8F5;stroke:#C9D1CB;stroke-width:1.3}.psvg .pvis{fill:#1B2528}
+.psvg .psep{stroke:#C9D3CD;stroke-width:1.5;stroke-dasharray:4 5}
+.psvg .pchip{fill:#FFF3F1;stroke:#E07A6E;stroke-width:1.4}.psvg .pchipt{font:700 11px var(--body);fill:#A1302B}
+.psvg .prd{fill:#fff;stroke:#C9D3CD;stroke-width:1.4}.psvg .prn{font:800 9.9px var(--body);letter-spacing:.06em;fill:#636F68}.psvg .prl{font:700 9.9px var(--body);fill:#27312E;letter-spacing:-.02em}
+.lmode .lvpro{margin-left:auto!important}.lmode .lvpro+.lvjump{margin-left:8px!important}
+@media (prefers-reduced-motion:reduce){.psvg g[opacity="0"]{opacity:1}}
+
+/* ---------- v108 mobile ---------- */
+.mnote{display:none}
+html.mob .mnote{display:block;font:500 11px var(--body);color:var(--ink2);text-align:center;margin:10px 0 0}
+#rotHint{display:none}
+html.mob body{-webkit-text-size-adjust:100%;overscroll-behavior:none}
+html.mob #app{height:100dvh;padding:6px!important;gap:6px!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto auto minmax(0,1fr) auto!important;box-sizing:border-box}
+html.mob #app>#hud{flex-wrap:wrap;gap:6px 10px!important;padding:7px 10px!important;border-radius:12px}
+html.mob #hud .brand{min-width:0}html.mob #hud .brand .wm{font-size:12px}html.mob #hud .brand .stn{font-size:9.5px}
+html.mob #hud .metrics{gap:10px;flex:1 1 auto}html.mob #hud .ml{display:none}
+html.mob #hud .ctl{order:3;flex:1 0 100%;display:flex;flex-wrap:nowrap;overflow-x:auto;gap:6px;scrollbar-width:none;padding-bottom:1px}
+html.mob #hud .ctl::-webkit-scrollbar{display:none}
+html.mob #hud .ctl button{flex:none;height:32px;padding:0 11px;font-size:11px}
+html.mob #app>#obj{padding:6px 9px!important;grid-template-columns:1fr!important;gap:4px!important}
+html.mob #obj .dom,html.mob #obj .chk{display:none}
+html.mob #obj h2{font-size:12.5px}
+html.mob #obj #coach,html.mob #obj.tut #coach{max-height:5.4em!important;font-size:11px!important}
+html.mob #app>#stageWrap{grid-column:1;grid-row:3;min-height:0}
+html.mob #app>#fpanel{display:none;position:fixed;left:8px;right:8px;bottom:8px;top:auto;max-height:62dvh;z-index:70;grid-row:auto!important;box-shadow:var(--sh3)!important}
+html.mob.fpopen #app>#fpanel{display:flex}
+html.mob #fpanel .fph{position:relative}html.mob #fpanel .fpx{margin-left:auto;border:0;background:none;font:700 18px/1 var(--body);color:#4E5B54;padding:0 4px}
+html.mob #app>#dock{grid-row:4;height:118px!important}
+html.mob #dock .dpane{padding:6px 8px 4px!important}
+html.mob #stageWrap #insp{position:fixed!important;left:8px!important;right:8px!important;bottom:8px!important;top:auto!important;width:auto!important;max-height:58dvh!important;z-index:65}
+html.mob .vctl{bottom:6px;right:6px}html.mob .vctl button{min-width:34px;height:32px}
+html.mob #tlog{width:min(240px,62%);left:6px;bottom:6px}
+html.mob #xcard{max-width:calc(100vw - 24px)}
+@media (orientation:portrait){html.mob #rotHint{display:flex;position:absolute;top:6px;left:50%;transform:translateX(-50%);z-index:8;align-items:center;gap:8px;background:#35433E;color:#F6F8F4;border-radius:999px;padding:5px 6px 5px 12px;font:600 10.8px var(--body);white-space:nowrap;box-shadow:var(--sh2)}
+  html.mob #rotHint button{border:0;background:rgba(255,255,255,.16);color:#fff;width:22px;height:22px;border-radius:50%;font:700 13px/1 var(--body)}}
+@media (orientation:landscape){html.mob #app>#obj #coach{max-height:3.4em!important}html.mob #app>#dock{height:96px!important}html.mob #hud .ctl{order:0;flex:0 1 auto}html.mob #app>#hud{flex-wrap:nowrap}}
+/* title and stage select on a phone */
+html.mob .tmode .ttl{padding:24px 14px 28px}
+html.mob .tmode .scene3d{height:min(38dvh,300px);width:100%}
+html.mob .tmode .ttlbtns{width:100%;justify-content:center}html.mob .tmode .bigbtn.go.play{width:min(320px,100%)}
+html.mob .tmode .ttlfoot{font-size:9.5px;padding:0 12px 10px}
+html.mob .lmode .lvs{grid-template-columns:1fr!important;height:auto}
+html.mob #ov:has(.scrw.lmode){overflow:auto!important}
+html.mob .lmode .lvl{padding:12px 14px 8px!important}
+html.mob .lmode .lv3d{min-height:170px!important;height:170px!important;flex:none!important}
+html.mob .lmode .lvlfoot{margin-top:0}
+html.mob .lmode .lvr{margin:4px 8px 14px!important;padding:14px 12px 18px!important;border-radius:18px}
+html.mob .lmode .lvrh{flex-wrap:wrap;gap:8px}html.mob .lmode .lvpro{margin-left:0!important}
+html.mob .lmode .lvjump{height:32px;font-size:11px}
+html.mob .sdlg{place-items:end center}
+html.mob .sdlg .sdbox{width:100%;max-height:86dvh;border-radius:18px 18px 0 0}
+html.mob .sdlg .sdbox .pv{border-radius:18px 18px 0 0!important}
+html.mob #ov:has(.panel){padding:8px}
+html.mob .panel{max-width:calc(100vw - 16px)!important;padding:14px!important}
+html.mob .panel .act.cact{gap:8px}html.mob .panel .cgo{width:100%;justify-content:flex-end}html.mob .panel .cwait{flex:1}
+html.mob .setbox{max-width:calc(100vw - 24px)!important}
+html.mob #app>#dock{height:104px!important}
+html.mob #obj #coach,html.mob #obj.tut #coach{max-height:4.4em!important}
+html.mob .tmode .ttlfoot kbd,html.mob .tmode .ttlfoot>span:first-child{display:none}
+/*P153d*/
+html.mob #hud .metrics{flex:none}
+html.mob #hud .ctl{min-width:0}
+@media (orientation:landscape){
+  html.mob #app{padding:4px 8px!important;gap:4px!important}
+  html.mob #app>#hud{padding:4px 8px!important;gap:8px!important;min-height:0}
+  html.mob #hud .brand .stn{display:none}html.mob #hud .brand .wm{font-size:11px;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  html.mob #hud .mv{font-size:11px}html.mob #hud .bar{display:none}
+  html.mob #hud .ctl{order:0!important;flex:1 1 auto!important}html.mob #hud .ctl button{height:28px;padding:0 9px;font-size:10.5px}
+  html.mob #app>#obj{padding:4px 8px!important}
+  html.mob #obj h2,html.mob #obj .goal{display:none}
+  html.mob #obj #coach,html.mob #obj.tut #coach{max-height:2.9em!important;font-size:10.4px!important;margin:0!important;padding:0!important;border:0!important}
+  html.mob #app>#dock{height:72px!important}
+  html.mob #ptabs{display:none!important}
+  html.mob #dock #tray .card{height:48px}
+  html.mob #dock #tray .gl{display:none}
+  html.mob .vctl{padding:2px}html.mob .vctl button{min-width:26px;height:24px;font-size:10.5px;padding:0 6px}
+  html.mob #tlog{max-height:60%}
+}
 </style>
 
 <div id="app">
@@ -1694,14 +1786,20 @@ let W=0,H=0,DPR=1,CS=30,BX=0,BY=0,T=0;
 {const dp=document.getElementById('dpParts');if(dp){const mk=(d,lab)=>{const b=document.createElement('button');b.type='button';b.className='trayarr '+d;b.setAttribute('aria-label',lab);b.textContent=d==='l'?'‹':'›';b.addEventListener('click',()=>{const tr=document.getElementById('tray');tr.scrollBy({left:(d==='l'?-1:1)*Math.max(240,tr.clientWidth*.7),behavior:'smooth'})});dp.appendChild(b)};mk('l','Scroll parts left');mk('r','Scroll parts right');
   const upd=()=>{const tr=document.getElementById('tray');if(!tr)return;const ov=tr.scrollWidth>tr.clientWidth+4;dp.classList.toggle('ovx',ov);dp.classList.toggle('atl',tr.scrollLeft<4);dp.classList.toggle('atr',tr.scrollLeft+tr.clientWidth>=tr.scrollWidth-4)};
   setInterval(upd,400);document.getElementById('tray').addEventListener('scroll',upd)}}
+/*P153*/const MOB=(()=>{try{return matchMedia('(pointer:coarse)').matches&&Math.min(screen.width,screen.height)<=820}catch(_){return false}})();
+if(MOB){document.documentElement.classList.add('mob');
+  {const sw=document.getElementById('stageWrap'),vc=sw&&sw.querySelector('.vctl');if(vc){const b=document.createElement('button');b.type='button';b.id='bFilesM';b.textContent=Lk('Files','파일','ファイル');b.setAttribute('aria-label','Project files');b.addEventListener('click',()=>document.documentElement.classList.toggle('fpopen'));vc.insertBefore(b,vc.firstChild)}
+   const fp=document.getElementById('fpanel');if(fp){const x=document.createElement('button');x.type='button';x.className='fpx';x.textContent='×';x.setAttribute('aria-label','Close');x.addEventListener('click',()=>document.documentElement.classList.remove('fpopen'));fp.querySelector('.fph').appendChild(x)}
+   if(sw){const h=document.createElement('div');h.id='rotHint';h.setAttribute('data-noi18n','');h.innerHTML='<span></span><button type="button" aria-label="Close">×</button>';h.querySelector('button').addEventListener('click',()=>{h.remove()});sw.appendChild(h);
+     const lab=()=>{const fb=document.getElementById('bFilesM');if(fb)fb.textContent=Lk('Files','파일','ファイル');const sp=h.querySelector('span');if(sp)sp.textContent=Lk('Turn your phone sideways for a bigger board','가로로 돌리면 회로판이 더 크게 보여요','横向きにすると回路がもっと大きく見えます')};lab();setInterval(lab,1500)}}}
 const VIEW={r0:0,rows:18};cv.__view=VIEW; // rows of the board on screen: the full width is always shown, the rows fit the circuit
 let VTOP=34;
 function resize(){const r=$('#stageWrap').getBoundingClientRect();DPR=Math.min(2,window.devicePixelRatio||1);W=Math.max(1,r.width);H=Math.max(1,r.height);cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';
-  const top=34,Hh=Math.max(60,H-top-24);VIEW.rows=Math.max(6,Math.min(ROWS,VIEW.rows));VIEW.r0=Math.max(0,Math.min(ROWS-VIEW.rows,VIEW.r0));CS=Math.max(12,Math.floor(Math.min((W-16)/(COLS+3.2),Hh/VIEW.rows)));/*P136b*/{const fr=Math.min(ROWS,Math.floor(Hh/CS));if(fr>VIEW.rows){const add=fr-VIEW.rows;VIEW.r0=Math.max(0,Math.min(ROWS-fr,VIEW.r0-Math.floor(add/2)));VIEW.rows=fr}}BX=Math.round((W-CS*COLS)/2);VTOP=top;BY=top+Math.max(0,Math.round((Hh-VIEW.rows*CS)/2))-VIEW.r0*CS;syncView()}
+  const top=34,Hh=Math.max(60,H-top-24);VIEW.rows=Math.max(6,Math.min(ROWS,VIEW.rows));VIEW.r0=Math.max(0,Math.min(ROWS-VIEW.rows,VIEW.r0));CS=Math.max(MOB?6:12,Math.floor(Math.min((W-16)/(COLS+3.2),Hh/VIEW.rows)));/*P153b*//*P136b*/{const fr=Math.min(ROWS,Math.floor(Hh/CS));if(fr>VIEW.rows){const add=fr-VIEW.rows;VIEW.r0=Math.max(0,Math.min(ROWS-fr,VIEW.r0-Math.floor(add/2)));VIEW.rows=fr}}BX=Math.round((W-CS*COLS)/2);VTOP=top;BY=top+Math.max(0,Math.round((Hh-VIEW.rows*CS)/2))-VIEW.r0*CS;syncView()}
 const unlocked=id=>G.ep.unlock.includes(id);
 function dims(p){if(PT[p.type].cat==='agent'){const s=M[PT[p.type].model].sizes[p.effort];return p.rot?[s[1],s[0]]:[s[0],s[1]]}const t=PT[p.type];return p.rot?[t.h,t.w]:[t.w,t.h]}
 function setDims(p){const d=dims(p);p.w=d[0];p.h=d[1]}
-let SPEED=[1,2,4].includes(store.get('ccp-speed',2))?store.get('ccp-speed',2):2; // chosen run speed; kept across levels and reloads
+/*P151*/const SPEED=2; // fixed base pace; automatic pacing (slow on the case, fast after success) still applies
 function syncSpeed(){{const b=$('#bSpeed');if(b)b.textContent=Lk("Speed","속도","速度")+' '+SPEED+'×'}document.querySelectorAll('[data-sp]').forEach(x=>x.setAttribute('aria-pressed',String(+x.dataset.sp===SPEED)))}
 function newGame(ep){
   G={ep,pieces:[],running:false,done:false,t:0,speed:SPEED,queue:[],pkts:[],parts:[],fxs:[],wave:[],wi:0,tok:0,pen:0,shipped:0,leaks:{},leakN:0,dead:0,caught:{},resolved:0,
@@ -2597,9 +2695,9 @@ function render(dt){
     if(VIEW.r0>0){cx.fillStyle='rgba(31,37,43,.18)';cx.fillRect(BX,vt-1,COLS*CS,1)}if(VIEW.r0+VIEW.rows<ROWS){cx.fillStyle='rgba(31,37,43,.18)';cx.fillRect(BX,vb,COLS*CS,1)}
     const y=Math.max(8,vt-24),sq=(x,fill,st)=>{cx.fillStyle=fill;rr(x,y,13,13,3);cx.fill();cx.strokeStyle=st;cx.lineWidth=1.3;rr(x+.5,y+.5,12,12,3);cx.stroke()};
     cx.font='600 11px Manrope,"Pretendard Variable","Noto Sans KR","Noto Sans JP",system-ui,sans-serif';const lw1=cx.measureText('AGENT SIDE · the model and what you attach to it (non-deterministic)').width,lw2=cx.measureText('BACKEND CODE · handlers, schemas, routing (deterministic)').width;
-    let x=Math.max(BX+4,Math.round(BX+COLS*CS/2-(19+lw1+26+19+lw2)/2));
-    sq(x,'#FAFBFC','#2B333B');cx.fillStyle='#F08A24';cx.fillRect(x+3,y+9,7,2);label('AGENT SIDE · the model and what you attach to it (non-deterministic)',x+19,y+11,11,'#55606B','left');
-    x+=19+lw1+26;sq(x,'#46525D','#1C9ED8');cx.fillStyle='#7FD6F5';cx.fillRect(x+3,y+3,7,2);label('BACKEND CODE · handlers, schemas, routing (deterministic)',x+19,y+11,11,'#55606B','left');
+    let x=Math.max(BX+4,Math.round(BX+COLS*CS/2-(19+lw1+26+19+lw2)/2));/*P153c*/const lgFit=(19+lw1+26+19+lw2)<=COLS*CS+CS*2;
+    if(lgFit){sq(x,'#FAFBFC','#2B333B');cx.fillStyle='#F08A24';cx.fillRect(x+3,y+9,7,2);label('AGENT SIDE · the model and what you attach to it (non-deterministic)',x+19,y+11,11,'#55606B','left');
+    x+=19+lw1+26;sq(x,'#46525D','#1C9ED8');cx.fillStyle='#7FD6F5';cx.fillRect(x+3,y+3,7,2);label('BACKEND CODE · handlers, schemas, routing (deterministic)',x+19,y+11,11,'#55606B','left')}
     if(VIEW.r0>0){cx.fillStyle='#93A0AB';cx.font='700 11px '+'Manrope,sans-serif';cx.textAlign='center';cx.fillText('▲',BX+COLS*CS/2,vt-6)}if(VIEW.r0+VIEW.rows<ROWS){cx.fillStyle='#93A0AB';cx.textAlign='center';cx.fillText('▼',BX+COLS*CS/2,vb+16)}
     cx.restore()}
 }
@@ -2658,7 +2756,7 @@ function toolBay(a){const ids=TOOLK.filter(id=>unlocked(id));if(!ids.length)retu
     ${multi?`<div class="tnote">${Lk('A tool on a shared stretch of wire reaches every agent on it; removing it removes it for all of them.','여러 에이전트가 함께 지나는 전선 위의 도구는 그 에이전트들 모두에게 적용돼요. 해제하면 모두에게서 빠져요.','複数のエージェントが通る配線上のツールは全員に効きます。外すと全員から外れます。')}</div>`:''}</div>`}
 $('#insp').addEventListener('click',e=>{const s_=e.target.closest('[data-tbs]');if(s_){tbScope=s_.dataset.tbs;renderInsp();return}const b=e.target.closest('[data-tb]');if(!b)return;const a=G.sel;if(!a||!isAgent(a))return;const id=b.dataset.tb;
   if(toolsOf(a).some(n=>n.type===id))unequipTool(a,id);else equipTool(a,id,tbScope==='shared');G.sel=a;renderInsp()});
-/*P147*/let TLOG=[],tlogN=0,tlogOpen=true;const tlogNo=new WeakMap();
+/*P147*/let TLOG=[],tlogN=0,tlogOpen=!(window.matchMedia&&matchMedia('(pointer:coarse)').matches&&Math.min(screen.width,screen.height)<=820);const tlogNo=new WeakMap();
 const TLA={auto:['No prompt · read-only','자동 허용 · 읽기 전용','確認なし · 読み取り専用'],pre:['Pre-approved · permissions.allow','미리 허용 · permissions.allow','事前許可 · permissions.allow'],ask:['Asks first (default mode)','먼저 물어봄 (기본 모드)','先に確認 (既定モード)'],
   gone:['Not callable · not in tools:','호출 불가 · tools: 목록에 없음','呼べない · tools: にない'],hook:['Blocked · PreToolUse exit 2','차단 · PreToolUse exit 2','ブロック · PreToolUse exit 2'],stop:['Halted · Stop hook','중단 · Stop hook','停止 · Stop hook'],ran:['Ran · nothing blocked it','실행됨 · 막는 장치 없음','実行された · 止めるものがない']};
 function tlogUsed(){return !!(G.ep&&((G.ep.unlock||[]).some(k=>TOOLK.includes(k))||(G.ep.haz||[]).includes('danger')))}
@@ -3076,8 +3174,8 @@ function openSet(from){setFrom=from||null;setdlg.hidden=false;syncLang();syncMut
 function closeSet(){setdlg.hidden=true;if(setFrom&&setFrom.isConnected)setFrom.focus();setFrom=null}
 document.addEventListener('click',e=>{const t=e.target;if(!t.closest)return;const o=t.closest('[data-set]');if(o){openSet(o);return}if(t===setdlg||t.closest('#setX')){closeSet();return}const b=t.closest('[data-snd]');if(b)setMute(b.dataset.snd==='0')});
 window.addEventListener('keydown',e=>{if(setdlg.hidden)return;if(e.key==='Escape'){e.preventDefault();closeSet()}e.stopPropagation()},true);
-document.querySelectorAll('[data-sp]').forEach(b=>b.addEventListener('click',()=>{SPEED=G.speed=+b.dataset.sp;if(G.running){G.manual=true;G.slow=false;G.ff=false}store.set('ccp-speed',SPEED);syncSpeed()}));syncSpeed();
-$('#bMenu').addEventListener('click',()=>showTitle());$('#bSpeed').addEventListener('click',()=>{const n={1:2,2:4,4:1}[SPEED]||2;document.querySelector('[data-sp="'+n+'"]').click()});syncSpeed();
+document.querySelectorAll('[data-sp]').forEach(b=>b.remove());
+$('#bMenu').addEventListener('click',()=>showTitle());{const b=$('#bSpeed');if(b)b.remove()}
 $('#bPrice').addEventListener('click',()=>showPricing());
 $('#bFiles').addEventListener('click',()=>showFiles());$('#bConc').addEventListener('click',()=>{if(G.ep&&ov.hidden)showConcepts(epIdx,()=>{ov.hidden=true;ov.innerHTML=''},true)});
 
@@ -3269,7 +3367,7 @@ function heroSVG(){ // the four model robots, drawn like the in-game agents: whi
 let scrMode='title',lvSel=-1;
 function flipFrom(r0,el){if(!r0||!el||matchMedia('(prefers-reduced-motion: reduce)').matches)return;const r1=el.getBoundingClientRect();if(!r1.width)return;const sx=r0.width/r1.width,dx=r0.left-r1.left,dy=r0.top-r1.top;
   el.style.transformOrigin='0 0';el.style.transition='none';el.style.transform=`translate(${dx}px,${dy}px) scale(${sx})`;void el.offsetWidth;el.style.transition='transform .55s cubic-bezier(.2,.8,.2,1)';el.style.transform='none'}
-function refreshLang(){if(!ov.hidden&&ov.querySelector('.scrw'))showTitle(scrMode)}
+function refreshLang(){if(!ov.hidden&&ov.querySelector('.panel.prolog')&&ov.__prologDraw){ov.__prologDraw();return}if(!ov.hidden&&ov.querySelector('.scrw'))showTitle(scrMode)}
 /*P133*/const STAGE={ // [mission title en/ko/ja, technical subtitle en/ko/ja]. Display only; e.en stays the id.
  'Basics':[['Catch agent mistakes with hooks','실행 전후 hook으로 실수 잡기','実行前後の hook でミスを止める'],'PRE hook · POST hook'],
  'PreToolUse vs Stop vs max_turns':[['Block danger, early stops and endless loops','위험 명령·조기 종료·무한 루프 막기','危険な命令・早すぎる終了・無限ループを防ぐ'],'PreToolUse · Stop · max_turns'],
@@ -3348,6 +3446,54 @@ const STICO=(()=>{const g='<ellipse class="k" cx="24" cy="42.5" rx="15" ry="2.6"
  return en=>`<svg class="lvi" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round">${P[BY[en]]||P.hook}</svg>`})();
 const CHCOL=['#32B9A5','#4899DA','#9270D6','#2FA9C2','#E59A54','#647DD9','#D97CA0','#D6A93A']; // chapter colours, the last one is FINAL
 const chSty=ci=>`--cc:${CHCOL[ci]||CHCOL[7]}`;
+/*P152*/const PROLOG=[
+ {k:'code',t:['Before: every decision written as code','예전에는: 모든 판단을 코드로','以前は: すべての判断をコードで'],
+  b:['Handling one support ticket meant writing everything in advance: parse it, validate it, pick a route, retry on failure, catch errors, format the answer. Work that follows the rules is fast and exact. An input nobody planned for stops the line.','지원 티켓 하나를 처리하려면 모든 걸 미리 코드로 써 둬야 했어요. 읽고, 검사하고, 갈 곳을 정하고, 실패하면 다시 하고, 오류를 잡고, 답을 정리하는 것까지요. 규칙대로 오는 일은 빠르고 정확해요. 하지만 아무도 예상하지 못한 입력이 오면 거기서 멈춰요.','サポートチケット一件を処理するにも、すべてを先にコードで書いておく必要がありました。読み取り、検証、振り分け、失敗時の再試行、エラー処理、回答の整形まで。ルール通りの仕事は速く正確です。でも誰も想定していない入力が来ると、そこで止まります。']},
+ {k:'branch',t:['More cases, more branches','경우가 늘면 분기도 늘어요','ケースが増えると分岐も増える'],
+  b:['Every new kind of request needs another branch, and every branch has to be tested against all the others. The code keeps growing, and changing one rule can break three others.','새로운 요청 유형마다 분기를 하나씩 더해야 하고, 그 분기를 다른 모든 분기와 함께 다시 테스트해야 해요. 코드는 계속 커지고, 규칙 하나를 고치면 다른 세 곳이 깨지기도 해요.','新しい種類の依頼ごとに分岐を一つ足し、ほかの分岐すべてと一緒にテストし直す必要があります。コードは膨らみ続け、ルールを一つ直すと別の三か所が壊れることもあります。']},
+ {k:'agent',t:['Now: give an agent the goal','이제는: 에이전트에게 목표를 맡겨요','いまは: エージェントに目的を任せる'],
+  b:['An orchestrator splits the work and hands it to subagents. Each one reads its task, picks its tools and works it out, even on input it has never seen. The wiring is short: who gets which kind of work.','오케스트레이터가 일을 나눠 subagent에게 넘겨요. 각 subagent는 작업을 읽고, 도구를 골라, 처음 보는 입력도 스스로 풀어내요. 회로는 짧아요. 누가 어떤 일을 맡는지만 이으면 돼요.','オーケストレーターが仕事を分けて subagent に渡します。各 subagent はタスクを読み、ツールを選び、初めて見る入力でも自分で解きます。配線は短く、誰がどの仕事を受け持つかをつなぐだけです。']},
+ {k:'compare',t:['What changed','무엇이 달라졌나','何が変わったか'],
+  b:['Code is deterministic: the same input always gives the same output, and someone wrote every rule. An agent is non-deterministic: give it a goal and context and it handles cases nobody listed, but two runs can differ.','코드는 결정적이에요. 같은 입력이면 늘 같은 결과가 나오고, 모든 규칙을 누군가 직접 썼어요. 에이전트는 비결정적이에요. 목표와 맥락만 주면 목록에 없던 경우도 처리하지만, 실행할 때마다 결과가 조금씩 다를 수 있어요.','コードは決定的です。同じ入力ならいつも同じ結果で、ルールはすべて誰かが書きました。エージェントは非決定的です。目的と文脈を渡せば一覧にないケースも扱えますが、実行ごとに結果が少し変わることがあります。']},
+ {k:'risks',t:['But not ready to run on its own','하지만 그대로 맡기기엔 아직 일러요','でも、そのまま任せるにはまだ早い'],
+  b:['Because it is non-deterministic, an agent can give a confident wrong answer, run a dangerous command, break the output format, burn through tokens or loop forever. In production it needs deterministic code around it: hooks, schemas, limits and routing.','비결정적이기 때문에 에이전트는 그럴듯한 오답을 내거나, 위험한 명령을 실행하거나, 출력 형식을 깨거나, 토큰을 마구 쓰거나, 끝없이 반복할 수 있어요. 실제로 쓰려면 그 주변을 결정적인 코드(hook, 스키마, 한도, 라우팅)로 감싸야 해요.','非決定的なので、エージェントはもっともらしい誤答を出したり、危険なコマンドを実行したり、出力形式を崩したり、トークンを使いすぎたり、終わらないループに入ったりします。本番で使うには、周りを決定的なコード(hook、スキーマ、上限、ルーティング)で囲む必要があります。']},
+ {k:'road',t:['Let’s solve them one by one','이제 하나씩 풀어 봐요','ひとつずつ解いていこう'],
+  b:['Each chapter takes one of these problems and fixes it with the right mix of agent and code. First come the guardrails: catching an agent’s mistakes with hooks.','각 챕터마다 이 과제를 하나씩 골라, 에이전트와 코드를 알맞게 섞어 해결해요. 첫 번째는 안전장치예요. hook으로 에이전트의 실수를 잡아 봐요.','各章でこの課題を一つずつ取り上げ、エージェントとコードを適切に組み合わせて解決します。最初はガードレール。hook でエージェントのミスを止めましょう。']}];
+function prologSVG(k){const L=a=>Array.isArray(a)?(LANG==='ko'?a[1]:LANG==='ja'?a[2]:a[0]):a,E=x=>escH(String(x));
+  const box=(x,y,w,h,t,cls)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="9" class="${cls||'pb'}"/><text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" class="${cls==='pdk'?'ptw':'pt'}">${E(t)}</text>`;
+  const dot=(path,dur,beg,cls,r)=>`<circle r="${r||6}" class="${cls||'pd'}"><animateMotion dur="${dur}s" begin="${beg||0}s" repeatCount="indefinite" path="${path}"/></circle>`;
+  const bot=(x,y,c)=>`<g transform="translate(${x} ${y})"><rect x="-30" y="-20" width="60" height="42" rx="12" class="pbot"/><ellipse cx="0" cy="-3" rx="20" ry="11" class="pvis"/><ellipse cx="-7" cy="-3" rx="3" ry="4.5" fill="${c}"/><ellipse cx="7" cy="-3" rx="3" ry="4.5" fill="${c}"/><rect x="-18" y="14" width="36" height="3" rx="1.5" fill="${c}"/></g>`;
+  let h=230,o='';
+  if(k==='code'){const P='M62 62 H418 V168 H62';o+=`<path d="${P}" class="pl"/>`+dot(P,5.2,0)+dot(P,5.2,1.7)+dot(P,5.2,3.4)+`<rect width="13" height="13" rx="3" class="pbad" x="-6.5" y="-6.5"><animateMotion dur="3s" begin="0.6s" fill="freeze" path="M62 62 H332"/></rect>`;
+    o+=box(16,44,64,36,'QUEUE','pdk')+box(110,44,92,36,'parse()')+box(222,44,100,36,'validate()')+box(342,44,92,36,'route()')+box(342,150,92,36,'retry(3)')+box(222,150,100,36,'on_error()')+box(110,150,92,36,'format()')+box(16,150,64,36,'DEPLOY','pdk');
+    o+=`<g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="3.6s" dur=".3s" fill="freeze"/><text x="388" y="30" text-anchor="middle" class="pbadt">✕ ${E(L(['No rule for this case','이 경우를 처리할 규칙이 없음','このケースのルールがない']))}</text></g>`}
+  else if(k==='branch'){o+=box(16,96,80,36,'input');const ys=[30,80,148,198],lab=['if A','elif B','elif C','else'];ys.forEach((y,i)=>{o+=`<path d="M96 114 C130 114 130 ${y} 160 ${y}" class="pl"/>`+box(160,y-16,74,32,lab[i])});
+    let n=0;ys.forEach((y,i)=>{[-12,12].forEach(d=>{const yy=y+d,b=(.4+n*.25).toFixed(2);n++;o+=`<g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="${b}s" dur=".3s" fill="freeze"/><path d="M234 ${y} C260 ${y} 260 ${yy} 290 ${yy}" class="pl"/><rect x="290" y="${yy-9}" width="64" height="18" rx="5" class="pb2"/><text x="322" y="${yy+4}" text-anchor="middle" class="pts">case ${n}</text>${[0,1].map(z=>`<path d="M354 ${yy} L390 ${yy+(z?6:-6)}" class="pl"/><rect x="390" y="${yy+(z?6:-6)-6}" width="40" height="12" rx="4" class="pb3"/>`).join('')}</g>`})});
+    o+=`<g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2.6s" dur=".4s" fill="freeze"/><text x="500" y="110" text-anchor="middle" class="pbadt">${E(L(['+ new case','+ 새 경우','+ 新しいケース']))}</text><text x="500" y="130" text-anchor="middle" class="pts">${E(L(['retest every path','모든 경로 재테스트','全経路を再テスト']))}</text></g>`}
+  else if(k==='agent'){o+=box(24,94,86,40,'COORD','pdk')+box(470,94,70,40,'DEPLOY','pdk');const ys=[48,114,180],cs=['#17AE9B','#1C9ED8','#8D6BE8'],sh=['circle','rect','tri'];
+    let top='';ys.forEach((y,i)=>{const P=`M110 114 C180 114 190 ${y} 250 ${y} L330 ${y} C400 ${y} 410 114 470 114`;o+=`<path d="${P}" class="pl"/>`;top+=bot(290,y,cs[i]);
+      const beg=(i*.9).toFixed(1),shp=sh[i]==='circle'?`<circle r="6.5" class="pd"/>`:sh[i]==='rect'?`<rect x="-6" y="-6" width="12" height="12" rx="2" class="pd"/>`:`<path d="M0 -7 L7 6 L-7 6 Z" class="pd"/>`;
+      o+=`<g>${shp}<animateMotion dur="3.4s" begin="${beg}s" repeatCount="indefinite" path="${P}"/></g>`});
+    o+=top+`<text x="505" y="80" text-anchor="middle" class="pok">✓ ✓ ✓</text><text x="290" y="222" text-anchor="middle" class="pts">${E(L(['three subagents · they pick their own tools','subagent 3개 · 도구는 각자 골라요','subagent 3つ · ツールは各自で選ぶ']))}</text>`}
+  else if(k==='compare'){o+=`<line x1="280" y1="16" x2="280" y2="214" class="psep"/>`;[[30,40],[100,40],[170,40],[170,96],[100,96],[30,96],[30,152],[100,152],[170,152]].forEach(([x,y],i)=>{o+=`<rect x="${x}" y="${y}" width="56" height="30" rx="7" class="pb"/><text x="${x+28}" y="${y+19}" text-anchor="middle" class="pts">${['if','try','map','retry','parse','check','if','route','fmt'][i]}</text>`});
+    o+=`<text x="128" y="206" text-anchor="middle" class="ptk">${E(L(['CODE · deterministic · every rule written','코드 · 결정적 · 규칙을 전부 씀','コード · 決定的 · ルールを全部書く']))}</text>`;
+    o+=box(312,88,76,36,'COORD','pdk')+`<path d="M388 106 C420 106 420 62 446 62 M388 106 C420 106 420 150 446 150" class="pl"/>`+bot(478,62,'#1C9ED8')+bot(478,150,'#F08A24');
+    o+=`<text x="420" y="206" text-anchor="middle" class="ptk">${E(L(['AGENT · non-deterministic · goal + context','에이전트 · 비결정적 · 목표와 맥락','エージェント · 非決定的 · 目的と文脈']))}</text>`}
+  else if(k==='risks'){o+=bot(280,112,'#F08A24');const R_=[['Hallucination','할루시네이션','ハルシネーション'],['Dangerous command','위험한 명령','危険なコマンド'],['Broken format','형식 오류','形式の崩れ'],['Token blow-up','토큰 폭증','トークンの膨張'],['Endless loop','무한 루프','終わらないループ'],['Context waste','컨텍스트 낭비','コンテキストの無駄']],pos=[[120,48],[440,48],[90,118],[470,118],[120,188],[440,188]];
+    R_.forEach((r,i)=>{const [x,y]=pos[i],t=L(r),w=Math.max(96,t.length*(LANG==='en'?7.2:12.5)+22),b=(.3+i*.45).toFixed(2);o+=`<g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="${b}s" dur=".35s" fill="freeze"/><path d="M${x} ${y} L280 112" class="plr"/><rect x="${x-w/2}" y="${y-14}" width="${w}" height="28" rx="14" class="pchip"/><text x="${x}" y="${y+4.5}" text-anchor="middle" class="pchipt">${E(t)}</text></g>`})}
+  else if(k==='road'){const rows=[[0,1,2,3],[4,5,6,7]];let pth='M70 70 H490 V170 H70';o+=`<path d="${pth}" class="pl"/>`+dot(pth,7,0,'pd',5);
+    rows.forEach((r,ri)=>r.forEach((ci,j)=>{const x=ri===0?70+j*140:490-j*140,y=ri===0?70:170,col=(typeof CHCOL!=='undefined'&&CHCOL[ci])||'#3EC2AE',lab=(typeof CHM!=='undefined'&&CHM[ci])?L(CHM[ci]):'',w=134;
+      o+=`<rect x="${x-w/2}" y="${y-24}" width="${w}" height="48" rx="12" class="prd"${ci===0?' style="stroke:#3EC2AE;stroke-width:2.4"':''}/><circle cx="${x-w/2+14}" cy="${y-9}" r="5" fill="${col}"/><text x="${x-w/2+24}" y="${y-5}" class="prn">${ci===7?'FINAL':'CH '+(ci+1)}</text><text x="${x}" y="${y+13}" text-anchor="middle" class="prl">${E(lab.length>(LANG==='en'?22:19)?lab.slice(0,LANG==='en'?21:18)+'…':lab)}</text>`}));
+    o+=`<text x="70" y="30" text-anchor="middle" class="pok">START</text>`}
+  return `<svg viewBox="0 0 560 ${h}" class="psvg" role="img" aria-hidden="true">${o}</svg>`}
+function showPrologue(done){let n=0,seen=false;const L=a=>LANG==='ko'?a[1]:LANG==='ja'?a[2]:a[0];
+  const draw=()=>{const p=PROLOG[n],last=n===PROLOG.length-1;if(last)seen=true;ov.hidden=false;delete ov.dataset.dlg;
+    ov.innerHTML=`<div class="panel cpt prolog" data-noi18n><div class="eyebrow">PROLOGUE · ${n+1} / ${PROLOG.length}</div><h2>${L(p.t)}</h2><div class="cptb">${L(p.b)}</div><div class="anim">${prologSVG(p.k)}</div>
+      <div class="cdots">${PROLOG.map((_,k)=>`<i class="${k===n?'on':''}"></i>`).join('')}</div>
+      <div class="act cact"><div class="cnav"><button class="btn alt" id="pprev"${n>0?'':' disabled'}>‹ ${Lk('Back','이전','戻る')}</button><button class="btn${last?' alt':''}" id="pnext"${last?' disabled':''}>${Lk('Next','다음','次へ')} ›</button></div>
+      <div class="cgo">${seen?'':`<span class="cwait">${Lk('Read to the last page to start','끝까지 읽으면 시작할 수 있어요','最後まで読むと始められます')} · ${n+1}/${PROLOG.length}</span>`}<button class="btn" id="pdone"${seen?'':' disabled'}>${Lk('To the stages','스테이지로','ステージへ')} ▸</button></div></div></div>`;
+    $('#pprev').addEventListener('click',()=>{if(n>0){n--;draw()}});$('#pnext').addEventListener('click',()=>{if(!last){n++;draw()}});$('#pdone').addEventListener('click',()=>{if(!seen)return;store.set('ccp-prolog',1);done()});
+    (last?$('#pdone'):$('#pnext')).focus()};ov.__prologDraw=draw;draw()}
 function showTitle(mode){mode=mode==='title'?'title':'levels';
   const prog=store.get('ccp4-stars',{}),best=store.get('ccp4-best',{});ov.hidden=false;delete ov.dataset.dlg;
   const done=EPS.filter(e=>prog[e.en]).length,nx=Math.max(0,EPS.findIndex(e=>!prog[e.en])),starN=EPS.reduce((a,e)=>a+(prog[e.en]||0),0),missN=rvMissed().length;
@@ -3362,9 +3508,9 @@ function showTitle(mode){mode=mode==='title'?'title':'levels';
      <div class="scene3d" id="scene3d">${crewHTML()}</div>
      <div class="ttlbtns" data-noi18n><button class="bigbtn go play" id="tLv" type="button"><span class="pi" aria-hidden="true">▶</span>${Lk('Play','플레이하기','プレイする')}</button></div>
      <div class="ttlprog">${progLine}</div>
-     <p class="mnote">This game is built for a desktop screen. On a phone the board is too small to play comfortably: rotate to landscape, or open it on a computer.</p>
+     <p class="mnote" data-noi18n>${Lk("On a phone, turn it sideways for a bigger board. A computer screen is the most comfortable.","휴대폰에서는 가로로 돌리면 회로판이 더 크게 보여요. 컴퓨터 화면이 가장 편해요.","スマートフォンでは横向きにすると回路が大きく見えます。いちばん快適なのはパソコンの画面です。")}</p>
     </div></div><div class="ttlfoot"><span data-noi18n><kbd>Enter</kbd> ${Lk('play','플레이','プレイ')} · </span><span>Unofficial study game. Not affiliated with or endorsed by Anthropic. Prices and behaviour are simplified for play.</span></div></div>`;
-    $('#tLv').addEventListener('click',()=>showTitle('levels'));
+    $('#tLv').addEventListener('click',()=>{if(!store.get('ccp-prolog',0))showPrologue(()=>showTitle('levels'));else showTitle('levels')});
     {const box=$('#scene3d');let stop2d=null,stop3d=null,dead=false;window.__crewStop=()=>{dead=true;if(stop2d)stop2d();if(stop3d)stop3d()};
      const fall=()=>{if(!dead&&box.isConnected&&!stop2d){box.classList.add('fallback');stop2d=crewLife(box.querySelector('.crew'))}};
      ensureThree(()=>{if(dead||!box.isConnected)return;try{stop3d=scene3d(box)}catch(e){stop3d=null}if(!stop3d)fall()},fall)}
@@ -3391,7 +3537,7 @@ function showTitle(mode){mode=mode==='title'?'title':'levels';
      <div class="pv" id="pv" data-noi18n></div>
      <div class="lvlfoot"><div class="ttlprog" style="justify-content:flex-start;margin:0">${progLine}</div>${missN?`<button class="btn alt" id="rvmiss" type="button">${Lk('Retry missed questions','틀린 문제 다시 풀기','間違えた問題をやり直す')} · ${missN}</button>`:''}
       <details><summary>${Lk('How levels work','레벨 진행 방식','レベルの進み方')}</summary><p class="legend" style="margin-top:6px">${(x=>x.replace(/>CCA</g,'>CCAR-F<'))(trH(`Each chapter starts with <b>guided levels</b>: a failure just rewinds and shows you why. It ends with a <i class="hardtag">HARD</i> level: the same ideas all at once, with no guide, a budget and a leak limit. After a guided level a short <b>review round</b> asks the exam points on that topic that the board does not play. Tags show which exam a level draws on: <span class="exm" data-noi18n>CCA</span> Claude Certified Architect · <span class="exm" data-noi18n>CCDV-F</span> Claude Certified Developer – Foundations.`))}</p><p class="legend">${trH(`Drag parts onto the grid and drag across empty cells to wire them · <kbd>R</kbd> rotate · drag off the board to remove (refund) · click an agent to resize it by effort · <kbd>Space</kbd> run`)}</p></details></div>
-    </div><div class="lvr"><div class="lvrh" data-noi18n><b>${Lk('Stage select','스테이지 선택','ステージ選択')}</b><span>${done} / ${EPS.length} · ★ ${starN} / ${EPS.length*3}</span><button type="button" class="lvjump" id="lvJump">▸ ${Lk('Current stage','현재 스테이지로','現在のステージへ')} <b>${lvCode(EPS[nx])}</b></button></div>
+    </div><div class="lvr"><div class="lvrh" data-noi18n><b>${Lk('Stage select','스테이지 선택','ステージ選択')}</b><span>${done} / ${EPS.length} · ★ ${starN} / ${EPS.length*3}</span><button type="button" class="lvjump lvpro" id="lvPro">▶ ${Lk('Prologue','프롤로그','プロローグ')}</button><button type="button" class="lvjump" id="lvJump">▸ ${Lk('Current stage','현재 스테이지로','現在のステージへ')} <b>${lvCode(EPS[nx])}</b></button></div>
      ${CH.map((c,ci)=>{const Lv=EPS.map((e,i)=>[e,i]).filter(x=>x[0].ch===ci),cd=Lv.filter(x=>prog[x[0].en]).length,fin=ci===CH.length-1;
        return `<section class="chs" style="${chSty(ci)}"><div class="chh" data-noi18n><span class="chtt" data-v="b"><span class="chn">${fin?'FINAL':'CHAPTER '+String(ci+1).padStart(2,'0')}</span><span class="chl2"><span class="cht">${escH(L3x(CHM[ci]))}</span><span class="chs2">${escH(tr(fin?'Legacy circuit':c.t))}</span></span></span><span class="chp${cd===Lv.length?' all':''}">${cd===Lv.length?'✓ ':''}${cd} / ${Lv.length} ${Lk('cleared','완료','クリア')}</span></div>
        <div class="tiles">${Lv.map(([e,i])=>`<button type="button" class="tile stg${e.kind==='fix'?' hard':''}${prog[e.en]?' done':''}${i===nx?' next':''}" data-i="${i}" data-noi18n title="${escH(stTitle(e))}"><span class="sic">${STICO(e.en)}</span><span class="sb"><span class="sh"><b class="sc">${lvCode(e)}</b>${e.kind==='fix'?'<span class="hardb">HARD</span>':''}${(RVQ[e.en]||[]).length&&!rvLeft(e.en).length?'<span class="rvok">✓ Q</span>':''}<span class="sp"></span>${i===nx&&!prog[e.en]?`<span class="nxb">NEXT</span>`:prog[e.en]?`<span class="sst">${'★'.repeat(prog[e.en])}<i>${'★'.repeat(3-prog[e.en])}</i></span>`:''}</span><span class="tn">${escH(stTitle(e))}</span><span class="ssub">${escH(stSub(e))}</span></span></button>`).join('')}</div></section>`}).join('')}
@@ -3409,13 +3555,13 @@ function showTitle(mode){mode=mode==='title'?'title':'levels';
     if(scroll){const t=tiles.find(t=>+t.dataset.i===i);if(t)t.scrollIntoView({block:'nearest'})}};
   lvSel=-1;sel(lvSel>=0?lvSel:nx,true);
   tiles.forEach((t,k)=>{t.style.animation=`rise .32s cubic-bezier(.2,.8,.2,1) ${Math.min(k,14)*.02}s both`;t.addEventListener('focus',()=>{tiles.forEach(x=>x.classList.toggle('sel',x===t))});const go=()=>{const i=+t.dataset.i,d=$('#sdlg');if(d&&!d.hidden&&i===lvSel){showBrief(i);return}openDlg(i)};t.addEventListener('click',go);t.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();go()}})});
-  $('#lvBack').addEventListener('click',()=>showTitle('title'));$('#lvJump').addEventListener('click',()=>{sel(nx,false);const t=tiles.find(t=>+t.dataset.i===nx);if(t){t.scrollIntoView({block:'center',behavior:'smooth'});t.focus({preventScroll:true})}});{const rm=$('#rvmiss');if(rm)rm.addEventListener('click',()=>showReview(()=>showTitle('levels'),rvMissed().slice(0,RVN)))}
+  $('#lvBack').addEventListener('click',()=>showTitle('title'));$('#lvPro').addEventListener('click',()=>showPrologue(()=>showTitle('levels')));$('#lvJump').addEventListener('click',()=>{sel(nx,false);const t=tiles.find(t=>+t.dataset.i===nx);if(t){t.scrollIntoView({block:'center',behavior:'smooth'});t.focus({preventScroll:true})}});{const rm=$('#rvmiss');if(rm)rm.addEventListener('click',()=>showReview(()=>showTitle('levels'),rvMissed().slice(0,RVN)))}
   flipFrom(r0,ov.querySelector('.lvl .heroart'));flipFrom(h0,ov.querySelector('.lvl h1.ttlh'));
   (tiles.find(t=>+t.dataset.i===nx)||tiles[0]).focus({preventScroll:true});
 }
 addEventListener('keydown',e=>{if(e.key==='Escape'){const d=document.getElementById('sdlg');if(d&&!d.hidden&&ov.__closeDlg){e.preventDefault();e.stopImmediatePropagation();ov.__closeDlg()}}},true);
 addEventListener('keydown',e=>{if(ov.hidden||!ov.querySelector('.scrw')||!setdlg.hidden||e.metaKey||e.ctrlKey||e.altKey)return;
-  if(scrMode==='title'){if(e.key==='l'||e.key==='L'||e.key==='Enter'){e.preventDefault();showTitle('levels')}return}
+  if(scrMode==='title'){if(e.key==='l'||e.key==='L'||e.key==='Enter'){e.preventDefault();if(!store.get('ccp-prolog',0))showPrologue(()=>showTitle('levels'));else showTitle('levels')}return}
   if(e.key==='Escape'){e.preventDefault();showTitle('title');return}
   const tl=[...ov.querySelectorAll('.tile')],k=tl.indexOf(document.activeElement);if(k<0)return;const cols=getComputedStyle(tl[0].parentElement).gridTemplateColumns.split(' ').length;
   const mv={ArrowRight:1,ArrowLeft:-1,ArrowDown:cols,ArrowUp:-cols}[e.key];if(mv){e.preventDefault();const n=tl[Math.max(0,Math.min(tl.length-1,k+mv))];n.focus()}});
