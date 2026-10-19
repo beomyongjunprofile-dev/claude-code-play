@@ -1033,7 +1033,25 @@ html.prolog #app>#prol{display:grid;grid-column:1/-1;grid-row:3;gap:10px;backgro
 html.mob.prolog #app{grid-template-rows:auto minmax(0,1fr) auto!important}
 html.mob #prol{padding:10px 12px 9px!important;border-radius:12px}html.mob #prol h2{font-size:14px}html.mob #prol p{font-size:11.2px;line-height:1.45}
 html.mob #prol .act{flex-wrap:wrap;gap:8px}html.mob #prol .cdots{order:-1;flex:1 0 100%}html.mob #prol .cgo{margin-left:auto}html.mob #prol .cwait{display:none}
-@media (orientation:landscape){html.mob.prolog #app{grid-template-columns:minmax(0,1fr) 260px!important;grid-template-rows:auto minmax(0,1fr)!important}html.mob.prolog #app>#stageWrap{grid-column:1!important;grid-row:2!important}html.mob.prolog #app>#prol{grid-column:2;grid-row:2;overflow:auto;align-content:space-between}html.mob #prol .btn{padding:6px 10px}}
+@media (orientation:landscape){html.mob #prol p{max-height:3.1em;overflow:auto}html.mob #prol .btn{padding:6px 10px}}
+
+/* ---------- v110 prologue: two circuits side by side ---------- */
+#pdual{display:none}
+html.prolog #cv{visibility:hidden}
+html.prolog #hud .metrics,html.prolog #rotHint{display:none!important}
+html.prolog #pdual{display:grid;position:absolute;inset:0;grid-template-columns:1fr 1fr;grid-template-rows:auto minmax(0,1fr);gap:8px 10px;padding:8px 10px 10px;z-index:3}
+#pdual .pdtop{grid-column:1/-1;display:flex;justify-content:center}
+#pdual .pp{display:grid;grid-template-rows:auto minmax(0,1fr) auto;min-width:0;min-height:0;background:rgba(255,255,255,.42);border:1px solid rgba(53,67,62,.12);border-radius:14px;overflow:hidden}
+#pdual .pp0{box-shadow:inset 0 3px 0 #3B4650}#pdual .pp1{box-shadow:inset 0 3px 0 #F08A24}
+#pdual .pph{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px 4px}
+#pdual .ppt{font:800 13.5px var(--display);color:var(--ink)}
+#pdual canvas{width:100%;height:100%;display:block;min-height:0}
+#pdual .pps{display:flex;flex-wrap:wrap;gap:4px 14px;padding:6px 12px 9px;font:600 11.2px var(--body);color:var(--ink2)}
+#pdual .pps b{color:var(--ink)}#pdual .pps b.bad{color:#C2413F}#pdual .pps b.ok{color:#2E8B62}
+#pdual .btn{padding:5px 11px;font-size:11.2px}
+#prol .btn:disabled{opacity:.38;cursor:default;box-shadow:none;filter:saturate(.4)}
+html.mob #pdual{gap:6px;padding:6px}html.mob #pdual .pph{padding:6px 8px 2px}html.mob #pdual .ppt{font-size:11.5px}html.mob #pdual .pps{font-size:9.9px;gap:2px 8px;padding:3px 8px 5px}
+@media (orientation:portrait){html.mob #pdual{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr) minmax(0,1fr)}}
 </style>
 
 <div id="app">
@@ -2588,7 +2606,7 @@ function render(dt){
   if(G.running||G.done){const pw=COLS*CS,f=G.resolved/G.ep.n,yb=BY+(VIEW.r0+VIEW.rows)*CS+8;cx.fillStyle='rgba(47,42,61,.1)';cx.fillRect(BX,yb,pw,5);cx.fillStyle=G.leakN?'#B7822A':'#2E8B62';cx.fillRect(BX,yb,pw*f,5)}
   // queue
   drawQueue(dt);
-  {const ep=G.ep;if(ep.sla&&(!ep.tut||ep.sla<60)){ // queue time limit clock, large at the top of the board
+  {const ep=G.ep;if(ep.sla&&!ep.demo&&(!ep.tut||ep.sla<60)){ // queue time limit clock, large at the top of the board
     const mx=G.queue.reduce((m,t)=>Math.max(m,t.wait),0),f=clamp(mx/ep.sla,0,1),hot=f>.7,bw=/*P131f*/Math.max(290,Math.min(CS*10.5,390)),bx=BX+CS*1.3,by=BY+VIEW.r0*CS+6,bh=34;
     cx.save();cx.shadowColor='rgba(47,42,61,.18)';cx.shadowBlur=8;cx.fillStyle=hot?'#FFF0ED':'rgba(255,255,255,.96)';rr(bx,by,bw,bh,9);cx.fill();cx.shadowColor='transparent';cx.strokeStyle=hot?'#D92D20':'rgba(47,42,61,.25)';cx.lineWidth=hot?2.5:1.2;rr(bx,by,bw,bh,9);cx.stroke();
     cx.font='700 15px Manrope,"Pretendard Variable","Noto Sans KR","Noto Sans JP",system-ui,sans-serif';cx.textAlign='left';cx.fillStyle=hot?'#D92D20':'#2F2A3D';cx.fillText('⏱ Queue time limit '+ep.sla+'s',bx+10,by+16);
@@ -3451,65 +3469,83 @@ const STICO=(()=>{const g='<ellipse class="k" cx="24" cy="42.5" rx="15" ry="2.6"
  return en=>`<svg class="lvi" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round">${P[BY[en]]||P.hook}</svg>`})();
 const CHCOL=['#32B9A5','#4899DA','#9270D6','#2FA9C2','#E59A54','#647DD9','#D97CA0','#D6A93A']; // chapter colours, the last one is FINAL
 const chSty=ci=>`--cc:${CHCOL[ci]||CHCOL[7]}`;
-/*P154*/const PRO_CODE=[['tool',5,7],['W',3,8,4,8],['W',7,8,31,8],['structured',9,7],['h_429',12,8],['h_529',14,8],['h_maxtok',16,8],['router',19,7],['h_refusal',22,8],['h_ctx',24,8]],
+/*P155*/const PRO_RATE=1; // demo pace: slower than play (1.6) so each task can be followed
+const PRO_CX=(()=>{const o=[['W',3,8,5,8],['W',6,2,6,14],['W',27,2,27,14],['W',28,8,31,8]],ys=[2,5,8,11,14],chk=[['h_429','h_529','h_maxtok','h_refusal','h_ctx','h_fatal'],['h_fatal','h_429','nullable','h_529','h_maxtok','keepboth'],['h_429','h_maxtok','h_529','h_ctx','h_refusal','nullable'],['keepboth','h_429','h_529','h_fatal','h_maxtok','h_ctx'],['h_529','h_refusal','h_429','nullable','h_ctx','h_maxtok']];
+  ys.forEach((y,i)=>{o.push(['W',7,y,26,y],['tool',8,y-1]);chk[i].forEach((t,j)=>o.push([t,11+j*2,y]));o.push([i%2?'router':'structured',23,y-1])});return o})(), // five branches, one per known case, each with its own checks
   PRO_SQ=[['sonnet',13,3],['sonnet',13,7],['sonnet',13,11],['W',3,8,11,8],['W',12,4,12,12],['W',15,4,15,12],['W',16,8,31,8]],
   PRO_T8=['search','edit','refactor','json','edit','sec','json','edit'],PRO_HZ=['halluc','danger','schema'],
-  PRO_ep=o=>Object.assign({n:8,gap:1.3,budget:999,par:999,maxLeak:99,sla:40,haz:[],seed:18,kind:'demo',demo:true,native:true,freeBuild:true,mix:{search:1},unlock:['wire'],name:'Prologue',en:'__prologue',dom:''},o);
+  PRO_ep=o=>Object.assign({n:6,gap:1.6,budget:999,par:999,maxLeak:99,sla:40,haz:[],seed:18,kind:'demo',demo:true,native:true,freeBuild:true,mix:{search:1},unlock:['wire'],name:'Prologue',en:'__prologue',dom:''},o),
+  PRO_S6=['search','search','search','search','search','search'];
+const PRO_SIDE={
+  code:{lab:['Rule-based code','규칙 기반 코드','ルールベースのコード'],ep:()=>PRO_ep({code:true,types:PRO_S6,preset:PRO_CX})},
+  codeNew:{lab:['Rule-based code','규칙 기반 코드','ルールベースのコード'],ep:()=>PRO_ep({code:true,sla:10,types:['search','refactor','search','sec','search','edit'],preset:PRO_CX}),
+    say:[[p=>p.type==='orch',['No branch for this task type','이 작업 유형엔 분기가 없음','この作業タイプの分岐がない'],'#C2413F']]},
+  agent:{lab:['Agents','에이전트','エージェント'],ep:()=>PRO_ep({types:PRO_S6,preset:PRO_SQ})},
+  agentNew:{lab:['Agents','에이전트','エージェント'],ep:()=>PRO_ep({n:6,types:['search','refactor','search','sec','search','edit'],preset:PRO_SQ})},
+  agentRisk:{lab:['Agents alone','에이전트만','エージェントだけ'],ep:()=>PRO_ep({n:8,types:PRO_T8,preset:PRO_SQ,haz:PRO_HZ,danger:.3,seed:17}),
+    say:[[{x:24,y:8},['Nothing checks the output','출력을 검사하는 게 없음','出力をチェックするものがない'],'#C2413F']]},
+  agentFix:{lab:['Agents + a little code','에이전트 + 결정적 코드 조금','エージェント + 少しのコード'],ep:()=>PRO_ep({n:8,types:PRO_T8,preset:[...PRO_SQ,['allowed',6,7],['hook',19,7],['structured',26,7]],haz:PRO_HZ,danger:.3,seed:17}),
+    say:[[p=>p.type==='allowed',['Blocks rm -rf','rm -rf 차단','rm -rf を遮断'],'#2E8B62'],[p=>p.type==='hook',['Checks the answer','답을 검사','答えを検査'],'#2E8B62'],[p=>p.type==='structured',['Keeps JSON valid','JSON 형식 보장','JSON の形を保証'],'#2E8B62']]}};
 const PROLOG=[
- {k:'code',ep:()=>PRO_ep({code:true,n:6,gap:1.1,types:['search','search','search','search','search','search'],preset:PRO_CODE}),
-  t:['Before: every rule written as code','예전에는: 모든 규칙을 코드로','以前は: すべてのルールをコードで'],
-  b:['This is the board you will play on, with no model on it at all. dispatch() sends each task down a branch, and every check on the wire (schema, retries, error handlers, routing) is code someone wrote. Log searches have a rule, so the Tool station finishes them at once for almost nothing.',
-     '앞으로 플레이할 바로 그 회로판이에요. 여기엔 모델이 하나도 없어요. dispatch()가 작업마다 갈 분기를 정하고, 전선 위의 검사(스키마, 재시도, 오류 처리, 라우팅)는 전부 누군가 직접 짠 코드예요. 로그 검색은 규칙이 있어서 Tool station이 거의 비용 없이 바로 끝내요.',
-     'これから遊ぶ回路盤ですが、モデルはひとつもありません。dispatch() が作業ごとに分岐を決め、配線上のチェック(スキーマ、リトライ、エラー処理、ルーティング)はすべて誰かが書いたコードです。ログ検索にはルールがあるので、Tool station がほぼコストなしですぐに片づけます。'],
-  say:[[p=>p.type==='tool',['Log search → rule → Tool station','로그 검색 → 규칙 있음 → Tool station','ログ検索 → ルールあり → Tool station'],'#2F2A3D'],[p=>p.type==='h_529',['Every check is hand-written code','검사 하나하나가 직접 짠 코드','チェックの一つひとつが手書きのコード'],'#2F2A3D']]},
- {k:'new',ep:()=>PRO_ep({code:true,n:6,gap:1.1,sla:9,types:['search','search','refactor','search','edit','search'],preset:PRO_CODE}),
-  t:['A task nobody wrote a rule for','규칙이 없는 작업이 오면','ルールのない作業が来たら'],
-  b:['Now a module refactor and a bug fix arrive. No branch matches them, so they wait in the queue until the time limit runs out. To handle them you would write another branch and retest it against every other branch. The code keeps growing.',
-     '이번엔 모듈 리팩터와 버그 수정이 들어와요. 맞는 분기가 없어서 시간 제한이 끝날 때까지 대기열에 멈춰 있어요. 처리하려면 분기를 하나 더 짜고, 다른 모든 분기와 함께 다시 테스트해야 해요. 코드는 계속 늘어나요.',
-     '今度はモジュールのリファクタとバグ修正が来ます。合う分岐がないので、制限時間が切れるまでキューで待ったままです。処理するには分岐をもう一つ書き、ほかのすべての分岐と一緒にテストし直す必要があります。コードは増え続けます。'],
-  say:[[p=>p.type==='orch',['No branch for this task type','이 작업 유형엔 분기가 없음','この作業タイプの分岐がない'],'#C2413F']]},
- {k:'agent',ep:()=>PRO_ep({types:PRO_T8,preset:PRO_SQ}),
-  t:['Now: give agents the goal','이제는: 에이전트에게 목표를 맡겨요','いまは: エージェントに目的を任せる'],
-  b:['COORD, the main session, hands each task to a subagent. Each subagent reads the task, picks its own tools and works it out, so searches, bug fixes, refactors and security audits all ship on the same short wiring. The trade-off: code is deterministic and nearly free, an agent is non-deterministic and you pay for its tokens.',
-     '메인 세션인 COORD가 작업마다 subagent에게 넘겨요. 각 subagent는 작업을 읽고 도구를 스스로 골라 풀어내요. 그래서 검색, 버그 수정, 리팩터, 보안 점검이 모두 같은 짧은 회로로 나가요. 대신 차이가 있어요. 코드는 결정적이고 비용이 거의 없지만, 에이전트는 비결정적이고 토큰 비용이 들어요.',
-     'メインセッションの COORD が作業ごとに subagent へ渡します。各 subagent は作業を読み、ツールを自分で選んで解きます。だから検索、バグ修正、リファクタ、セキュリティ監査がすべて同じ短い配線で出ていきます。違いもあります。コードは決定的でほぼ無料ですが、エージェントは非決定的でトークンの費用がかかります。'],
-  say:[[p=>p.type==='orch',['COORD splits the work','COORD가 일을 나눠요','COORD が仕事を分ける'],'#2F2A3D'],[p=>p.type==='sonnet'&&p.y===3,['Reads the task, picks its tools','작업을 읽고 도구를 골라요','作業を読み、ツールを選ぶ'],'#2F2A3D']]},
- {k:'risks',ep:()=>PRO_ep({types:PRO_T8,preset:PRO_SQ,haz:PRO_HZ,danger:.3}),
-  t:['But left alone, it makes mistakes','하지만 그대로 맡기면 사고가 나요','でも、そのまま任せると事故が起きる'],
-  b:['Give the same team real work. One subagent invents a function that does not exist, one tries rm -rf, one returns broken JSON. Nothing on the wire checks them, so the mistakes ship and the penalties add up. Watch Leaks in the top bar.',
-     '같은 팀에게 실제 일을 맡겨 봐요. 어떤 subagent는 없는 함수를 지어내고, 어떤 건 rm -rf를 시도하고, 어떤 건 깨진 JSON을 돌려줘요. 전선 위에 검사하는 게 없어서 실수가 그대로 나가고 벌금이 쌓여요. 상단의 누출 수를 보세요.',
-     '同じチームに実際の仕事を任せてみます。ある subagent は存在しない関数をでっち上げ、ある subagent は rm -rf を試し、ある subagent は壊れた JSON を返します。配線上にチェックがないので、ミスがそのまま出ていき、ペナルティが積み上がります。上のバーの漏れを見てください。'],
-  say:[[{x:24,y:8},['Nothing checks the output','출력을 검사하는 게 없음','出力をチェックするものがない'],'#C2413F']]},
- {k:'road',ep:()=>PRO_ep({types:PRO_T8,preset:[...PRO_SQ,['allowed',6,7],['hook',19,7],['structured',26,7]],haz:PRO_HZ,danger:.3}),
-  t:['Let’s solve them one by one','이제 하나씩 풀어 봐요','ひとつずつ解いていこう'],
-  b:['Add a little deterministic code around the agents: allowed-tools on the way in, a POST hook and a schema on the way out. The same three mistakes are now caught before they ship. Each chapter takes one problem like these and solves it with the right mix of agent and code. First up: catching mistakes with hooks.',
-     '에이전트 주위에 결정적인 코드를 조금 더해요. 들어가는 쪽엔 allowed-tools, 나오는 쪽엔 POST hook과 schema예요. 같은 실수 세 개가 이제 나가기 전에 잡혀요. 챕터마다 이런 과제를 하나씩 골라 에이전트와 코드를 알맞게 섞어 풀어요. 첫 번째는 hook으로 실수 잡기예요.',
-     'エージェントのまわりに決定的なコードを少し足します。入口に allowed-tools、出口に POST hook と schema です。同じ三つのミスが、出ていく前に捕まるようになります。各章でこうした課題を一つずつ選び、エージェントとコードをうまく組み合わせて解きます。最初は hook でミスを捕まえることです。'],
-  say:[[p=>p.type==='allowed',['Blocks rm -rf','rm -rf 차단','rm -rf を遮断'],'#2E8B62'],[p=>p.type==='hook',['Checks the answer','답을 검사','答えを検査'],'#2E8B62'],[p=>p.type==='structured',['Keeps JSON valid','JSON 형식 보장','JSON の形を保証'],'#2E8B62']]}
+ {L:'code',R:'agent',t:['Same work, two architectures','같은 일, 두 가지 설계','同じ仕事、二つの設計'],
+  b:['Both sides get the same six log searches. On the left, every case has its own branch, and every branch has its own hand-written checks: 40 parts. On the right, COORD hands the work to three subagents: 3 parts. Both ship everything. Compare the size of the circuits and the cost under each one.',
+     '양쪽에 같은 로그 검색 6건이 들어와요. 왼쪽은 경우마다 분기가 있고, 분기마다 직접 짠 검사가 붙어 있어서 부품이 40개예요. 오른쪽은 COORD가 subagent 3개에게 일을 넘기는 게 전부라 부품이 3개예요. 둘 다 전부 처리해요. 회로 크기와 각 회로 밑에 적힌 비용을 비교해 보세요.',
+     '両側に同じログ検索が6件入ります。左はケースごとに分岐があり、分岐ごとに手書きのチェックが付いていて部品は40個です。右は COORD が3つの subagent に仕事を渡すだけで、部品は3個です。どちらも全部処理します。回路の大きさと、それぞれの回路の下に出るコストを比べてみてください。']},
+ {L:'codeNew',R:'agentNew',t:['A task nobody wrote a rule for','규칙이 없는 작업이 오면','ルールのない作業が来たら'],
+  b:['Now a module refactor, a security audit and a bug fix arrive. On the left no branch matches them, so they wait until the time limit runs out. Handling them means another branch, more checks and retesting every other branch. On the right the subagents read each task and work it out.',
+     '이번엔 모듈 리팩터, 보안 점검, 버그 수정이 들어와요. 왼쪽은 맞는 분기가 없어서 시간 제한이 끝날 때까지 기다리다 실패해요. 처리하려면 분기와 검사를 또 짜고, 다른 분기를 모두 다시 테스트해야 해요. 오른쪽은 subagent가 작업을 읽고 스스로 풀어내요.',
+     '今度はモジュールのリファクタ、セキュリティ監査、バグ修正が来ます。左は合う分岐がないので、制限時間まで待って失敗します。処理するには分岐とチェックをまた書き、ほかの分岐をすべてテストし直す必要があります。右は subagent が作業を読んで自分で解きます。']},
+ {L:'code',R:'agentRisk',t:['But an agent can be confidently wrong','하지만 에이전트는 그럴듯하게 틀려요','でも、エージェントはもっともらしく間違える'],
+  b:['Code is deterministic: it does exactly what was written, every time. An agent is not. Given real work, one subagent invents a function that does not exist, one tries rm -rf, one returns broken JSON. Nothing on its wire checks them, so the mistakes ship and the penalties add up.',
+     '코드는 결정적이라 쓴 그대로, 매번 똑같이 동작해요. 에이전트는 그렇지 않아요. 실제 일을 맡기면 어떤 subagent는 없는 함수를 지어내고, 어떤 건 rm -rf를 시도하고, 어떤 건 깨진 JSON을 돌려줘요. 전선 위에 검사하는 게 없어서 실수가 그대로 나가고 벌금이 쌓여요.',
+     'コードは決定的で、書いたとおりに毎回同じように動きます。エージェントはそうではありません。実際の仕事を任せると、ある subagent は存在しない関数をでっち上げ、ある subagent は rm -rf を試し、ある subagent は壊れた JSON を返します。配線上にチェックがないので、ミスがそのまま出ていき、ペナルティが積み上がります。']},
+ {L:'agentRisk',R:'agentFix',t:['Let’s solve them one by one','이제 하나씩 풀어 봐요','ひとつずつ解いていこう'],
+  b:['The answer is not the old 40-part circuit. It is a little deterministic code in the right places: allowed-tools on the way in, a POST hook and a schema on the way out. The same three mistakes are now caught before they ship. Each chapter takes one problem like these and solves it. First up: catching mistakes with hooks.',
+     '답은 예전의 부품 40개짜리 회로가 아니에요. 알맞은 자리에 결정적인 코드를 조금 더하는 거예요. 들어가는 쪽엔 allowed-tools, 나오는 쪽엔 POST hook과 schema예요. 같은 실수 세 개가 이제 나가기 전에 잡혀요. 챕터마다 이런 과제를 하나씩 풀어요. 첫 번째는 hook으로 실수 잡기예요.',
+     '答えは昔の部品40個の回路ではありません。適切な場所に決定的なコードを少し足すことです。入口に allowed-tools、出口に POST hook と schema です。同じ三つのミスが、出ていく前に捕まるようになります。各章でこうした課題を一つずつ解きます。最初は hook でミスを捕まえることです。']}
 ];
 let PRO=null;
 function proL(a){return LANG==='ko'?a[1]:LANG==='ja'?a[2]:a[0]}
-function proScene(){if(!PRO)return;const p=PROLOG[PRO.n];clearTimeout(PRO.tm);$('#xcard').hidden=true;newGame(p.ep());
-  if(G.ep.code&&G.memo)G.pieces=G.pieces.filter(q=>q!==G.memo); // no CLAUDE.md before there is a model to read it
-  rebuildNet();TLOG=[];tlogN=0;tlogRender();fitView();hudFit(G.ep);updateHUD();updateRunBtn();const g0=G;PRO.tm=setTimeout(()=>{if(PRO&&G===g0)startRun()},700)}
-function proEnd(){if(!PRO)return;const g0=G;clearTimeout(PRO.tm);PRO.tm=setTimeout(()=>{if(PRO&&G===g0)startRun()},2600)} // loop the run while the page is open
-function proBubbles(){if(!PRO||!G.ep.demo||CS<14)return;const pg=PROLOG[PRO.n];(pg.say||[]).forEach(([w,t,col])=>{let x,y;if(typeof w==='function'){const q=G.pieces.find(w);if(!q)return;x=BX+(q.x+q.w/2)*CS;y=BY+q.y*CS-4}else{x=BX+(w.x+.5)*CS;y=BY+w.y*CS-4}
-  const tx=proL(t);cx.font=`700 ${13.5*UK()}px Manrope,"Pretendard Variable","Noto Sans KR","Noto Sans JP",system-ui,sans-serif`;const bw=cx.measureText(tx).width+16,bh=24*UK(),bx=clamp(x-bw/2,BX+2,Math.max(BX+2,BX+COLS*CS-bw-2)),by=y-bh-4,px=clamp(x,bx+10,bx+bw-10);
+function proPage(){if(!PRO)return;const pg=PROLOG[PRO.n];clearTimeout(PRO.tm);$('#xcard').hidden=true;
+  const box=$('#pdual');box.innerHTML=`<div class="pdtop"><button class="btn alt pdboth" type="button"></button></div>`+[0,1].map(i=>`<div class="pp pp${i}"><div class="pph"><span class="ppt"></span><button class="btn alt ppgo" type="button" data-i="${i}"></button></div><canvas></canvas><div class="pps"></div></div>`).join('');
+  PRO.sides=[pg.L,pg.R].map((k,i)=>{const d=PRO_SIDE[k];newGame(d.ep());if(G.ep.code&&G.memo)G.pieces=G.pieces.filter(q=>q!==G.memo);rebuildNet();const el=box.querySelector('.pp'+i),c=el.querySelector('canvas');return {k,d,G,el,cv:c,cx:c.getContext('2d')}});
+  box.querySelectorAll('.ppgo').forEach(b=>b.addEventListener('click',()=>proPlay(PRO.sides[+b.dataset.i])));box.querySelector('.pdboth').addEventListener('click',()=>PRO.sides.forEach(proPlay));
+  TLOG=[];tlogN=0;tlogRender();updateHUD();proLabels();PRO.tm=setTimeout(()=>{if(PRO)PRO.sides.forEach(proPlay)},700)}
+function proPlay(sd){if(!PRO)return;const g=G;G=sd.G;G.ended=false;startRun();G=g;proLabels()}
+function proEnd(){if(!PRO)return;G.ended=true;proLabels()} // a demo run ends; the pane offers a replay
+function proLabels(){if(!PRO||!PRO.sides)return;const box=$('#pdual');if(!box)return;const b=box.querySelector('.pdboth');if(b)b.textContent='↻ '+Lk('Replay both','둘 다 다시 재생','両方もう一度再生');
+  PRO.sides.forEach(sd=>{sd.el.querySelector('.ppt').textContent=proL(sd.d.lab);sd.el.querySelector('.ppgo').textContent=sd.G.running?'↻ '+Lk('Restart','처음부터','最初から'):'▶ '+Lk('Replay','다시 재생','もう一度再生');
+    const g=sd.G,np=g.pieces.filter(p=>!p.fixed&&p.type!=='wire').length,tot=g.tok+g.pen,st=g.ended?(g.leakN?`<b class="bad">✕ ${Lk('Problems','문제','問題')} ${g.leakN}</b>`:`<b class="ok">✓ ${Lk('All shipped','모두 처리','すべて処理')}</b>`):'';
+    sd.el.querySelector('.pps').innerHTML=`<span>${Lk(`<b>${np}</b> parts`,`부품 <b>${np}</b>개`,`部品 <b>${np}</b>個`)}</span><span>${Lk('Shipped','처리','処理')} <b>${g.shipped}/${g.ep.n}</b></span><span>${Lk('Leaks','누출','漏れ')} <b class="${g.leakN?'bad':''}">${g.leakN}</b></span><span>${Lk('Cost','비용','コスト')} <b>$${tot.toFixed(2)}</b></span>${st}`})}
+function proFrame(dt){const S=PRO.sides;if(!S)return;const r=S[0].cv.getBoundingClientRect(),w=Math.max(1,Math.round(r.width)),h=Math.max(1,Math.round(r.height));DPR=Math.min(2,window.devicePixelRatio||1);
+  if(cv.width!==w*DPR||cv.height!==h*DPR){cv.width=w*DPR;cv.height=h*DPR}const g0=G;
+  S.forEach(sd=>{if(sd.cv.width!==w*DPR||sd.cv.height!==h*DPR){sd.cv.width=w*DPR;sd.cv.height=h*DPR}
+    G=sd.G;PRO.cur=sd;W=w;H=h;VIEW.r0=0;VIEW.rows=ROWS;const top=8,Hh=Math.max(40,H-top-14);CS=Math.max(4,Math.floor(Math.min((W-8)/(COLS+1.4),Hh/ROWS)));BX=Math.round((W-CS*COLS)/2);VTOP=top;BY=top+Math.max(0,Math.round((Hh-ROWS*CS)/2));
+    if(G.running){G.acc=(G.acc||0)+dt*PRO_RATE;let n=0;while(G.acc>=SIMDT-1e-9&&G.running&&n++<600){step(SIMDT);G.acc-=SIMDT}}
+    render(dt);sd.cx.setTransform(1,0,0,1,0,0);sd.cx.clearRect(0,0,sd.cv.width,sd.cv.height);sd.cx.drawImage(cv,0,0)});
+  PRO.cur=null;PRO.hudT=(PRO.hudT||0)+dt;if(PRO.hudT>.2){PRO.hudT=0;proLabels()}}
+window.__ccpPro=dt=>{if(PRO&&PRO.sides)proFrame(dt)}; // test handle: advance the prologue panes
+function proBubbles(){if(!PRO||!PRO.cur||!G.ep.demo||CS<12)return;(PRO.cur.d.say||[]).forEach(([w,t,col])=>{let x,y;if(typeof w==='function'){const q=G.pieces.find(w);if(!q)return;x=BX+(q.x+q.w/2)*CS;y=BY+q.y*CS-4}else{x=BX+(w.x+.5)*CS;y=BY+w.y*CS-4}
+  const tx=proL(t);cx.font=`700 ${12*UK()}px Manrope,"Pretendard Variable","Noto Sans KR","Noto Sans JP",system-ui,sans-serif`;const bw=cx.measureText(tx).width+14,bh=21*UK(),bx=clamp(x-bw/2,BX+2,Math.max(BX+2,BX+COLS*CS-bw-2)),by=y-bh-4,px=clamp(x,bx+10,bx+bw-10);
   cx.fillStyle='rgba(255,255,255,.97)';cx.strokeStyle=col;cx.lineWidth=1.5;cx.lineJoin='round';cx.beginPath();cx.moveTo(px-5,by+bh-1);cx.lineTo(px,by+bh+6);cx.lineTo(px+5,by+bh-1);cx.closePath();cx.fill();cx.stroke();
   rr(bx,by,bw,bh,7);cx.fill();cx.stroke();cx.fillRect(px-4,by+bh-2.2,8,2.4);cx.textAlign='center';cx.fillStyle=col;cx.fillText(tx,bx+bw/2,by+bh/2+4)})}
+const proStack=()=>document.documentElement.classList.contains('mob')&&matchMedia('(orientation:portrait)').matches; // panes stack on a phone held upright
+try{matchMedia('(orientation:portrait)').addEventListener('change',()=>{if(PRO)proDraw()})}catch(_){}
 function proDraw(){if(!PRO)return;const n=PRO.n,p=PROLOG[n],last=n===PROLOG.length-1;if(last)PRO.seen=true;const el=$('#prol');
-  el.innerHTML=`<div class="prt"><div class="eyebrow">PROLOGUE · ${n+1} / ${PROLOG.length} · ${n<2?Lk('CODE ERA','코드 시대','コードの時代'):Lk('AGENT ERA','에이전트 시대','エージェントの時代')}</div><h2>${proL(p.t)}</h2><p>${proL(p.b)}</p></div>
-    <div class="act cact"><div class="cnav"><button class="btn alt" id="pprev"${n>0?'':' disabled'}>‹ ${Lk('Back','이전','戻る')}</button><button class="btn${last?' alt':''}" id="pnext"${last?' disabled':''}>${Lk('Next','다음','次へ')} ›</button></div>
+  el.innerHTML=`<div class="prt"><div class="eyebrow">PROLOGUE · ${n+1} / ${PROLOG.length}</div><h2>${proL(p.t)}</h2><p>${proStack()?proL(p.b).replace(/On the left/g,'On top').replace(/On the right/g,'Below').replace(/왼쪽/g,'위쪽').replace(/오른쪽/g,'아래쪽').replace(/左は/g,'上は').replace(/右は/g,'下は'):proL(p.b)}</p></div>
+    <div class="act cact"><div class="cnav"><button class="btn alt" id="pprev"${n>0?'':' disabled'}>‹ ${Lk('Back','이전','戻る')}</button><button class="btn" id="pnext"${last?' disabled':''}>${Lk('Next','다음','次へ')} ›</button></div>
     <div class="cdots">${PROLOG.map((_,k)=>`<i class="${k===n?'on':''}"></i>`).join('')}</div>
     <div class="cgo">${PRO.seen?'':`<span class="cwait">${Lk('Read to the last page to start','끝까지 읽으면 시작할 수 있어요','最後まで読むと始められます')} · ${n+1}/${PROLOG.length}</span>`}<button class="btn" id="pdone"${PRO.seen?'':' disabled'}>${Lk('To the stages','스테이지로','ステージへ')} ▸</button></div></div>`;
-  $('#pprev').addEventListener('click',()=>{if(PRO.n>0){PRO.n--;proDraw();proScene()}});$('#pnext').addEventListener('click',()=>{if(PRO.n<PROLOG.length-1){PRO.n++;proDraw();proScene()}});
-  $('#pdone').addEventListener('click',()=>{if(!PRO.seen)return;store.set('ccp-prolog',1);const d=PRO.done;proExit();d()});(last?$('#pdone'):$('#pnext')).focus({preventScroll:true})}
-function proExit(){if(!PRO)return;clearTimeout(PRO.tm);PRO=null;G.running=false;document.documentElement.classList.remove('prolog');$('#prol').hidden=true;$('#prol').innerHTML='';newGame(EPS[epIdx]);fitView();hudFit(EPS[epIdx]);updateHUD();updateRunBtn()}
+  $('#pprev').addEventListener('click',()=>{if(PRO.n>0){PRO.n--;proDraw();proPage()}});$('#pnext').addEventListener('click',()=>{if(PRO.n<PROLOG.length-1){PRO.n++;proDraw();proPage()}});
+  $('#pdone').addEventListener('click',()=>{if(!PRO.seen)return;store.set('ccp-prolog',1);const d=PRO.done;proExit();d()});(last?$('#pdone'):$('#pnext')).focus({preventScroll:true});proLabels()}
+function proExit(){if(!PRO)return;clearTimeout(PRO.tm);PRO=null;document.documentElement.classList.remove('prolog');$('#prol').hidden=true;$('#prol').innerHTML='';$('#pdual').innerHTML='';
+  newGame(EPS[epIdx]);fitView();hudFit(EPS[epIdx]);updateHUD();updateRunBtn()} // leave the board as it was before the prologue
 function showPrologue(done){if(window.__crewStop){window.__crewStop();window.__crewStop=null}ov.hidden=true;ov.innerHTML='';$('#xcard').hidden=true;
   let el=$('#prol');if(!el){el=document.createElement('div');el.id='prol';el.setAttribute('data-noi18n','');$('#app').appendChild(el)}el.hidden=false;
-  PRO={n:0,seen:false,done,tm:0};document.documentElement.classList.add('prolog');proDraw();proScene()}
+  if(!$('#pdual')){const d=document.createElement('div');d.id='pdual';d.setAttribute('data-noi18n','');$('#stageWrap').appendChild(d)}
+  PRO={n:0,seen:false,done,tm:0,sides:null};document.documentElement.classList.add('prolog');proDraw();proPage()}
 addEventListener('keydown',e=>{if(!PRO)return;if(e.key==='ArrowRight'){e.preventDefault();e.stopImmediatePropagation();$('#pnext').click();return}if(e.key==='ArrowLeft'){e.preventDefault();e.stopImmediatePropagation();$('#pprev').click();return}
-  if(e.key==='Tab'||((e.key==='Enter'||e.key===' ')&&e.target.closest&&e.target.closest('#prol')))return;e.stopImmediatePropagation()},true); // the board is view-only during the prologue
+  if(e.key==='Tab'||((e.key==='Enter'||e.key===' ')&&e.target.closest&&e.target.closest('#prol,#pdual')))return;e.stopImmediatePropagation()},true); // the board is view-only during the prologue
 function showTitle(mode){mode=mode==='title'?'title':'levels';
   const prog=store.get('ccp4-stars',{}),best=store.get('ccp4-best',{});ov.hidden=false;delete ov.dataset.dlg;
   const done=EPS.filter(e=>prog[e.en]).length,nx=Math.max(0,EPS.findIndex(e=>!prog[e.en])),starN=EPS.reduce((a,e)=>a+(prog[e.en]||0),0),missN=rvMissed().length;
@@ -3820,6 +3856,7 @@ let last=performance.now();
 /*P120*/const SIMDT=1/60; // the only step size the simulation ever uses
 function frame(now){
   const dt=Math.min(.05,(now-last)/1000);last=now;T+=dt;
+  if(PRO&&PRO.sides){proFrame(dt);requestAnimationFrame(frame);return}
   for(const k in G.nudge)if(G.nudge[k]>0)G.nudge[k]-=dt;
   if(G.running&&ov.hidden&&!G.card&&setdlg.hidden){G.acc=(G.acc||0)+dt*simRate(dt);let n=0;while(G.acc>=SIMDT-1e-9&&G.running&&n++<600){step(SIMDT);G.acc-=SIMDT}}
   render(dt);hudT+=dt;if(hudT>.15){hudT=0;updateHUD()}
