@@ -1045,6 +1045,30 @@ html.prolog #pcard:not([hidden]){display:block;position:absolute;left:50%;top:50
 @keyframes pIn{from{opacity:0;transform:translate(-50%,-6px)}to{opacity:1;transform:translate(-50%,0)}}
 html.mob #ppro span{font-size:9.9px;padding:3px 8px 3px 4px}html.mob #ppro span:not(.on){display:none}html.mob #pchip{bottom:8px;font-size:11.2px}html.mob #pcard{padding:14px 14px 12px}html.mob #pcard h2{font-size:16px}html.mob #pcard dd,html.mob #pcard p{font-size:12px}
 @media (prefers-reduced-motion:reduce){#pcard,#pchip{animation:none!important}}
+
+/* ---------- v114 queue editor ---------- */
+#qed{position:fixed;inset:0;z-index:90;background:rgba(30,40,36,.42);display:grid;place-items:center;padding:16px}#qed[hidden]{display:none}
+#qed .qbox{width:min(980px,100%);max-height:calc(100dvh - 32px);overflow:auto;background:#FAFBF8;border-radius:18px;padding:18px 20px 16px;box-shadow:0 24px 60px rgba(20,28,25,.3);border-top:5px solid #3EC2AE}
+#qed .qh{display:flex;justify-content:space-between;align-items:flex-start}#qed .qk{font:800 10.8px var(--body);letter-spacing:.12em;color:#2C8C7F}#qed h2{font:800 19px var(--display);margin:2px 0 4px}
+#qed .qx{border:0;background:none;font:700 22px/1 var(--body);color:#4E5B54;cursor:pointer}
+#qed .qhelp{font:500 12.6px/1.5 var(--body);color:var(--ink2);margin:0 0 10px}
+#qed .qrules{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}#qed .qrules span{font:700 11.2px var(--body);padding:4px 10px;border-radius:999px;border:1px solid}
+#qed .qrules .ok{color:#2E8B62;border-color:#9FD6B9;background:#EEF8F2}#qed .qrules .no{color:#B4562C;border-color:#F0C2A8;background:#FFF5EE}
+#qed .qslots{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;margin-bottom:14px}
+#qed .qpal{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:6px;margin-bottom:14px}
+#qed .qpl{font:800 10.8px var(--body);letter-spacing:.1em;color:#7A857F;margin:0 0 6px}
+#qed .qc{display:flex;align-items:center;gap:7px;flex-wrap:wrap;text-align:left;border:1px solid rgba(53,67,62,.16);background:#fff;border-radius:10px;padding:6px 8px;font:600 11.7px var(--body);color:var(--ink);cursor:pointer;min-height:38px;position:relative}
+#qed .qc:hover:not(:disabled){border-color:#3EC2AE}#qed .qc:disabled{opacity:.45;cursor:default}
+#qed .qc.trap{border-color:#E9A28F;background:#FFF7F4}#qed .qc.empty{border-style:dashed;background:transparent;cursor:default}
+#qed .qc em{font:800 9.9px var(--mono,monospace);color:#9AA59F;font-style:normal;min-width:14px}
+#qed .qc small{font-weight:600;color:var(--ink2)}#qed .qn{flex:1;min-width:0}
+#qed .qt{flex-basis:100%;font:800 10.4px var(--body);color:#C2413F}
+#qed .jl{width:18px;height:16px;border-radius:50% 50% 46% 46%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.7) 0 18%,transparent 19%),var(--c);box-shadow:inset 0 -2px 0 rgba(0,0,0,.12);position:relative;flex:none}
+#qed .jl::before,#qed .jl::after{content:"";position:absolute;top:6px;width:3px;height:4px;border-radius:2px;background:#262B33}#qed .jl::before{left:4px}#qed .jl::after{right:4px}
+#qed .qf{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;bottom:-16px;background:#FAFBF8;padding:8px 0 2px}
+#qed .qwhy{font:600 11.2px var(--body);color:#B4562C;margin-right:10px}
+#pcard .pcr{display:flex;gap:8px;align-items:center}
+html.mob #qed .qslots{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}html.mob #qed .qpal{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
 </style>
 
 <div id="app">
@@ -1834,6 +1858,7 @@ function resetWave(){
   for(let i=0;i<ep.n;i++){let x=r(),acc=0,type=keys[0];for(const k of keys){acc+=ep.mix[k];if(x<=acc){type=k;break}}if(ep.typesF)type=ep.typesF(i,G.part||0);else if(ep.types)type=ep.types[i%ep.types.length];const due=ep.dues?ep.dues(i,G.part||0):null,vol=ep.vol&&type==='batch'?ep.vol:1;
     G.wave.push({id:i,type,diff:TT[type].diff,turns:TT[type].turns,color:TT[type].color,at:i*ep.gap*(.7+r()*.6),danger:(ep.danger||0)>r()&&type!=='search'&&type!=='json',esc:0,wait:0,due,vol});
     {const a=ra(),b=ra(),c=ra(),w=G.wave[i],iv=ri();if(!ep.tut&&type==='pr'&&ep.haz.includes('inject'))w.inj=iv<.35;w.amt=ep.amts?ep.amts[i%ep.amts.length]:a<stR?(b<.3?3000:800):type==='refund'?[40,120,300][Math.floor(c*3)]:0}}
+  /*P159*/G.wave0=G.wave.map(w=>Object.assign({},w));{const cq=CQ[cqKey()];if(cq&&cq.length===G.wave.length)G.wave=G.wave.map((w,i)=>cardTask(cq[i],w));if(ep.budget0!=null){const wt=a=>a.reduce((s_,w)=>s_+TT[w.type].turns*(w.vol||1)*(1+.3*TT[w.type].diff),0),k=cq&&cq.length===G.wave.length?Math.max(1,wt(G.wave)/Math.max(1e-9,wt(G.wave0))):1;ep.budget=k>1?Math.ceil(ep.budget0*k*2)/2:ep.budget0}}
   (G.later||[]).forEach(x=>G.seen.delete(x.c));G.later=[];G.hum=0;G.bulkTok=0;G.liveTok=0;G.t=0;G.wi=0;G.queue=[];G.pkts=[];G.parts=[];G.fxs=[];G.tok=0;G.pen=0;G.shipped=0;G.leaks={};G.leakN=0;G.dead=0;G.caught={};G.resolved=0;G.done=false;G.running=false;G.dispT=0;
   G.rnd=mulberry(ep.seed*7+3);G.pool={};G.orch.ctx=22000;G.orch.stall=0;G.forceLeft=ep.tut&&G.tutPhase===2?1:ep.force||0;
   G.pieces.forEach(p=>{G.holdT=0;G.pendCard=null;p.hum=null;p.hq=null;p.bp=null;p.bin=null;p.smile=0;p.xx=0;p.grp=null;p.busy=0;p.waitHum=0;p.pkt=null;p.state='idle';p.zapped=0;p.hij=0;p.burn=0;p.ctx=0;p.flash=0;p.count=0;p.spent=0;p.said=0;p.backoff=0});
@@ -2314,10 +2339,10 @@ function hookArt(p,x,y,w,h,act){
   else{ // stop sign
     const k=1+Math.sin(T*3)*.04;octPath(ix,iy,r*1.05*k);cx.fill();cx.fillStyle='#fff';cx.fillRect(ix-r*.55,iy-r*.14,r*1.1,r*.28)}
 }
-/*P148*/const tHit=(t,mod,rem)=>t.id>=2&&(t.id-2)%mod===rem; // guided: the first two tasks of a run are always clean
+/*P148*/const tHit=(t,mod,rem)=>t.id>=2&&(t.id-2)%mod===rem;/*P159*/const hitK=(t,k,mod,rem)=>t.tr?t.tr.includes(k):tHit(t,mod,rem); // guided: the first two tasks of a run are always clean
 function taskTraits(t){const out=[];
-  if(G.ep.tut){G.ep.tut.parts.slice(0,G.part+1).forEach((p,i,ps)=>{if(qzOld(ps,i))return;if(p.on&&TH[p.k]&&tHit(t,p.on[0],p.on[1])&&!out.includes(p.k))out.push(p.k);(p.more||[]).forEach(m=>{if(tHit(t,m[1],m[2])&&!out.includes(m[0]))out.push(m[0])})});if(actK('stuck')&&t.amt>500)out.push('stuck')}
-  else{if(t.inj)out.push('inject');if(t.danger&&G.ep.haz.includes('danger'))out.push('danger');if(t.amt>500&&G.ep.haz.includes('stuck'))out.push('stuck')}
+  if(G.ep.tut){G.ep.tut.parts.slice(0,G.part+1).forEach((p,i,ps)=>{if(qzOld(ps,i))return;if(p.on&&TH[p.k]&&hitK(t,p.k,p.on[0],p.on[1])&&!out.includes(p.k))out.push(p.k);(p.more||[]).forEach(m=>{if(hitK(t,m[0],m[1],m[2])&&!out.includes(m[0]))out.push(m[0])})});if(actK('stuck')&&t.amt>500)out.push('stuck')}
+  else{if(t.inj)out.push('inject');if(t.danger&&G.ep.haz.includes('danger'))out.push('danger');if(t.amt>500&&G.ep.haz.includes('stuck'))out.push('stuck');(t.tr||[]).forEach(k=>{if(TH[k]&&!out.includes(k))out.push(k)})}
   return out}
 function traitIcons(x,y,r,t,tr){ // show the same marks in transit as in the queue
   if(t.esc>0)pill('↩',x-r*.9,y-r*.8,8.5,'#fff','#D9822B',false,700);
@@ -2874,12 +2899,13 @@ function tsee(k,a){const p=partOf(k);if(p&&p.see)tcard(p.see,a)}
 function tgood(k,a){if(k==='nopref'&&tagEff('peer','usermd'))return;const p=partOf(k);if(!p||!p.good)return;if(typeof p.good==='function'){const key=a&&a.type==='stophook'?'_g1':'_g0';p[key]=p[key]||p.good(a);tlater(p[key],a)}else tlater(p.good,a)}
 function tbad(k){const p=partOf(k);{const has_=t=>G.pieces.some(q=>q.type===t||(q.type==='session'&&q.cond===t)),t=p&&p.alt&&!TH[k].by.some(b=>G.pieces.some(q=>q.type===b))&&Object.keys(p.alt).find(has_);if(t)return p.alt[t]} // a plausible wrong part explains itself
   let c=p&&p.bad;if(typeof c==='function')c=c();if(c&&!c.title)c=c[k];return c||K(TH[k].ko+' — leaked','<p>'+(TH[k].ex||'')+'</p>'+REW,BAD)}
-function tutOn(k,t,h){const ps=G.ep.tut.parts;for(let i=0;i<=G.part;i++){const p=ps[i];if(p.k===k&&p.on&&tHit(t,p.on[0],p.on[1])&&(!p.who||h.tag===p.who))return true}return false}
+function tutOn(k,t,h){const ps=G.ep.tut.parts;for(let i=0;i<=G.part;i++){const p=ps[i];if(p.k===k&&p.on&&hitK(t,p.k,p.on[0],p.on[1])&&(!p.who||h.tag===p.who))return true}return false}
 function forcedKinds(t,h){t.fz=t.fz||{};const out=[];
   if(G.ep.tut){const ps=G.ep.tut.parts;for(let i=0;i<=G.part;i++){const p=ps[i];if(qzOld(ps,i)||(p.scene&&i<G.part))continue; // a later scene replaces the earlier one
-      if(p.on&&p.k!=='inject'&&!t.fz[p.k]&&tHit(t,p.on[0],p.on[1])&&(!p.who||h.tag===p.who))out.push(p.k);(p.more||[]).forEach(m=>{if(!t.fz[m[0]]&&tHit(t,m[1],m[2]))out.push(m[0])})}
+      if(p.on&&p.k!=='inject'&&!t.fz[p.k]&&hitK(t,p.k,p.on[0],p.on[1])&&(!p.who||h.tag===p.who))out.push(p.k);(p.more||[]).forEach(m=>{if(!t.fz[m[0]]&&hitK(t,m[0],m[1],m[2]))out.push(m[0])})}
     if(G.ep.scope&&h.tag==='peer'&&h.net.eff.has('usermd')&&!t.fz.wrongscope)out.push('wrongscope')}
   else if(G.ep.rate){t.rz=t.rz||{};for(const k in G.ep.rate){if(k==='stuck')continue;if(!(k in t.rz))t.rz[k]=(!JSONLY.has(k)||t.type==='json')&&(k!=='stuck'||t.type==='refund'||t.type==='edit')&&G.rnd()<G.ep.rate[k];if(t.rz[k]&&!t.fz[k])out.push(k)}}
+  if(!G.ep.tut&&t.tr)t.tr.forEach(k=>{if(k!=='stuck'&&k!=='inject'&&!t.fz[k]&&!out.includes(k))out.push(k)}); // a trap card in an unguided run fires its case
   if(!t.fz.stuck&&actK('stuck')&&(t.amt>500||(h.net.eff.has('escalate')&&(t.amt||0)>escThr(h))))out.push('stuck');
   return out}
 function forceTh(h,pk,k){ // returning true ends this turn here
@@ -3487,12 +3513,15 @@ const PRO_CX=(()=>{const o=[['W',3,8,5,8],['W',6,2,6,14],['W',27,2,27,14],['W',2
   PRO_GUARD=[['allowed',6,7],['hook',19,7],['structured',26,7]],
   /*P158d*/PRO_ep=o=>Object.assign({n:12,gap:1.6,budget:999,par:999,maxLeak:99,sla:40,haz:[],seed:18,kind:'demo',demo:true,native:true,freeBuild:true,mix:{search:1},unlock:['wire'],name:'Prologue',en:'__prologue',dom:''},o),
   PRO_CHK=p=>!p.fixed&&p.type!=='wire'&&PT[p.type]&&PT[p.type].cat==='backend',PRO_AG=p=>p.type==='orch'||p.type==='sonnet',PRO_GD=p=>p.type==='allowed'||p.type==='hook'||p.type==='structured';
+const PRO_QB={qk:'B',qpal:['search','edit','refactor','sec','json','arch'].map(type=>({type})),qmin:[{n:3,lab:()=>Lk('New kinds of work (not log search)','처음 보는 작업(로그 검색 아님)','初めての作業(ログ検索以外)'),test:c=>c.type!=='search'}]},
+  PRO_QC={qk:'C',qpal:[{type:'search'},{type:'edit'},{type:'refactor'},{type:'sec'},{type:'json'},{type:'edit',tr:['halluc']},{type:'refactor',tr:['halluc']},{type:'edit',danger:true},{type:'sec',danger:true},{type:'json',tr:['schema']}],
+    qmin:[{n:1,lab:()=>tr(TH.halluc.ko),test:c=>(c.tr||[]).includes('halluc')},{n:1,lab:'rm -rf',test:c=>!!c.danger},{n:1,lab:()=>tr(TH.schema.ko),test:c=>(c.tr||[]).includes('schema')}]};
 const PRO_EP={
   code:()=>PRO_ep({code:true,types:['search','search','search','search','search','search'],preset:PRO_CX}),
-  codeNew:()=>PRO_ep({code:true,sla:10,types:PRO_NEW,preset:PRO_CX}),
-  agentNew:()=>PRO_ep({types:PRO_NEW,preset:PRO_SQ,seed:2}),
-  risk:()=>PRO_ep({n:16,types:PRO_T8,preset:PRO_SQ,haz:PRO_HZ,danger:.3,seed:24}),
-  fix:(k=3)=>PRO_ep({n:16,types:PRO_T8,preset:[...PRO_SQ,...PRO_GUARD.slice(0,k)],haz:PRO_HZ,danger:.3,seed:24})};
+  codeNew:()=>PRO_ep(Object.assign({code:true,sla:10,types:PRO_NEW,preset:PRO_CX},PRO_QB)),
+  agentNew:()=>PRO_ep(Object.assign({types:PRO_NEW,preset:PRO_SQ,seed:2},PRO_QB)),
+  risk:()=>PRO_ep({...PRO_QC,n:16,types:PRO_T8,preset:PRO_SQ,haz:PRO_HZ,danger:.3,seed:24}),
+  fix:(k=3)=>PRO_ep({...PRO_QC,n:16,types:PRO_T8,preset:[...PRO_SQ,...PRO_GUARD.slice(0,k)],haz:PRO_HZ,danger:.3,seed:24})};
 const L3=(e,k,j)=>[e,k,j],DO=L3('What to do','할 일','やること'),LOOK=L3('Where to look','볼 곳','見るところ');
 const PROLOG=[
  {name:L3('Rule-based code','규칙 기반 코드','ルールベースのコード'),steps:[{type:'run',ep:'code',hl:[PRO_CHK,'#1C9ED8',true],
@@ -3556,7 +3585,7 @@ function proUI(){if(!PRO)return;const box=$('#pcard'),pg=PROLOG[PRO.n],st=proSte
   if(PRO.ph==='start'){const btn=st.type==='run'?'▶ '+Lk('Run','실행','実行'):st.type==='morph'?'⇄ '+Lk('Switch','바꾸기','切り替え'):'✓ '+Lk('Got it','알겠어요','わかった');
     box.className='pc start';box.innerHTML=`<div class="pck">PATTERN ${PRO.n+1} / ${N} · ${Lk('START','시작','スタート')}</div><h2>${proL(pg.name)}</h2>
       <dl><dt>${proL(DO)}</dt><dd>${proL(st.do)}</dd><dt>${proL(LOOK)}</dt><dd>${proL(st.look)}</dd></dl>
-      <div class="pca">${PRO.n>0&&PRO.si===0?`<button class="btn alt" id="pprev">‹ ${Lk('Previous pattern','이전 패턴','前のパターン')}</button>`:'<span></span>'}<button class="btn" id="pgo">${btn}</button></div>`;box.hidden=false}
+      <div class="pca">${PRO.n>0&&PRO.si===0?`<button class="btn alt" id="pprev">‹ ${Lk('Previous pattern','이전 패턴','前のパターン')}</button>`:'<span></span>'}<span class="pcr">${st.type==='run'&&G.ep.qk?`<button class="btn alt" id="pq">🃏 ${Lk('Edit queue','큐 바꾸기','キューを変える')}${CQ[cqKey()]?' ✓':''}</button>`:''}<button class="btn" id="pgo">${btn}</button></span></div>`;box.hidden=false}
   else if(PRO.ph==='end'){const g=G,np=g.pieces.filter(p=>!p.fixed&&p.type!=='wire').length,ok=!g.leakN;if(last)PRO.seen=true;
     box.className='pc end '+(ok?'ok':'ng');box.innerHTML=`<div class="pck">PATTERN ${PRO.n+1} / ${N} · ${last&&ok?Lk('PROLOGUE CLEAR','프롤로그 완료','プロローグ クリア'):Lk('RESULT','결과','結果')}</div>
       <div class="pcs">${ok?'✓ '+Lk('All shipped','모두 처리','すべて処理'):'✕ '+Lk('Problems','문제','問題')+' '+g.leakN}</div>
@@ -3565,7 +3594,7 @@ function proUI(){if(!PRO)return;const box=$('#pcard'),pg=PROLOG[PRO.n],st=proSte
       <div class="pca"><button class="btn alt" id="prep">↻ ${Lk('Watch again','다시 보기','もう一度見る')}</button>${last?`<button class="btn" id="pdone">${Lk('To the stages','스테이지로','ステージへ')} ▸</button>`:`<button class="btn" id="pnext">${Lk('Next pattern','다음 패턴','次のパターン')} ▸</button>`}</div>`;box.hidden=false}
   else{box.hidden=true;box.innerHTML=''}
   const on=(id,f)=>{const b=$('#'+id);if(b)b.addEventListener('click',f)};
-  on('pgo',proGo);on('pprev',()=>proPattern(PRO.n-1));on('pnext',()=>proPattern(PRO.n+1));
+  on('pgo',proGo);on('pq',()=>qedOpen(()=>proUI()));on('pprev',()=>proPattern(PRO.n-1));on('pnext',()=>proPattern(PRO.n+1));
   on('prep',()=>{const sr=PROLOG[PRO.n].steps.length-1;PRO.si=sr;PRO.ph='start';proBoard(PRO_EP[proStep().ep]());PRO.ph='start';proGo()});
   on('pdone',()=>{store.set('ccp-prolog',1);const d=PRO.done;proExit();d()});
   const f=$('#pgo')||$('#pnext')||$('#pdone');if(f)f.focus({preventScroll:true})}
@@ -3590,6 +3619,45 @@ $('#stageWrap').addEventListener('pointerdown',e=>{if(!PRO)return;if(e.target.cl
 $('#stageWrap').addEventListener('wheel',e=>{if(PRO){e.stopPropagation()}},true);
 addEventListener('keydown',e=>{if(!PRO)return;if((e.key==='Enter'||e.key===' ')&&!(e.target.closest&&e.target.closest('#pcard'))){const b=$('#pgo')||$('#pnext')||$('#pdone');e.preventDefault();e.stopImmediatePropagation();if(b)b.click();return}
   if(e.key==='Tab'||((e.key==='Enter'||e.key===' ')&&e.target.closest&&e.target.closest('#pcard')))return;e.stopImmediatePropagation()},true);
+/*P159*/const CQ={}; // saved card queues for this session: "level|part" → cards
+const cqKey=()=>G.ep.en+'|'+(G.ep.tut?G.part:(G.ep.qk||0));
+function cardTask(c,w){const T_=TT[c.type];return Object.assign({},w,{type:c.type,diff:T_.diff,turns:T_.turns,color:T_.color,danger:!!c.danger,inj:!!c.inj,amt:c.amt||0,due:c.due==null?null:c.due,vol:c.vol||1,tr:(c.tr||[]).slice(),qy:null})}
+function qCard(w){const tr=[];if(G.ep.tut){G.ep.tut.parts.slice(0,G.part+1).forEach(p=>{if(p.on&&TH[p.k]&&tHit(w,p.on[0],p.on[1])&&!tr.includes(p.k))tr.push(p.k);(p.more||[]).forEach(m=>{if(tHit(w,m[1],m[2])&&!tr.includes(m[0]))tr.push(m[0])})})}else(w.tr||[]).forEach(k=>tr.push(k));
+  return {type:w.type,amt:w.amt||0,due:w.due==null?null:w.due,vol:w.vol||1,danger:!!w.danger,inj:!!w.inj,tr}}
+const cardId=c=>[c.type,c.amt||0,c.due==null?'':c.due,c.vol||1,c.danger?1:0,c.inj?1:0,(c.tr||[]).slice().sort().join('+')].join('|');
+function qPalette(){const L=G.ep.qpal?G.ep.qpal.map(c=>Object.assign({amt:0,due:null,vol:1,danger:false,inj:false,tr:[]},c)):G.wave0.map(qCard),seen=new Set(),out=[];L.forEach(c=>{const id=cardId(c);if(!seen.has(id)){seen.add(id);out.push(c)}});
+  return out.sort((a,b)=>(a.tr.length||a.danger||a.inj?1:0)-(b.tr.length||b.danger||b.inj?1:0)||a.type.localeCompare(b.type)||(a.amt||0)-(b.amt||0))}
+const trapOf=c=>[...(c.tr||[]),...(c.danger?['danger']:[]),...(c.inj?['inject']:[]),...((c.amt||0)>500&&(G.ep.tut?G.ep.tut.parts.some(p=>p.k==='stuck'):G.ep.haz.includes('stuck'))?['stuck']:[])];
+function qRules(){ // the minimum trap cards this part (or Prologue pattern) asks for
+  if(G.ep.qmin)return G.ep.qmin;const out=[];if(!G.ep.tut)return out;const p=G.ep.tut.parts[G.part];if(!p)return out;const def=G.wave0.map(qCard),cnt=k=>def.filter(c=>trapOf(c).includes(k)).length;
+  const add=k=>{const n=Math.min(2,cnt(k));if(n>0&&!out.some(r=>r.k===k))out.push({k,n,lab:TH[k]?tr(TH[k].ko):k,test:c=>trapOf(c).includes(k)})};
+  if(p.on||p.k==='stuck')add(p.k);(p.more||[]).forEach(m=>add(m[0]));return out}
+const TTN={search:['Log search','로그 검색','ログ検索'],edit:['Bug fix','버그 수정','バグ修正'],refactor:['Module refactor','모듈 리팩터','モジュールのリファクタ'],arch:['Architecture design','아키텍처 설계','アーキテクチャ設計'],sec:['Security audit','보안 점검','セキュリティ監査'],batch:['Nightly report','야간 리포트','夜間レポート'],json:['JSON extraction','JSON 추출','JSON 抽出'],pr:['PR review','PR 리뷰','PR レビュー'],research:['Domain research','도메인 조사','ドメイン調査'],refund:['Refund request','환불 요청','返金依頼'],release:['Release prep','릴리스 준비','リリース準備']};
+const ttName=k=>TTN[k]?Lk(...TTN[k]):tr(TT[k].ko);
+function cardLabel(c){const T_=TT[c.type],ex=[];if(c.amt)ex.push('$'+(c.amt>=1000?c.amt/1000+'k':c.amt));if(c.due!=null)ex.push(c.due?Lk(`due ${c.due}h`,`마감 ${c.due}시간`,`締切 ${c.due}時間`):Lk('now','즉시','すぐ'));if((c.vol||1)>1)ex.push(G.ep.volTxt||'bulk');
+  const traps=trapOf(c).map(k=>k==='danger'?'rm -rf':k==='inject'?Lk('injection','인젝션','インジェクション'):TH[k]?tr(TH[k].ko):k);
+  return `<i class="jl" style="--c:${T_.color}"></i><span class="qn">${ttName(c.type)}${ex.length?` <small>${ex.join(' · ')}</small>`:''}</span>${traps.length?`<b class="qt">⚠ ${traps.join(' · ')}</b>`:''}`}
+let QED=null;
+function qedOpen(after){if(G.running)return;const n=G.ep.n,cur=CQ[cqKey()];QED={slots:cur?cur.map(c=>Object.assign({},c)):G.wave0.map(qCard),pal:qPalette(),rules:qRules(),after};qedDraw()}
+function qedDraw(){if(!QED)return;let el=$('#qed');if(!el){el=document.createElement('div');el.id='qed';el.setAttribute('data-noi18n','');document.body.appendChild(el)}el.hidden=false;
+  const n=G.ep.n,S=QED.slots,R_=QED.rules,isDef=S.length===n&&G.wave0.map(qCard).every((c,i)=>cardId(c)===cardId(S[i])),ok=S.length===n&&(isDef||R_.every(r=>S.filter(r.test).length>=r.n)),LB=r=>typeof r.lab==='function'?r.lab():r.lab,pn=G.ep.tut?(G.part+1)+' / '+G.ep.tut.parts.length:'';
+  el.innerHTML=`<div class="qbox" role="dialog" aria-label="Queue"><div class="qh"><div><div class="qk">${Lk('QUEUE EDITOR','큐 편집','キュー編集')}${pn?' · '+Lk('PART','파트','パート')+' '+pn:''}</div><h2>${Lk('Build the queue','큐를 직접 짜 보세요','キューを組んでみましょう')}</h2></div><button class="qx" type="button" aria-label="Close">×</button></div>
+    <p class="qhelp">${Lk('Click a card below to add it to the next empty slot. Click a slot to take its card out. Trap cards (⚠) are the tasks where the problem happens.','아래 카드를 누르면 빈칸에 들어가요. 칸을 누르면 빠져요. ⚠ 함정 카드가 문제가 생기는 작업이에요.','下のカードを押すと空きマスに入ります。マスを押すと外れます。⚠ のトラップカードが問題の起きる作業です。')}</p>
+    <div class="qrules">${R_.length?R_.map(r=>{const c=S.filter(r.test).length;return `<span class="${c>=r.n||isDef?'ok':'no'}">${c>=r.n||isDef?'✓':'○'} ⚠ ${LB(r)} ${Lk('at least','최소','最低')} ${r.n} · ${isDef&&c<r.n?Lk('default queue: by chance','기본 큐: 확률로 발생','標準キュー: 確率で発生'):c}</span>`}).join(''):`<span class="ok">${Lk('No required cards in this part','이 파트는 필수 카드가 없어요','このパートは必須カードがありません')}</span>`}<span class="${S.length===n?'ok':'no'}">${S.length===n?'✓':'○'} ${Lk('Slots','칸','マス')} ${S.length} / ${n}</span></div>
+    <div class="qslots">${Array.from({length:n},(_,i)=>S[i]?`<button type="button" class="qc on${trapOf(S[i]).length?' trap':''}" data-s="${i}"><em>${i+1}</em>${cardLabel(S[i])}</button>`:`<div class="qc empty"><em>${i+1}</em></div>`).join('')}</div>
+    <div class="qpl">${Lk('Cards','카드','カード')}</div><div class="qpal">${QED.pal.map((c,i)=>`<button type="button" class="qc${trapOf(c).length?' trap':''}" data-p="${i}"${S.length>=n?' disabled':''}>${cardLabel(c)}</button>`).join('')}</div>
+    <div class="qf"><div><button class="btn alt" type="button" id="qrand">🎲 ${Lk('Random','랜덤','ランダム')}</button> <button class="btn alt" type="button" id="qdef">↺ ${Lk('Default','기본 큐','標準')}</button> <button class="btn alt" type="button" id="qclr">${Lk('Clear','비우기','空にする')}</button></div>
+      <div>${ok?'':`<span class="qwhy">${S.length<n?Lk('Fill every slot','칸을 모두 채워 주세요','すべてのマスを埋めてください'):Lk('Add the required trap cards','필수 함정 카드를 넣어 주세요','必須のトラップカードを入れてください')}</span>`}<button class="btn" type="button" id="qok"${ok?'':' disabled'}>✓ ${Lk('Use this queue','이 큐로 실행 준비','このキューを使う')}</button></div></div></div>`;
+  el.querySelector('.qx').onclick=qedClose;el.onclick=e=>{if(e.target===el)qedClose()};
+  el.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{QED.slots.splice(+b.dataset.s,1);qedDraw()});
+  el.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{if(QED.slots.length<n){QED.slots.push(Object.assign({},QED.pal[+b.dataset.p]));qedDraw()}});
+  $('#qrand').onclick=()=>{const P=QED.pal,out=[];R_.forEach(r=>{const c=P.filter(r.test);for(let i=0;i<r.n&&c.length;i++)out.push(Object.assign({},c[Math.floor(Math.random()*c.length)]))});while(out.length<n)out.push(Object.assign({},P[Math.floor(Math.random()*P.length)]));
+    for(let i=out.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[out[i],out[j]]=[out[j],out[i]]}QED.slots=out.slice(0,n);qedDraw()};
+  $('#qdef').onclick=()=>{QED.slots=G.wave0.map(qCard);qedDraw()};$('#qclr').onclick=()=>{QED.slots=[];qedDraw()};
+  $('#qok').onclick=()=>{if(!ok)return;const def=G.wave0.map(qCard),same=QED.slots.every((c,i)=>cardId(c)===cardId(def[i]));if(same)delete CQ[cqKey()];else CQ[cqKey()]=QED.slots.map(c=>Object.assign({},c));const a=QED.after;qedClose();resetWave();updateHUD();updateRunBtn();sfx('place');log(same?Lk('Default queue','기본 큐','標準のキュー'):Lk('Your queue is set','직접 짠 큐가 준비됐어요','組んだキューの準備ができました'),'good');if(a)a()};
+  const f=$('#qok');if(f&&!f.disabled)f.focus({preventScroll:true})}
+function qedClose(){QED=null;const el=$('#qed');if(el){el.hidden=true;el.innerHTML=''}}
+addEventListener('keydown',e=>{if(QED&&e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();qedClose()}},true);
 function showTitle(mode){mode=mode==='title'?'title':'levels';
   const prog=store.get('ccp4-stars',{}),best=store.get('ccp4-best',{});ov.hidden=false;delete ov.dataset.dlg;
   const done=EPS.filter(e=>prog[e.en]).length,nx=Math.max(0,EPS.findIndex(e=>!prog[e.en])),starN=EPS.reduce((a,e)=>a+(prog[e.en]||0),0),missN=rvMissed().length;
@@ -3914,6 +3982,7 @@ function trScan(){const d=document.createElement('div'),H=x=>{if(typeof x!=='str
 window.__ccp={simRate:dt=>simRate(dt),get RVQ(){return RVQ},showReview,total,buildCost,setLang,tr,trScan,get LANG(){return LANG},get G(){return G},eye,startEp,TH,isAgent,EPS,PT,M,newGame,step,startRun,canPlace,changed,setDims,render,updateHUD,genFiles,uid:()=>++uid,setEp:i=>{epIdx=i}};
 /*P158c*//*P158*/EPS.forEach(e=>{if(e.n)e.n*=2;if(e.sla)e.sla*=2;if(e.parT)e.parT*=2}); // the queue is twice as long everywhere; queue time limits and par time follow
 /*P158b*/{const GB={"Basics":17.5,"PreToolUse vs Stop vs max_turns":27.5,"Model Selection":17.0,"Batch vs Caching":18.0,"Caching Details":12.5,"Structured Output":11.5,"Few-shot":9.5,"Built-in Tools":20.5,"Tool Descriptions":14.5,"Tool Use Loop":10.5,"Orchestration":14.5,"Human Escalation":37.5,"Config Scope":13.0,"Skills & Slash Commands":15.0,"Session Resume":14.0},HB={"Over-engineering":[27.5,25.5,24.96],"Misplaced Hooks":[36.5,33.2,32.96],"Context Diet":[35.5,33.8,32.75],"Retry Hell":[41.5,38.0,37.29],"Legacy Overhaul":[105.5,102.1,97.12],"Untrusted Extraction":[25.0,23.3,22.53],"Tool Sprawl":[27.0,24.6,23.72],"Team Setup":[31.5,29.8,28.65]};EPS.forEach(e=>{if(GB[e.en]!=null)e.budget=GB[e.en];const h=HB[e.en];if(h){e.budget=h[0];e.par=h[1];REFC[e.en]=h[2]}if(e.en==='Retry Hell')e.sla=150})} // budgets re-measured for the doubled queue: guided keep their headroom over the costliest fixed design, HARD keep their ratio to the reference build
+/*P159*/EPS.forEach(e=>{e.budget0=e.budget});{const ctl=document.querySelector('#hud .ctl'),run=ctl&&ctl.querySelector('.run');if(ctl){const b=document.createElement('button');b.type='button';b.id='bQueue';b.setAttribute('data-noi18n','');b.textContent=Lk('Queue','큐','キュー');b.title='Queue editor';b.addEventListener('click',()=>qedOpen());run&&run.nextSibling?ctl.insertBefore(b,run.nextSibling):ctl.appendChild(b);setInterval(()=>{b.textContent='🃏 '+Lk('Queue','큐 편집','キュー編集')+(CQ[cqKey()]?' ✓':'');b.disabled=!!(G&&G.running)},400)}}
 epIdx=0;newGame(EPS[0]);G.booted=true;resize();showTitle('title');syncLang();if(LANG!=='en')trWalk(document.body);requestAnimationFrame(frame);
 })();
 </script>
