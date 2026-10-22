@@ -1069,6 +1069,18 @@ html.mob #ppro span{font-size:9.9px;padding:3px 8px 3px 4px}html.mob #ppro span:
 #qed .qwhy{font:600 11.2px var(--body);color:#B4562C;margin-right:10px}
 #pcard .pcr{display:flex;gap:8px;align-items:center}
 html.mob #qed .qslots{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}html.mob #qed .qpal{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+
+/* ---------- v115 target budget ---------- */
+#qtg{position:fixed;inset:0;z-index:91;background:rgba(30,40,36,.42);display:grid;place-items:center;padding:16px}#qtg[hidden]{display:none}
+#qtg .qbox{width:min(520px,100%);background:#FAFBF8;border-radius:18px;padding:18px 20px 16px;box-shadow:0 24px 60px rgba(20,28,25,.3);border-top:5px solid #E5B452}
+#qtg .qh{display:flex;justify-content:space-between;align-items:flex-start}#qtg .qk{font:800 10.8px var(--body);letter-spacing:.12em;color:#B7822A}#qtg h2{font:800 19px var(--display);margin:2px 0 6px}
+#qtg .qx{border:0;background:none;font:700 22px/1 var(--body);color:#4E5B54;cursor:pointer}#qtg .qhelp{font:500 12.6px/1.5 var(--body);color:var(--ink2);margin:0 0 12px}
+#qtg .tgv{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}#qtg .tgv b{font:800 30px var(--display);color:var(--ink)}#qtg .tgs{font:800 22px var(--body);color:#E5B452;letter-spacing:2px}
+#qtg input[type=range]{width:100%;accent-color:#2C8C7F}
+#qtg .tgbar{display:flex;height:6px;border-radius:3px;overflow:hidden;margin:2px 0 6px}#qtg .tgbar i{display:block}#qtg .t3{background:#E5B452}#qtg .t2{background:#C9D3CD}#qtg .t1{background:#E4E8E5}
+#qtg .tgl{display:flex;justify-content:space-between;font:700 11.2px var(--body);color:var(--ink2);margin-bottom:14px}
+#qtg .qf{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+#bTarget[hidden]{display:none}
 </style>
 
 <div id="app">
@@ -1858,7 +1870,7 @@ function resetWave(){
   for(let i=0;i<ep.n;i++){let x=r(),acc=0,type=keys[0];for(const k of keys){acc+=ep.mix[k];if(x<=acc){type=k;break}}if(ep.typesF)type=ep.typesF(i,G.part||0);else if(ep.types)type=ep.types[i%ep.types.length];const due=ep.dues?ep.dues(i,G.part||0):null,vol=ep.vol&&type==='batch'?ep.vol:1;
     G.wave.push({id:i,type,diff:TT[type].diff,turns:TT[type].turns,color:TT[type].color,at:i*ep.gap*(.7+r()*.6),danger:(ep.danger||0)>r()&&type!=='search'&&type!=='json',esc:0,wait:0,due,vol});
     {const a=ra(),b=ra(),c=ra(),w=G.wave[i],iv=ri();if(!ep.tut&&type==='pr'&&ep.haz.includes('inject'))w.inj=iv<.35;w.amt=ep.amts?ep.amts[i%ep.amts.length]:a<stR?(b<.3?3000:800):type==='refund'?[40,120,300][Math.floor(c*3)]:0}}
-  /*P159*/G.wave0=G.wave.map(w=>Object.assign({},w));{const cq=CQ[cqKey()];if(cq&&cq.length===G.wave.length)G.wave=G.wave.map((w,i)=>cardTask(cq[i],w));if(ep.budget0!=null){const wt=a=>a.reduce((s_,w)=>s_+TT[w.type].turns*(w.vol||1)*(1+.3*TT[w.type].diff),0),k=cq&&cq.length===G.wave.length?Math.max(1,wt(G.wave)/Math.max(1e-9,wt(G.wave0))):1;ep.budget=k>1?Math.ceil(ep.budget0*k*2)/2:ep.budget0}}
+  /*P159*/G.wave0=G.wave.map(w=>Object.assign({},w));{const cq=CQ[cqKey()];if(cq&&cq.length===G.wave.length)G.wave=G.wave.map((w,i)=>cardTask(cq[i],w));if(ep.budget0!=null){const custom=!!(cq&&cq.length===G.wave.length);if(ep.tut){const wt=a=>a.reduce((s_,w)=>s_+TT[w.type].turns*(w.vol||1)*(1+.3*TT[w.type].diff),0),k=custom?Math.max(1,wt(G.wave)/Math.max(1e-9,wt(G.wave0))):1;ep.budget=k>1?Math.ceil(ep.budget0*k*2)/2:ep.budget0}else hardBudget(custom&&cq.ref!=null?cq.ref:null)}}
   (G.later||[]).forEach(x=>G.seen.delete(x.c));G.later=[];G.hum=0;G.bulkTok=0;G.liveTok=0;G.t=0;G.wi=0;G.queue=[];G.pkts=[];G.parts=[];G.fxs=[];G.tok=0;G.pen=0;G.shipped=0;G.leaks={};G.leakN=0;G.dead=0;G.caught={};G.resolved=0;G.done=false;G.running=false;G.dispT=0;
   G.rnd=mulberry(ep.seed*7+3);G.pool={};G.orch.ctx=22000;G.orch.stall=0;G.forceLeft=ep.tut&&G.tutPhase===2?1:ep.force||0;
   G.pieces.forEach(p=>{G.holdT=0;G.pendCard=null;p.hum=null;p.hq=null;p.bp=null;p.bin=null;p.smile=0;p.xx=0;p.grp=null;p.busy=0;p.waitHum=0;p.pkt=null;p.state='idle';p.zapped=0;p.hij=0;p.burn=0;p.ctx=0;p.flash=0;p.count=0;p.spent=0;p.said=0;p.backoff=0});
@@ -1957,7 +1969,7 @@ function banner(text,col){G.fxs.push({type:'banner',text,col,t:0,d:1.3})}
 function ringAt(p,col){const c=center(p);G.fxs.push({type:'ring',x:c[0],y:c[1],col,t:0,d:.6,r:Math.max(p.w,p.h)*CS*.7})}
 
 /* ---------- Simulation ---------- */
-function log(t,k){const el=$('#logline');el.textContent=t;el.className=k||'';el.hidden=false;G.logT=5}
+function log(t,k){if(G&&G.sim)return;const el=$('#logline');el.textContent=t;el.className=k||'';el.hidden=false;G.logT=5}
 function coins(x,y,cost){const n=clamp(Math.round(cost*40),1,10);for(let i=0;i<n;i++)G.parts.push({x:x+(G.rnd()-.5)*10,y,vx:(Math.random()-.5)*30,vy:-20-Math.random()*30,life:.9,max:.9,coin:true})}
 function floatT(x,y,text,col,big){const hold=big?1.5:1.1,fade=.4; // stays put and fully readable for about a second, then lifts away
   for(const q of G.parts)if(q.text&&q.life>0&&Math.abs(q.x-x)<160&&q.y<=y+10&&q.y>y-130){q.y-=23;q.up=1} // an older message here moves up a row
@@ -2219,7 +2231,7 @@ function overCard(tot){const b=G.ep.budget,t=tot.toFixed(2); // guided level: ev
    body:Lk(`<p>Every task went through, but the run cost <b>$${t}</b> against a budget of <b>$${b}</b>.</p><p class="why">Cost is part of the design. Take off parts this level does not need, shorten the wire, or use a smaller model or a lower effort, then run again.</p>`,
     `<div data-noi18n><p>작업은 전부 처리됐지만, 이번 실행 비용이 <b>$${t}</b>로 예산 <b>$${b}</b>를 넘었어요.</p><p class="why">비용도 설계의 일부예요. 이 레벨에 필요 없는 부품을 빼거나, 전선을 줄이거나, 더 작은 모델·더 낮은 effort를 쓴 뒤 다시 실행하세요.</p></div>`,`<div data-noi18n><p>タスクはすべて処理されましたが、今回の実行コストは <b>$${t}</b> で、予算 <b>$${b}</b> を超えました。</p><p class="why">コストも設計の一部です。このレベルに要らない部品を外す、配線を短くする、小さなモデルや低い effort を使う、などしてからもう一度実行してください。</p></div>`)}}
 function finish(why){
-  G.running=false;G.done=true;if(G.ep.demo){updateRunBtn();proEnd();return}const ep=G.ep,tot=total();if(G.later&&G.later.length)G.later.splice(0).forEach(x=>showCard(x.c,x.anchor)); // nothing explained yet is lost when the run ends
+  G.running=false;G.done=true;if(G.sim)return;if(G.ep.demo){updateRunBtn();proEnd();return}const ep=G.ep,tot=total();if(G.later&&G.later.length)G.later.splice(0).forEach(x=>showCard(x.c,x.anchor)); // nothing explained yet is lost when the run ends
   if(ep.tut&&G.pendCard){const c=G.pendCard;G.pendCard=null;G.holdT=0;showCard(c[0],c[1]);if(G.rewind){updateRunBtn();return}}
   const okRun=why==='done'&&G.leakN<=ep.maxLeak,clear=okRun&&CT(tot)<=ep.budget;
   if(ep.tut&&okRun){predDone('hold');const p=ep.tut.parts[G.part];if(p.inef&&!p.fixed()){G.rewFree=true;G.rewind=true;G.rewMsg='Rewound. Nothing was broken — now make the same work cheaper';sfx('link');banner('ALL SHIPPED · exit 0 — now look at the bill','#C9820F');updateRunBtn();setTimeout(()=>showCard(p.inef(),G.dp),900);return}}
@@ -2227,7 +2239,7 @@ function finish(why){
   if(ep.tut&&!clear){tutRewind('Rewound to before the run. Change the design and run again');return}
   if(ep.tut&&clear&&G.part<ep.tut.parts.length-1){const dn=ep.tut.parts[G.part];G.part++;G.last=null;sfx('win');banner('Part '+G.part+(G.pmiss?' complete!':' complete · first try!'),'#2E8B62');G.pmiss=0;updateRunBtn();
     setTimeout(()=>{resetWave();changed();fitView();if(dn.goodOnClear&&dn.good&&!G.seen.has(dn.good)){G.seen.add(dn.good);showCard(dn.good,G.orch)}const np=ep.tut.parts[G.part];if(np.enter){np.enter();changed()}G.acted=null;if(np.intro)showCard(np.intro,G.orch)},1300);return}
-  const stars=!clear?0:ep.tut?1+(G.miss<=1?1:0)+(G.miss===0&&!G.hintU?1:0):1+(G.leakN===0?1:0)+(CT(tot)<=ep.par&&(!ep.parT||G.t<=ep.parT)?1:0);
+  const stars=!clear?0:ep.tut?1+(G.miss<=1?1:0)+(G.miss===0&&!G.hintU?1:0):ep.tgt!=null?Math.min(tgtTier(ep),G.leakN===0?3:2,(!ep.parT||G.t<=ep.parT)?3:2):1+(G.leakN===0?1:0)+(CT(tot)<=ep.par&&(!ep.parT||G.t<=ep.parT)?1:0);
   if(ep.tut&&clear&&G.predN){const P=store.get('ccp-pred',{}),o=P[ep.en];if(!o||G.predOK/G.predN>=o[0]/o[1])P[ep.en]=[G.predOK,G.predN];store.set('ccp-pred',P)}
   G.last={clear,stars,tot,why,miss:G.miss,hint:G.hintU,predN:G.predN,predOK:G.predOK,leaks:{...G.leaks},caught:{...G.caught},build:buildCost(),tok:G.tok,pen:G.pen,hum:G.hum||0,time:G.t,shipped:G.shipped};
   if(!ep.tut&&!clear){G.fails=(G.fails||0)+1;G.last.diag=diagnose(why);hintN[epIdx]=Math.min((ep.hints||[]).length,(hintN[epIdx]||0)+1);hintV[epIdx]=hintN[epIdx]}
@@ -2983,7 +2995,7 @@ function whyNot(pp){if(!pp||pp.quiz||!TH[pp.k]||!TH[pp.k].by.length||pp.scene||p
     return `<div class="pres no" data-noi18n>${nm}${right.late||(right.type==='hook'&&th.by.includes('pretool:in')&&right.role!=='pre')?Lk("is the right kind of part, but it acts too late here: this problem has to be stopped before the agent reads the task.","— 맞는 종류의 부품이지만 여기서는 너무 늦게 동작해요. 이 문제는 에이전트가 작업을 읽기 전에 막아야 해요.","は正しい種類の部品ですが、ここでは働くのが遅すぎます。この問題はエージェントがタスクを読む前に止める必要があります。"):right.before||(right.type==='hook'&&th.by.includes('posttool')&&right.role!=='post')?Lk("is the right kind of part, but it acts too early here: this problem only exists once the agent has produced its output.","— 맞는 종류의 부품이지만 여기서는 너무 일찍 동작해요. 이 문제는 에이전트가 결과를 낸 뒤에야 생겨요.","は正しい種類の部品ですが、ここでは働くのが早すぎます。この問題はエージェントが出力を出してから生まれます。"):Lk("is the right kind of part, but the tasks with this problem never pass it where it sits.","— 맞는 종류의 부품이지만, 이 문제를 가진 작업이 지금 자리를 지나가지 않아요.","は正しい種類の部品ですが、この問題を持つタスクは今の場所を通りません。")}</div>`}
   const wrong=G.pieces.filter(q=>q.mine===G.part&&!q.fixed&&q.type!=='wire'&&PT[q.type].cat!=='agent'&&!isRight(q));if(!wrong.length)return '';
   return `<div class="pres no" data-noi18n><b>${wrong.map(q=>PT[q.type].name).join(', ')}</b> ${Lk("was on the wire, but it does not stop","— 전선에 있었지만 이 문제를 막지 못해요:","は配線にありましたが、これは止めません:")} <b>${tr(th.ko)}</b>.<small>${wrong.map(q=>WHAT[q.type]?tr(WHAT[q.type]):'').filter(Boolean).join(' ')}</small></div>`}
-function showCard(c,anchor){if(G&&G.ep&&G.ep.demo)return;if(typeof c==='string')c=CARDS[c];if(!c)return;if(G.card){if(G.card!==c&&!G.cardQ.some(q=>q[0]===c))G.cardQ.push([c,anchor]);return}
+function showCard(c,anchor){if(G&&(G.sim||G.ep&&G.ep.demo))return;if(typeof c==='string')c=CARDS[c];if(!c)return;if(G.card){if(G.card!==c&&!G.cardQ.some(q=>q[0]===c))G.cardQ.push([c,anchor]);return}
   const el=$('#xcard');G.card=c;sfx(c.col==='#C2413F'?'leak':'link');const rw=G.rewind&&c.col==='#C2413F';
   const pp=G.ep.tut?G.ep.tut.parts[G.part]:null,isIntro=!!pp&&(c===pp.intro||c===pp.intro0),gq=pgOf(pp),pred=!!pp&&!pp.quiz&&isIntro&&!!gq&&!(G.pred&&G.pred.part===G.part),res=predRes(c,pp)+(c.col==='#C2413F'&&G.ep.tut&&c!==pp?.intro?whyNot(pp):'');G.slow=false;if(isIntro&&G.dp)anchor=G.dp;
   el.innerHTML=`<div class="xh" style="background:${c.col}">${c.title}</div><div class="xb">${res}${c.col===GOOD?foldCard(c.body):c.body}${pred?`<p class="predq"><b>Your prediction:</b> ${gq.q}</p><div class="predrow pr3">${gq.a.map((x,j)=>`<button class="btn alt" data-j="${j}">${x}</button>`).join('')}</div>`:`<button class="btn" id="xok">${c.btn||(rw?'Rewind and fix it ⟲':'Got it, continue')}</button>`}</div>`;el.hidden=false;
@@ -3619,17 +3631,66 @@ $('#stageWrap').addEventListener('pointerdown',e=>{if(!PRO)return;if(e.target.cl
 $('#stageWrap').addEventListener('wheel',e=>{if(PRO){e.stopPropagation()}},true);
 addEventListener('keydown',e=>{if(!PRO)return;if((e.key==='Enter'||e.key===' ')&&!(e.target.closest&&e.target.closest('#pcard'))){const b=$('#pgo')||$('#pnext')||$('#pdone');e.preventDefault();e.stopImmediatePropagation();if(b)b.click();return}
   if(e.key==='Tab'||((e.key==='Enter'||e.key===' ')&&e.target.closest&&e.target.closest('#pcard')))return;e.stopImmediatePropagation()},true);
+/*P160*/const TGT={}; // the player's target budget per HARD level (this session)
+const REFSOL={ // reference builds of the HARD levels (same as the regression harness), used to price a custom queue
+'Over-engineering':({put,rm,at,W})=>{rm('hook',3,5,false);put('allowed',3,5);rm('hook',10,5);rm('stophook',12,5);rm('structured',17,5);rm('opus',4,3,false);put('sonnet',6,4,{effort:'medium'});W(4,5,5,5)},
+'Misplaced Hooks':({put,rm})=>{rm('stophook',4,5);put('hook',8,5);put('stophook',11,5)},
+'Context Diet':({put,rm,at,W,C})=>{rm('mcp',15,4,false);rm('fewshot',14,6);for(const y of [0,8]){const a=at('sonnet',7,y);a.effort='medium';C.setDims(a)}W(9,2,9,2);W(9,10,9,10);put('summary',15,6);put('cache',4,6);put('ctxedit',19,6);put('maxturns',19,5)},
+'Retry Hell':({put,rm,W})=>{rm('hook',3,5);put('hook',6,5);rm('stophook',10,5,false);put('maxturns',10,5);put('summary',8,5);W(14,6,14,7);W(15,7,16,7);put('escalate',17,7);W(19,7,20,7)},
+'Legacy Overhaul':({put,rm,W})=>{rm('stophook',4,6);put('hook',13,6);put('stophook',14,6);put('summary',15,6);put('maxturns',17,5);W(16,7,16,9);put('escalate',17,9);W(19,9,20,9);W(20,7,20,8);rm('haiku',7,9,false);put('sonnet',7,8,{effort:'medium'});rm('opus',7,0,false);put('sonnet',7,2,{effort:'medium'});W(9,3,10,3)},
+'Untrusted Extraction':({put,rm})=>{rm('hook',3,5);rm('fewshot',9,5);put('fewshot',4,5);put('hook',9,5);rm('stophook',13,5)},
+'Tool Sprawl':({put,rm})=>{rm('mcp',3,3,false);rm('t_read',4,5);rm('t_write',5,5);rm('tooldesc',14,5);rm('stophook',16,5);put('allowed',3,5);put('t_grep',4,5);put('t_edit',5,5);put('tooldesc',6,5,{cond:'scoped'})},
+'Team Setup':({put,rm,C})=>{C.G.set.cm_rules='project';rm('skill',15,5);put('skill',4,5);put('slash',6,5)}};
+function refCost(cards){const ep=G.ep,sol=REFSOL[ep.en];if(!sol)return null;const g0=G,t0=TLOG,tn=tlogN,rtc=RTC,mu=muted,key=cqKey(),old=CQ[key],b0=ep.budget,p0=ep.par,tg=ep.tgt;let tot=null;
+  try{muted=true;TLOG=[];CQ[key]=cards;newGame(ep);G.sim=true;
+    const X=x=>x>=20?x+11:x,Y=y=>y+3,put=(type,x,y,o={})=>{x=X(x);y=Y(y);const t=PT[type];const p=Object.assign({id:++uid,type,x,y,rot:false,effort:t.cat==='agent'?M[t.model].def:undefined,cond:type==='guard'?'inject':null,state:'idle',w:1,h:1},o);setDims(p);G.pieces.push(p);return p},
+      at=(type,x,y)=>G.pieces.find(p=>p.type===type&&p.x===X(x)&&p.y===Y(y)),rm=(type,x,y,wire)=>{const p=at(type,x,y);if(!p)throw new Error('no '+type);G.pieces.splice(G.pieces.indexOf(p),1);if(wire!==false)put('wire',x,y)},
+      Wf=(x1,y1,x2,y2)=>{for(let x=X(x1);x<=X(x2);x++)for(let y=Y(y1);y<=Y(y2);y++)if(!G.pieces.some(q=>q.x<=x&&x<q.x+q.w&&q.y<=y&&y<q.y+q.h))G.pieces.push({id:++uid,type:'wire',x,y,rot:false,state:'idle',w:1,h:1})};
+    sol({put,rm,at,W:Wf,C:{setDims,G}});{const solid=G.pieces.filter(q=>q.type!=='wire');G.pieces=G.pieces.filter(q=>q.type!=='wire'||!solid.some(o=>q.x>=o.x&&q.x<o.x+o.w&&q.y>=o.y&&q.y<o.y+o.h))}rebuildNet();resetWave();ep.budget=1e9;G.running=true;G.acc=0;let n=0;while(G.running&&n++<90000)step(SIMDT);tot=total()}catch(e){console.warn('reference run',e)}
+  G=g0;TLOG=t0;tlogN=tn;RTC=rtc;muted=mu;if(old)CQ[key]=old;else delete CQ[key];ep.budget=b0;ep.par=p0;ep.tgt=tg;
+  rebuildNet();buildTray();renderObj();renderInsp();renderTree();resize();updateHUD();updateRunBtn();tlogRender();return tot}
+window.__ccpRef=c=>refCost(c);window.__ccpQ=()=>({CQ,TGT,qCard,wave0:G.wave0}); // test handles
+function hardBudget(ref){const ep=G.ep;if(ep.ref0==null||ep.demo){ep.budget=ep.budget0;return}
+  if(ref==null){ep.ref=ep.ref0;ep.bAuto=ep.budget0;ep.par=ep.par0}else{ep.ref=ref;ep.bAuto=Math.ceil(ref*ep.budget0/ep.ref0*2)/2;ep.par=Math.ceil(ref*ep.par0/ep.ref0*10)/10}
+  const lo=Math.ceil(ep.ref*10)/10,t=TGT[ep.en];ep.tgt=Math.round(clamp(t==null?ep.par:t,lo,ep.bAuto)*10)/10;ep.budget=ep.tgt}
+function tgtTier(ep){return ep.tgt<=ep.par+1e-9?3:ep.tgt<=(ep.par+ep.bAuto)/2+1e-9?2:1}
+const starsTxt=n=>'★'.repeat(n)+'☆'.repeat(3-n);
+let TGD=null;
+function tgtOpen(){if(G.running||G.ep.tut||G.ep.demo||G.ep.ref0==null)return;const ep=G.ep;TGD={v:ep.tgt};tgtDraw()}
+function tgtDraw(){const ep=G.ep;let el=$('#qtg');if(!el){el=document.createElement('div');el.id='qtg';el.setAttribute('data-noi18n','');document.body.appendChild(el)}el.hidden=false;
+  const lo=Math.ceil(ep.ref*10)/10,hi=ep.bAuto,mid=Math.round((ep.par+hi)/2*10)/10,v=TGD.v,tier=v<=ep.par+1e-9?3:v<=mid+1e-9?2:1,pct=x=>hi>lo?(x-lo)/(hi-lo)*100:0;
+  el.innerHTML=`<div class="qbox tg" role="dialog"><div class="qh"><div><div class="qk">🎯 ${Lk('TARGET BUDGET','목표 예산','目標予算')}</div><h2>${Lk('How tight can you run it?','얼마나 아껴서 돌릴 수 있나요?','どこまで切り詰めて回せますか?')}</h2></div><button class="qx" type="button" aria-label="Close">×</button></div>
+    <p class="qhelp">${Lk(`The reference build runs this queue for <b>$${ep.ref.toFixed(2)}</b>. Pick your target: you clear only if the run finishes within it, and a lower target earns more stars.`,`기준 설계로 이 큐를 돌리면 <b>$${ep.ref.toFixed(2)}</b>가 들어요. 목표를 정하세요. 실행이 목표 안에서 끝나야 클리어이고, 목표가 낮을수록 별이 많아요.`,`基準の設計でこのキューを回すと <b>$${ep.ref.toFixed(2)}</b> かかります。目標を決めてください。実行が目標内で終わればクリアで、目標が低いほど星が増えます。`)}</p>
+    <div class="tgv"><b>$${v.toFixed(1)}</b><span class="tgs">${starsTxt(tier)}</span></div>
+    <input type="range" id="tgr" min="${lo}" max="${hi}" step="0.1" value="${v}" aria-label="Target budget">
+    <div class="tgbar"><i class="t3" style="width:${pct(ep.par)}%"></i><i class="t2" style="width:${pct(mid)-pct(ep.par)}%"></i><i class="t1" style="width:${100-pct(mid)}%"></i></div>
+    <div class="tgl"><span>★★★ ≤ $${ep.par.toFixed(1)}</span><span>★★ ≤ $${mid.toFixed(1)}</span><span>★ ≤ $${hi.toFixed(1)}</span></div>
+    <div class="qf"><div><button class="btn alt" type="button" id="tg3">★★★ $${ep.par.toFixed(1)}</button> <button class="btn alt" type="button" id="tg1">${Lk('Easiest','가장 넉넉하게','いちばん余裕')} $${hi.toFixed(1)}</button></div><button class="btn" type="button" id="tgok">✓ ${Lk('Set target','목표로 정하기','目標にする')}</button></div></div>`;
+  el.querySelector('.qx').onclick=tgtClose;el.onclick=e=>{if(e.target===el)tgtClose()};
+  $('#tgr').oninput=e=>{TGD.v=+e.target.value;tgtDraw();const r=$('#tgr');r.focus()};$('#tg3').onclick=()=>{TGD.v=ep.par;tgtDraw()};$('#tg1').onclick=()=>{TGD.v=hi;tgtDraw()};
+  $('#tgok').onclick=()=>{TGT[ep.en]=TGD.v;tgtClose();resetWave();updateHUD();updateRunBtn();sfx('place');log(Lk(`Target $${ep.tgt.toFixed(1)} · up to ${starsTxt(tgtTier(ep))}`,`목표 $${ep.tgt.toFixed(1)} · 최대 ${starsTxt(tgtTier(ep))}`,`目標 $${ep.tgt.toFixed(1)} · 最大 ${starsTxt(tgtTier(ep))}`),'good')}}
+function tgtClose(){TGD=null;const el=$('#qtg');if(el){el.hidden=true;el.innerHTML=''}}
+addEventListener('keydown',e=>{if(TGD&&e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();tgtClose()}},true);
+function hardPalette(){const ep=G.ep,types=Object.keys(ep.mix||{}),pick=pref=>pref.find(t=>types.includes(t))||types[0],seen=new Set(),out=[];
+  G.wave0.map(qCard).map(c=>Object.assign(c,{danger:false,inj:null,tr:[]})).forEach(c=>{const id=cardId(c);if(!seen.has(id)){seen.add(id);out.push(c)}});
+  const add=c=>{c=Object.assign({amt:0,due:null,vol:1,danger:false,inj:false,tr:[]},c);const id=cardId(c);if(!seen.has(id)){seen.add(id);out.push(c)}},hz_=k=>ep.haz.includes(k);
+  if(hz_('halluc'))add({type:pick(['edit','refactor','search','refund','json']),tr:['halluc']});
+  if(hz_('schema')&&types.includes('json'))add({type:'json',tr:['schema']});
+  if(hz_('danger'))add({type:pick(['edit','search','refactor']),danger:true});
+  if(hz_('inject')&&types.includes('pr'))add({type:'pr',inj:true});
+  Object.keys(ep.rate||{}).forEach(k=>{if(k!=='stuck'&&TH[k])add({type:pick(['edit','search','json']),tr:[k]})});
+  return out.sort((a,b)=>(trapOf(a).length?1:0)-(trapOf(b).length?1:0)||a.type.localeCompare(b.type)||(a.amt||0)-(b.amt||0))}
 /*P159*/const CQ={}; // saved card queues for this session: "level|part" → cards
 const cqKey=()=>G.ep.en+'|'+(G.ep.tut?G.part:(G.ep.qk||0));
-function cardTask(c,w){const T_=TT[c.type];return Object.assign({},w,{type:c.type,diff:T_.diff,turns:T_.turns,color:T_.color,danger:!!c.danger,inj:!!c.inj,amt:c.amt||0,due:c.due==null?null:c.due,vol:c.vol||1,tr:(c.tr||[]).slice(),qy:null})}
+function cardTask(c,w){const T_=TT[c.type];return Object.assign({},w,{type:c.type,diff:T_.diff,turns:T_.turns,color:T_.color,danger:!!c.danger,inj:c.inj===true?true:c.inj===false?false:G.ep.tut?false:null,amt:c.amt||0,due:c.due==null?null:c.due,vol:c.vol||1,tr:(c.tr||[]).slice(),qy:null})}
 function qCard(w){const tr=[];if(G.ep.tut){G.ep.tut.parts.slice(0,G.part+1).forEach(p=>{if(p.on&&TH[p.k]&&tHit(w,p.on[0],p.on[1])&&!tr.includes(p.k))tr.push(p.k);(p.more||[]).forEach(m=>{if(tHit(w,m[1],m[2])&&!tr.includes(m[0]))tr.push(m[0])})})}else(w.tr||[]).forEach(k=>tr.push(k));
-  return {type:w.type,amt:w.amt||0,due:w.due==null?null:w.due,vol:w.vol||1,danger:!!w.danger,inj:!!w.inj,tr}}
+  return {type:w.type,amt:w.amt||0,due:w.due==null?null:w.due,vol:w.vol||1,danger:!!w.danger,inj:w.inj===true?true:w.inj===false?false:null,tr}}
 const cardId=c=>[c.type,c.amt||0,c.due==null?'':c.due,c.vol||1,c.danger?1:0,c.inj?1:0,(c.tr||[]).slice().sort().join('+')].join('|');
-function qPalette(){const L=G.ep.qpal?G.ep.qpal.map(c=>Object.assign({amt:0,due:null,vol:1,danger:false,inj:false,tr:[]},c)):G.wave0.map(qCard),seen=new Set(),out=[];L.forEach(c=>{const id=cardId(c);if(!seen.has(id)){seen.add(id);out.push(c)}});
+function qPalette(){if(!G.ep.tut&&!G.ep.demo)return hardPalette();const L=G.ep.qpal?G.ep.qpal.map(c=>Object.assign({amt:0,due:null,vol:1,danger:false,inj:false,tr:[]},c)):G.wave0.map(qCard),seen=new Set(),out=[];L.forEach(c=>{const id=cardId(c);if(!seen.has(id)){seen.add(id);out.push(c)}});
   return out.sort((a,b)=>(a.tr.length||a.danger||a.inj?1:0)-(b.tr.length||b.danger||b.inj?1:0)||a.type.localeCompare(b.type)||(a.amt||0)-(b.amt||0))}
 const trapOf=c=>[...(c.tr||[]),...(c.danger?['danger']:[]),...(c.inj?['inject']:[]),...((c.amt||0)>500&&(G.ep.tut?G.ep.tut.parts.some(p=>p.k==='stuck'):G.ep.haz.includes('stuck'))?['stuck']:[])];
 function qRules(){ // the minimum trap cards this part (or Prologue pattern) asks for
-  if(G.ep.qmin)return G.ep.qmin;const out=[];if(!G.ep.tut)return out;const p=G.ep.tut.parts[G.part];if(!p)return out;const def=G.wave0.map(qCard),cnt=k=>def.filter(c=>trapOf(c).includes(k)).length;
+  if(G.ep.qmin)return G.ep.qmin;const out=[];if(!G.ep.tut&&!G.ep.demo){const seen=new Set();QED.pal.forEach(c=>trapOf(c).forEach(k=>{if(seen.has(k))return;seen.add(k);out.push({k,n:1,lab:k==='danger'?'rm -rf':k==='inject'?Lk('Prompt injection','프롬프트 인젝션','プロンプトインジェクション'):k==='stuck'?Lk('Refund over $500','$500 넘는 환불','$500 超の返金'):TH[k]?tr(TH[k].ko):k,test:c=>trapOf(c).includes(k)})}));return out}if(!G.ep.tut)return out;const p=G.ep.tut.parts[G.part];if(!p)return out;const def=G.wave0.map(qCard),cnt=k=>def.filter(c=>trapOf(c).includes(k)).length;
   const add=k=>{const n=Math.min(2,cnt(k));if(n>0&&!out.some(r=>r.k===k))out.push({k,n,lab:TH[k]?tr(TH[k].ko):k,test:c=>trapOf(c).includes(k)})};
   if(p.on||p.k==='stuck')add(p.k);(p.more||[]).forEach(m=>add(m[0]));return out}
 const TTN={search:['Log search','로그 검색','ログ検索'],edit:['Bug fix','버그 수정','バグ修正'],refactor:['Module refactor','모듈 리팩터','モジュールのリファクタ'],arch:['Architecture design','아키텍처 설계','アーキテクチャ設計'],sec:['Security audit','보안 점검','セキュリティ監査'],batch:['Nightly report','야간 리포트','夜間レポート'],json:['JSON extraction','JSON 추출','JSON 抽出'],pr:['PR review','PR 리뷰','PR レビュー'],research:['Domain research','도메인 조사','ドメイン調査'],refund:['Refund request','환불 요청','返金依頼'],release:['Release prep','릴리스 준비','リリース準備']};
@@ -3638,7 +3699,7 @@ function cardLabel(c){const T_=TT[c.type],ex=[];if(c.amt)ex.push('$'+(c.amt>=100
   const traps=trapOf(c).map(k=>k==='danger'?'rm -rf':k==='inject'?Lk('injection','인젝션','インジェクション'):TH[k]?tr(TH[k].ko):k);
   return `<i class="jl" style="--c:${T_.color}"></i><span class="qn">${ttName(c.type)}${ex.length?` <small>${ex.join(' · ')}</small>`:''}</span>${traps.length?`<b class="qt">⚠ ${traps.join(' · ')}</b>`:''}`}
 let QED=null;
-function qedOpen(after){if(G.running)return;const n=G.ep.n,cur=CQ[cqKey()];QED={slots:cur?cur.map(c=>Object.assign({},c)):G.wave0.map(qCard),pal:qPalette(),rules:qRules(),after};qedDraw()}
+function qedOpen(after){if(G.running)return;const n=G.ep.n,cur=CQ[cqKey()];QED={slots:cur?cur.map(c=>Object.assign({},c)):G.wave0.map(qCard),pal:qPalette(),rules:[],after};QED.rules=qRules();qedDraw()}
 function qedDraw(){if(!QED)return;let el=$('#qed');if(!el){el=document.createElement('div');el.id='qed';el.setAttribute('data-noi18n','');document.body.appendChild(el)}el.hidden=false;
   const n=G.ep.n,S=QED.slots,R_=QED.rules,isDef=S.length===n&&G.wave0.map(qCard).every((c,i)=>cardId(c)===cardId(S[i])),ok=S.length===n&&(isDef||R_.every(r=>S.filter(r.test).length>=r.n)),LB=r=>typeof r.lab==='function'?r.lab():r.lab,pn=G.ep.tut?(G.part+1)+' / '+G.ep.tut.parts.length:'';
   el.innerHTML=`<div class="qbox" role="dialog" aria-label="Queue"><div class="qh"><div><div class="qk">${Lk('QUEUE EDITOR','큐 편집','キュー編集')}${pn?' · '+Lk('PART','파트','パート')+' '+pn:''}</div><h2>${Lk('Build the queue','큐를 직접 짜 보세요','キューを組んでみましょう')}</h2></div><button class="qx" type="button" aria-label="Close">×</button></div>
@@ -3654,7 +3715,7 @@ function qedDraw(){if(!QED)return;let el=$('#qed');if(!el){el=document.createEle
   $('#qrand').onclick=()=>{const P=QED.pal,out=[];R_.forEach(r=>{const c=P.filter(r.test);for(let i=0;i<r.n&&c.length;i++)out.push(Object.assign({},c[Math.floor(Math.random()*c.length)]))});while(out.length<n)out.push(Object.assign({},P[Math.floor(Math.random()*P.length)]));
     for(let i=out.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[out[i],out[j]]=[out[j],out[i]]}QED.slots=out.slice(0,n);qedDraw()};
   $('#qdef').onclick=()=>{QED.slots=G.wave0.map(qCard);qedDraw()};$('#qclr').onclick=()=>{QED.slots=[];qedDraw()};
-  $('#qok').onclick=()=>{if(!ok)return;const def=G.wave0.map(qCard),same=QED.slots.every((c,i)=>cardId(c)===cardId(def[i]));if(same)delete CQ[cqKey()];else CQ[cqKey()]=QED.slots.map(c=>Object.assign({},c));const a=QED.after;qedClose();resetWave();updateHUD();updateRunBtn();sfx('place');log(same?Lk('Default queue','기본 큐','標準のキュー'):Lk('Your queue is set','직접 짠 큐가 준비됐어요','組んだキューの準備ができました'),'good');if(a)a()};
+  $('#qok').onclick=()=>{if(!ok)return;const def=G.wave0.map(qCard),same=QED.slots.every((c,i)=>cardId(c)===cardId(def[i]));if(same)delete CQ[cqKey()];else{const q=QED.slots.map(c=>Object.assign({},c));if(!G.ep.tut&&!G.ep.demo&&REFSOL[G.ep.en]){const r=refCost(q);if(r!=null)q.ref=+r.toFixed(2)}CQ[cqKey()]=q}const a=QED.after||(!G.ep.tut&&!G.ep.demo&&G.ep.ref0!=null?()=>tgtOpen():null);qedClose();resetWave();updateHUD();updateRunBtn();sfx('place');log(same?Lk('Default queue','기본 큐','標準のキュー'):Lk('Your queue is set','직접 짠 큐가 준비됐어요','組んだキューの準備ができました'),'good');if(a)a()};
   const f=$('#qok');if(f&&!f.disabled)f.focus({preventScroll:true})}
 function qedClose(){QED=null;const el=$('#qed');if(el){el.hidden=true;el.innerHTML=''}}
 addEventListener('keydown',e=>{if(QED&&e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();qedClose()}},true);
@@ -3794,6 +3855,7 @@ function diagnose(why){ // plain-language reading of the failed run: what leaked
   if(!ep.tut&&!posOK())D.push(`<span data-noi18n>${Lk("<b>Look at where each part sits.</b> A part can be the right one and still sit on the wrong side of the agent. If the next run fails too, the diagnosis will also name the parts that sit in the wrong place.","<b>부품이 각각 어디에 있는지 보세요.</b> 맞는 부품이어도 에이전트의 반대쪽에 있으면 동작하지 않아요. 다음 실행도 실패하면 진단이 자리가 잘못된 부품도 짚어 줘요.","<b>各部品がどこにあるかを見てください。</b> 正しい部品でも、エージェントの反対側にあれば働きません。次の実行も失敗したら、診断が場所の違う部品も指摘します。")}</span>`);
   if(G.noTool)D.unshift(`<span data-noi18n>${Lk("<b>PR reviews had no GitHub tools.</b> Without the GitHub MCP server the agent cannot open a pull request, so it kept retrying until the task failed as a loop. Put GitHub MCP back on the wire in front of the agent.","<b>PR 리뷰에 쓸 GitHub 도구가 없었어요.</b> GitHub MCP server가 없으면 에이전트가 PR을 열 수 없어서, 계속 다시 시도하다가 루프로 실패했어요. GitHub MCP를 에이전트 앞 전선에 다시 놓으세요.","<b>PR レビューに使う GitHub ツールがありませんでした。</b> GitHub MCP server がないとエージェントは PR を開けず、再試行を続けてループとして失敗しました。GitHub MCP をエージェントの前の配線に戻します。")}</span>`); // the real cause of a PR loop
   if(why==='budget'){const b=buildCost(),tot=total();D.push(Lk(`<b>Over budget:</b> $${tot.toFixed(2)} of $${ep.budget} — parts $${b.toFixed(2)}, tokens $${G.tok.toFixed(2)}, penalties $${G.pen.toFixed(2)}, human review $${(G.hum||0).toFixed(2)}.`,`<span data-noi18n><b>예산 초과:</b> 예산 $${ep.budget} 중 $${tot.toFixed(2)} 사용 — 부품 $${b.toFixed(2)}, 토큰 $${G.tok.toFixed(2)}, 벌금 $${G.pen.toFixed(2)}, 사람 검토 $${(G.hum||0).toFixed(2)}.</span>`,`<span data-noi18n><b>予算オーバー:</b> 予算 $${ep.budget} のうち $${tot.toFixed(2)} 使用 — 部品 $${b.toFixed(2)}、トークン $${G.tok.toFixed(2)}、ペナルティ $${G.pen.toFixed(2)}、人のレビュー $${(G.hum||0).toFixed(2)}。</span>`));
+    if(ep.tgt!=null&&ep.bAuto!=null&&ep.tgt<ep.bAuto-1e-9)D.push(`<span data-noi18n>${Lk(`<b>🎯 Your target was $${ep.tgt.toFixed(1)}.</b> Raise it (up to $${ep.bAuto.toFixed(1)}) to clear with fewer stars, or cut the cost to keep ${starsTxt(tgtTier(ep))}.`,`<b>🎯 목표가 $${ep.tgt.toFixed(1)}였어요.</b> 목표를 올리면(최대 $${ep.bAuto.toFixed(1)}) 별은 줄지만 클리어할 수 있어요. ${starsTxt(tgtTier(ep))}를 지키려면 비용을 줄여 보세요.`,`<b>🎯 目標は $${ep.tgt.toFixed(1)} でした。</b> 目標を上げれば(最大 $${ep.bAuto.toFixed(1)})星は減りますがクリアできます。${starsTxt(tgtTier(ep))} を守るにはコストを削りましょう。`)}</span>`);
     if(G.pen>b&&G.pen>G.tok)D.push('<b>Penalties are the biggest cost.</b> Stop the leaks listed above first; each one is far more expensive than the part that blocks it.');
     if(G.tok>tot*.4)D.push('<b>Tokens are the biggest cost.</b> Look at what every turn carries (MCP, examples, always-loaded rules), whether results come back as summaries, whether the repeated prefix is cached, and whether effort is higher than the task needs.');
     if(b>ep.budget*.6&&b>G.pen&&b>G.tok)D.push('<b>Parts are the biggest cost.</b> Remove anything that guards a threat not on this episode’s list.')}
@@ -3982,7 +4044,7 @@ function trScan(){const d=document.createElement('div'),H=x=>{if(typeof x!=='str
 window.__ccp={simRate:dt=>simRate(dt),get RVQ(){return RVQ},showReview,total,buildCost,setLang,tr,trScan,get LANG(){return LANG},get G(){return G},eye,startEp,TH,isAgent,EPS,PT,M,newGame,step,startRun,canPlace,changed,setDims,render,updateHUD,genFiles,uid:()=>++uid,setEp:i=>{epIdx=i}};
 /*P158c*//*P158*/EPS.forEach(e=>{if(e.n)e.n*=2;if(e.sla)e.sla*=2;if(e.parT)e.parT*=2}); // the queue is twice as long everywhere; queue time limits and par time follow
 /*P158b*/{const GB={"Basics":17.5,"PreToolUse vs Stop vs max_turns":27.5,"Model Selection":17.0,"Batch vs Caching":18.0,"Caching Details":12.5,"Structured Output":11.5,"Few-shot":9.5,"Built-in Tools":20.5,"Tool Descriptions":14.5,"Tool Use Loop":10.5,"Orchestration":14.5,"Human Escalation":37.5,"Config Scope":13.0,"Skills & Slash Commands":15.0,"Session Resume":14.0},HB={"Over-engineering":[27.5,25.5,24.96],"Misplaced Hooks":[36.5,33.2,32.96],"Context Diet":[35.5,33.8,32.75],"Retry Hell":[41.5,38.0,37.29],"Legacy Overhaul":[105.5,102.1,97.12],"Untrusted Extraction":[25.0,23.3,22.53],"Tool Sprawl":[27.0,24.6,23.72],"Team Setup":[31.5,29.8,28.65]};EPS.forEach(e=>{if(GB[e.en]!=null)e.budget=GB[e.en];const h=HB[e.en];if(h){e.budget=h[0];e.par=h[1];REFC[e.en]=h[2]}if(e.en==='Retry Hell')e.sla=150})} // budgets re-measured for the doubled queue: guided keep their headroom over the costliest fixed design, HARD keep their ratio to the reference build
-/*P159*/EPS.forEach(e=>{e.budget0=e.budget});{const ctl=document.querySelector('#hud .ctl'),run=ctl&&ctl.querySelector('.run');if(ctl){const b=document.createElement('button');b.type='button';b.id='bQueue';b.setAttribute('data-noi18n','');b.textContent=Lk('Queue','큐','キュー');b.title='Queue editor';b.addEventListener('click',()=>qedOpen());run&&run.nextSibling?ctl.insertBefore(b,run.nextSibling):ctl.appendChild(b);setInterval(()=>{b.textContent='🃏 '+Lk('Queue','큐 편집','キュー編集')+(CQ[cqKey()]?' ✓':'');b.disabled=!!(G&&G.running)},400)}}
+/*P159*/EPS.forEach(e=>{e.budget0=e.budget;e.par0=e.par;if(REFC[e.en]!=null&&e.kind!=='tut')e.ref0=REFC[e.en]});{const ctl=document.querySelector('#hud .ctl'),run=ctl&&ctl.querySelector('.run');if(ctl){const b=document.createElement('button');b.type='button';b.id='bQueue';b.setAttribute('data-noi18n','');b.textContent=Lk('Queue','큐','キュー');b.title='Queue editor';b.addEventListener('click',()=>qedOpen());run&&run.nextSibling?ctl.insertBefore(b,run.nextSibling):ctl.appendChild(b);setInterval(()=>{b.textContent='🃏 '+Lk('Queue','큐 편집','キュー編集')+(CQ[cqKey()]?' ✓':'');b.disabled=!!(G&&G.running)},400);/*P160*/const t=document.createElement('button');t.type='button';t.id='bTarget';t.setAttribute('data-noi18n','');t.addEventListener('click',()=>tgtOpen());b.after(t);setInterval(()=>{const e_=G&&G.ep;const on=!!(e_&&!e_.tut&&!e_.demo&&e_.ref0!=null&&e_.tgt!=null);t.hidden=!on;if(on){t.textContent='🎯 $'+e_.tgt.toFixed(1)+' '+starsTxt(tgtTier(e_));t.disabled=!!G.running}},400)}}
 epIdx=0;newGame(EPS[0]);G.booted=true;resize();showTitle('title');syncLang();if(LANG!=='en')trWalk(document.body);requestAnimationFrame(frame);
 })();
 </script>
