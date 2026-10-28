@@ -1085,6 +1085,13 @@ html.mob #qed .qslots{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
 /* ---------- v116 data-cartridge card icons ---------- */
 #qed .jl{width:22px;height:15px;border-radius:4px;background:linear-gradient(var(--c) 0 56%,#E6EAEC 56%);box-shadow:inset 0 0 0 1px rgba(60,70,66,.25),0 1px 2px rgba(0,0,0,.15)}
 #qed .jl::before,#qed .jl::after{top:auto;bottom:2px;width:3px;height:3px;border-radius:50%;background:#3DBE7A}#qed .jl::before{left:5px}#qed .jl::after{right:5px}
+
+/* ---------- v117 prologue skip and fast result ---------- */
+#pskip{display:none}
+html.prolog #pskip:not([hidden]){display:block;position:absolute;top:10px;right:12px;z-index:8;border:1px solid rgba(53,67,62,.2);background:rgba(255,255,255,.92);color:var(--ink);font:700 12px var(--body);border-radius:999px;padding:6px 13px;cursor:pointer;box-shadow:var(--sh1)}
+html.prolog #pskip:hover{border-color:#3EC2AE}
+#pchip .pff{margin-left:10px;border:0;border-radius:999px;background:#3EC2AE;color:#0E2A28;font:800 11.5px var(--body);padding:4px 11px;cursor:pointer;vertical-align:1px}
+html.mob #pskip{top:6px;right:6px;padding:4px 10px;font-size:11px}
 </style>
 
 <div id="app">
@@ -3547,7 +3554,7 @@ const STICO=(()=>{const g='<ellipse class="k" cx="24" cy="42.5" rx="15" ry="2.6"
  return en=>`<svg class="lvi" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round">${P[BY[en]]||P.hook}</svg>`})();
 const CHCOL=['#32B9A5','#4899DA','#9270D6','#2FA9C2','#E59A54','#647DD9','#D97CA0','#D6A93A']; // chapter colours, the last one is FINAL
 const chSty=ci=>`--cc:${CHCOL[ci]||CHCOL[7]}`;
-/*P157*/const PRO_RATE=1; // demo pace: slower than play (1.6) so each task can be followed
+/*P157*//*P162*/const PRO_RATE=2.4; // demo pace: slower than play (1.6) so each task can be followed
 const PRO_CX=(()=>{const o=[['W',3,8,5,8],['W',6,2,6,14],['W',27,2,27,14],['W',28,8,31,8]],ys=[2,5,8,11,14],chk=[['h_429','h_529','h_maxtok','h_refusal','h_ctx','h_fatal'],['h_fatal','h_429','nullable','h_529','h_maxtok','keepboth'],['h_429','h_maxtok','h_529','h_ctx','h_refusal','nullable'],['keepboth','h_429','h_529','h_fatal','h_maxtok','h_ctx'],['h_529','h_refusal','h_429','nullable','h_ctx','h_maxtok']];
   ys.forEach((y,i)=>{o.push(['W',7,y,26,y],['tool',8,y-1]);chk[i].forEach((t,j)=>o.push([t,11+j*2,y]));o.push([i%2?'router':'structured',23,y-1])});return o})(), // five branches, one per known case, each with its own checks
   PRO_SQ=[['sonnet',13,3],['sonnet',13,7],['sonnet',13,11],['W',3,8,11,8],['W',12,4,12,12],['W',15,4,15,12],['W',16,8,31,8]],
@@ -3617,7 +3624,7 @@ function proPlace(){const st=proStep();PRO.placed++;proBoard(PRO_EP.fix(PRO.plac
   PRO.tip=proL(st.tips[PRO.placed-1]);if(PRO.placed>=PRO_GUARD.length){PRO.si++;PRO.keep=true;PRO.ph='wait';proUI();PRO.tm=setTimeout(()=>{if(PRO)proEnter()},1300)}else proUI()}
 function proEnd(){if(!PRO)return;G.ended=true;PRO.ph='done';proChip();clearTimeout(PRO.tm);PRO.tm=setTimeout(()=>{if(PRO&&PRO.ph==='done'){PRO.ph='end';proUI()}},900)} // a demo run ends → the RESULT card
 function proChip(){const c=$('#pchip');if(!c||!PRO)return;const st=proStep(),ph=PRO.ph;let t='';
-  if(ph==='play'||ph==='done')t=`<b>${Lk('Where to look','볼 곳','見るところ')}</b> ${proL(st.look)}`;
+  if(ph==='play'||ph==='done')t=`<b>${Lk('Where to look','볼 곳','見るところ')}</b> ${proL(st.look)}${ph==='play'?` <button type="button" class="pff">⏭ ${Lk('Show the result','결과 바로 보기','結果をすぐ見る')}</button>`:''}`;
   else if(ph==='morph')t=`<b>${Lk('Parts','부품','部品')}</b> <span class="pcnt">40 → ${PRO.cnt}</span>`;
   else if(ph==='place'||ph==='wait')t=PRO.placed?`<b>✓ ${PRO.placed} / 3</b> ${PRO.tip}`:`<b>${Lk('What to do','할 일','やること')}</b> ${proL(st.do)}`;
   c.innerHTML=t;c.hidden=!t}
@@ -3649,17 +3656,21 @@ function proBubbles(){if(!PRO||!G.ep.demo)return;const st=proStep();if(!st)retur
   function bub(x,y,tx,col){if(CS<12)return;cx.font=`700 ${12.5*UK()}px Manrope,"Pretendard Variable","Noto Sans KR","Noto Sans JP",system-ui,sans-serif`;const bw=cx.measureText(tx).width+14,bh=22*UK(),bx=clamp(x-bw/2,BX+2,Math.max(BX+2,BX+COLS*CS-bw-2)),by=y-bh-4,px=clamp(x,bx+10,bx+bw-10);
     cx.fillStyle='rgba(255,255,255,.97)';cx.strokeStyle=col;cx.lineWidth=1.5;cx.lineJoin='round';cx.beginPath();cx.moveTo(px-5,by+bh-1);cx.lineTo(px,by+bh+6);cx.lineTo(px+5,by+bh-1);cx.closePath();cx.fill();cx.stroke();
     rr(bx,by,bw,bh,7);cx.fill();cx.stroke();cx.fillRect(px-4,by+bh-2.2,8,2.4);cx.textAlign='center';cx.fillStyle=col;cx.fillText(tx,bx+bw/2,by+bh/2+4)}}
-function proDraw(){if(PRO)proUI()} // language switch
-function proExit(){if(!PRO)return;clearTimeout(PRO.tm);PRO=null;const H_=document.documentElement;['prolog','pdim','pplace'].forEach(c=>H_.classList.remove(c));['#pcard','#pchip','#ppro'].forEach(s=>{const e=$(s);if(e)e.remove()});
+function proDraw(){if(PRO){proSkipBtn();proUI()}} // language switch
+function proExit(){if(!PRO)return;clearTimeout(PRO.tm);PRO=null;const H_=document.documentElement;['prolog','pdim','pplace'].forEach(c=>H_.classList.remove(c));['#pcard','#pchip','#ppro','#pskip'].forEach(s=>{const e=$(s);if(e)e.remove()});
   newGame(EPS[epIdx]);fitView();hudFit(EPS[epIdx]);updateHUD();updateRunBtn()} // leave the board as it was before the prologue
 function showPrologue(done){if(window.__crewStop){window.__crewStop();window.__crewStop=null}ov.hidden=true;ov.innerHTML='';$('#xcard').hidden=true;const sw=$('#stageWrap');
   [['ppro','div'],['pchip','div'],['pcard','div']].forEach(([id,t])=>{if(!$('#'+id)){const e=document.createElement(t);e.id=id;e.setAttribute('data-noi18n','');sw.appendChild(e)}});
-  PRO={n:0,si:0,ph:'start',done,tm:0,placed:0,seen:false};document.documentElement.classList.add('prolog');proPattern(0)}
+  PRO={n:0,si:0,ph:'start',done,tm:0,placed:0,seen:false};document.documentElement.classList.add('prolog');proSkipBtn();proPattern(0)}
+function proSkip(){if(!PRO)return;store.set('ccp-prolog',1);const d=PRO.done;proExit();d()} // leave the prologue now; it will not start by itself again
+function proFast(){if(!PRO||PRO.ph!=='play'||!G.running)return;let n=0;while(G.running&&n++<120000)step(SIMDT)} // finish this run at once; finish() opens the RESULT card
+function proSkipBtn(){const sw=$('#stageWrap');let b=$('#pskip');if(!b){b=document.createElement('button');b.type='button';b.id='pskip';b.setAttribute('data-noi18n','');b.addEventListener('click',proSkip);sw.appendChild(b)}b.textContent=Lk('Skip','건너뛰기','スキップ')+' ✕';b.hidden=false;
+  const c=$('#pchip');if(c&&!c.__ff){c.__ff=1;c.addEventListener('click',e=>{if(e.target.closest('.pff'))proFast()})}}
 window.__ccpProSkip=()=>{if(PRO){store.set('ccp-prolog',1);const d=PRO.done;proExit();d()}}; // test handle
-$('#stageWrap').addEventListener('pointerdown',e=>{if(!PRO)return;if(e.target.closest('#pcard,#pchip,#ppro'))return;e.stopPropagation();e.preventDefault();if(PRO.ph!=='place')return; // the board is view-only, except the glowing spot
+$('#stageWrap').addEventListener('pointerdown',e=>{if(!PRO)return;if(e.target.closest('#pcard,#pchip,#ppro,#pskip'))return;e.stopPropagation();e.preventDefault();if(PRO.ph!=='place')return; // the board is view-only, except the glowing spot
   const r=cv.getBoundingClientRect(),x=(e.clientX-r.left-BX)/CS,y=(e.clientY-r.top-BY)/CS,t=PRO_GUARD[PRO.placed],tp=PT[t[0]];if(x>=t[1]-.6&&x<=t[1]+tp.w+.6&&y>=t[2]-.6&&y<=t[2]+tp.h+.6)proPlace()},true);
 $('#stageWrap').addEventListener('wheel',e=>{if(PRO){e.stopPropagation()}},true);
-addEventListener('keydown',e=>{if(!PRO)return;if((e.key==='Enter'||e.key===' ')&&!(e.target.closest&&e.target.closest('#pcard'))){const b=$('#pgo')||$('#pnext')||$('#pdone');e.preventDefault();e.stopImmediatePropagation();if(b)b.click();return}
+addEventListener('keydown',e=>{if(!PRO)return;if(e.key==='Escape'&&!QED){e.preventDefault();e.stopImmediatePropagation();proSkip();return}if((e.key==='Enter'||e.key===' ')&&!(e.target.closest&&e.target.closest('#pcard'))){const b=$('#pgo')||$('#pnext')||$('#pdone');e.preventDefault();e.stopImmediatePropagation();if(b)b.click();return}
   if(e.key==='Tab'||((e.key==='Enter'||e.key===' ')&&e.target.closest&&e.target.closest('#pcard')))return;e.stopImmediatePropagation()},true);
 /*P160*/const TGT={}; // the player's target budget per HARD level (this session)
 const REFSOL={ // reference builds of the HARD levels (same as the regression harness), used to price a custom queue
